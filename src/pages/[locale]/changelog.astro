@@ -3,13 +3,7 @@
  * Changelog (/[locale]/changelog) — release history from src/data/changelog.ts.
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import {
-  useTranslations,
-  localeFromPath,
-  localeStaticPaths,
-  formatDate,
-  getLocale,
-} from "@i18n/index.ts";
+import { localeFromPath, localeStaticPaths, formatDate, getLocale } from "@i18n/index.ts";
 import { changelog } from "@/data/changelog.ts";
 
 export function getStaticPaths() {
@@ -18,7 +12,6 @@ export function getStaticPaths() {
 
 const localePath = localeFromPath(Astro.url.pathname);
 const locale = getLocale(localePath);
-const t = useTranslations(localePath);
 ---
 
 <BaseLayout
