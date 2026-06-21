@@ -1,12 +1,18 @@
 # ─────────────────────────────────────────────────────────────────────────────
-# §15 Security headers for STATIC (prerendered) assets, applied at the Cloudflare
-# edge. On-demand routes get an equivalent (nonce-based) CSP from src/middleware.ts.
+# §15 Security headers, applied at the Cloudflare edge.
 #
-# CSP posture: zero third-party scripts, zero inline scripts/styles (Astro is
-# configured with inlineStylesheets:"never" and all our JS is external + same
-# origin), so `script-src 'self'` / `style-src 'self'` is the strongest static
-# policy and needs no nonce or hash here. Keep it that way — adding a third-party
-# script means widening this allow-list, which is a review smell.
+# IMPORTANT — why CSP is path-scoped instead of on `/*`:
+# Cloudflare Workers static-assets `_headers` APPENDS headers from every matching
+# rule (it does not let a more-specific rule override a less-specific one), and
+# Modify-Response-Header Transform Rules do NOT apply to static-asset responses.
+# So a strict CSP on `/*` plus a relaxed CSP on `/admin/*` produced TWO CSP
+# headers on /admin — browsers enforce the intersection, which re-blocked the
+# CMS. The only reliable fix is to ensure each path matches exactly ONE CSP rule:
+#   - the strict marketing CSP is scoped to the HTML routes (`/`, `/en-*/*`)
+#   - `/admin/*` carries its own relaxed CSP (CMS loads from a CDN + talks to
+#     GitHub and the OAuth relay)
+# Non-CSP security headers stay on `/*` (identical everywhere, no conflict).
+# Marketing CSP posture is still zero-third-party, `script-src 'self'`.
 # ─────────────────────────────────────────────────────────────────────────────
 
 /*
@@ -17,6 +23,15 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
+
+# Strict marketing CSP — scoped to the HTML routes so /admin never inherits it.
+/
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://*.ingest.sentry.io https://*.ingest.us.sentry.io; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
+/en-au/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://*.ingest.sentry.io https://*.ingest.us.sentry.io; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
+/en-us/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://*.ingest.sentry.io https://*.ingest.us.sentry.io; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
+/en-gb/*
   Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://*.ingest.sentry.io https://*.ingest.us.sentry.io; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
 
 # Long-cache fingerprinted build assets.
@@ -30,9 +45,8 @@
 /.well-known/security.txt
   Content-Type: text/plain; charset=utf-8
 
-# Sveltia CMS admin gets its OWN, relaxed CSP — it loads from a CDN and talks to
-# GitHub. This override keeps the marketing site's strict 'self'-only policy
-# untouched. /admin is noindex + robots-disallowed and gated behind GitHub OAuth.
+# Sveltia CMS admin — its OWN relaxed CSP (the only CSP rule matching /admin).
+# Loads the CMS bundle from unpkg, talks to GitHub + the OAuth relay.
 /admin/*
   X-Robots-Tag: noindex
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://api.github.com https://raw.githubusercontent.com https://unpkg.com; frame-ancestors 'none'; base-uri 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://unpkg.com https://api.github.com https://raw.githubusercontent.com https://sveltia-cms-auth.lumii-health.workers.dev; frame-ancestors 'none'; base-uri 'self'
