@@ -21,7 +21,10 @@
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()
-  Cross-Origin-Opener-Policy: same-origin
+  # same-origin-allow-popups (not same-origin): the CMS at /admin opens a
+  # cross-origin OAuth popup and needs window.opener to deliver the token back.
+  # COOP same-origin severs window.opener for cross-origin popups → login aborts.
+  Cross-Origin-Opener-Policy: same-origin-allow-popups
   Cross-Origin-Resource-Policy: same-origin
 
 # Strict marketing CSP — scoped to the HTML routes so /admin never inherits it.
