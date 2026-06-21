@@ -1,4 +1,9 @@
 ---
+/**
+ * Privacy policy — DRAFT. Plain-language scaffold covering the Australian Privacy
+ * Principles touchpoints. NOT legal advice and NOT final: kept noindex until a
+ * privacy lawyer reviews (§18). Replace the body with the reviewed policy.
+ */
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { useTranslations, localeFromPath, localeStaticPaths } from "@i18n/index.ts";
 
@@ -10,12 +15,73 @@ const t = useTranslations(localeFromPath(Astro.url.pathname));
 
 <BaseLayout title={t("footer.privacy")} noindex={true}>
   <section class="container-page prose measure">
+    <p class="draft">Draft — pending legal review. Not yet the binding policy.</p>
+
     <h1>{t("footer.privacy")}</h1>
     <p>
-      Our full privacy policy is being finalised with legal review ahead of launch. Lead
-      data submitted on this site is stored in Australia (Sydney).
+      Lumii is an Australian-built practice-management platform. This policy explains what
+      personal information we collect, how we use it, and the choices you have. It is
+      written to align with the Australian Privacy Principles (APPs).
     </p>
-    <p>Questions: <a href="mailto:privacy@lumii.com.au">privacy@lumii.com.au</a>.</p>
+
+    <h2>What we collect</h2>
+    <p>
+      <strong>From this website:</strong> if you request access, we collect the details you
+      submit (name, work email, clinic name, discipline, and any message). This site is cookieless
+      and we don't run third-party tracking scripts.
+    </p>
+    <p>
+      <strong>In the Lumii app (for clinics):</strong> clinics use Lumii to manage their own
+      patients' information. In that context the clinic is the controller of patient data and
+      Lumii is the processor, handling it on the clinic's behalf under our agreement.
+    </p>
+
+    <h2>How we use it</h2>
+    <p>
+      Website lead data is used solely to respond to your access request and to contact
+      you about onboarding. We do not sell personal information.
+    </p>
+
+    <h2>Where it's stored</h2>
+    <p>
+      Personal information is stored in <strong>Australian-region</strong> infrastructure (Sydney).
+      Lead data captured here is stored in Australia.
+    </p>
+
+    <h2>Service providers</h2>
+    <p>
+      We use a small set of processors to run the service — including cloud hosting,
+      database, email delivery, and (for clinics) payments and messaging providers. Each
+      is bound to handle data only as instructed. A current sub-processor register is
+      available on request.
+    </p>
+
+    <h2>Retention</h2>
+    <p>
+      We keep personal information only as long as needed for the purpose it was
+      collected, then delete or de-identify it.
+    </p>
+
+    <h2>Your rights</h2>
+    <p>
+      You can request access to, or correction of, the personal information we hold about
+      you, and ask us to delete website lead data. Email
+      <a href="mailto:privacy@lumii.com.au">privacy@lumii.com.au</a>.
+    </p>
+
+    <h2>Security</h2>
+    <p>
+      We protect personal information with encryption in transit and at rest,
+      least-privilege access, and audit logging. See our <a href="/en-au/security"
+        >security page</a
+      >.
+    </p>
+
+    <h2>Changes & contact</h2>
+    <p>
+      We'll update this policy as the service evolves. Questions or complaints:
+      <a href="mailto:privacy@lumii.com.au">privacy@lumii.com.au</a>.
+    </p>
   </section>
 </BaseLayout>
 
@@ -27,6 +93,24 @@ const t = useTranslations(localeFromPath(Astro.url.pathname));
   }
   .prose h1 {
     color: var(--text);
+    margin-block-end: var(--space-lg);
+  }
+  .prose h2 {
+    color: var(--text);
+    font-size: var(--text-h4);
+    margin-block: var(--space-xl) var(--space-sm);
+  }
+  .prose p {
+    margin-block-end: var(--space-md);
+  }
+  .draft {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-pill);
+    background-color: var(--tag-amber-bg);
+    color: var(--tag-amber-fg);
+    font-size: var(--text-caption);
+    font-weight: var(--weight-semibold);
     margin-block-end: var(--space-lg);
   }
 </style>

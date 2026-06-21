@@ -18,6 +18,7 @@ export const strings = {
   "nav.forClinicians": "For clinicians",
   "nav.security": "Security",
   "nav.knowledge": "Knowledge hub",
+  "nav.changelog": "Changelog",
   "nav.pricing": "Pricing",
   "nav.about": "About",
   "nav.requestAccess": "Request access",
