@@ -49,4 +49,4 @@
 # Loads the CMS bundle from unpkg, talks to GitHub + the OAuth relay.
 /admin/*
   X-Robots-Tag: noindex
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://unpkg.com https://api.github.com https://raw.githubusercontent.com https://sveltia-cms-auth.lumii-health.workers.dev; frame-ancestors 'none'; base-uri 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://unpkg.com https://api.github.com https://raw.githubusercontent.com https://www.githubstatus.com https://cms-auth.lumii.com.au; frame-ancestors 'none'; base-uri 'self'
