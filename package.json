@@ -14,7 +14,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "npm run build && wrangler dev",
     "astro": "astro",
     "typecheck": "astro check",
     "lint": "eslint . --max-warnings 0",
@@ -22,7 +22,9 @@
     "format:check": "prettier --check .",
     "lhci": "lhci autorun",
     "a11y": "node ./scripts/axe-check.mjs",
-    "links": "node ./scripts/link-check.mjs"
+    "links": "node ./scripts/link-check.mjs",
+    "generate-types": "wrangler types",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^13.7.0",
@@ -44,6 +46,6 @@
     "tailwindcss": "^4.1.0",
     "typescript": "^5.7.0",
     "typescript-eslint": "^8.61.1",
-    "wrangler": "^4.0.0"
+    "wrangler": "^4.103.0"
   }
 }

@@ -5,6 +5,8 @@ import sitemap from "@astrojs/sitemap";
 
 import { DEFAULT_LOCALE } from "./src/i18n/config.ts";
 
+import cloudflare from "@astrojs/cloudflare";
+
 // Canonical apex chosen as `lumii.com.au` (www → apex 301 at the edge; see _headers).
 const SITE = "https://lumii.com.au";
 
@@ -40,4 +42,6 @@ export default defineConfig({
   build: {
     inlineStylesheets: "never",
   },
+
+  adapter: cloudflare(),
 });
