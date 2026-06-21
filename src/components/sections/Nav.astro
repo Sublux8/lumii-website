@@ -34,7 +34,15 @@ const isActive = (p: string) =>
 
 <header class="nav">
   <div class="container-page nav__inner">
-    <a class="nav__brand" href={lp("/")} aria-label={t("site.name")}>Lumii</a>
+    <a class="nav__brand" href={lp("/")} aria-label={t("site.name")}>
+      <img
+        class="nav__brand-img"
+        src="/logo.svg"
+        alt={t("site.name")}
+        width="80"
+        height="29"
+      />
+    </a>
 
     <details class="nav__menu">
       <summary class="nav__toggle" aria-label={t("nav.openMenu")}>
@@ -115,12 +123,18 @@ const isActive = (p: string) =>
     padding-block: var(--space-md);
   }
   .nav__brand {
-    font-family: var(--font-display);
-    font-size: var(--text-title);
-    font-weight: var(--weight-bold);
-    letter-spacing: var(--tracking-tight);
-    color: var(--text);
+    display: inline-flex;
+    align-items: center;
     text-decoration: none;
+  }
+  .nav__brand-img {
+    block-size: 1.75rem;
+    inline-size: auto;
+    display: block;
+  }
+  /* The wordmark's "lum" is dark ink (light-mode artwork); lighten it on dark. */
+  :root[data-theme="dark"] .nav__brand-img {
+    filter: brightness(0) invert(1);
   }
 
   .nav__menu {

@@ -179,3 +179,28 @@ single accessible focus token (3px accent ring) used by every interactive elemen
 | `sections/*` (Nav, Footer, Hero, FeatureBlock, LogoWall, CTA, Testimonial, FAQ, PricingTable) | composed from the primitives + tokens; no single app source |
 
 Live gallery: `/en-au/components` (noindex).
+
+---
+
+## Login / welcome aesthetic (light default)
+
+Sourced from the app's sign-in screen — `AuthFlowView`
+(`Views/Auth/AuthViews.swift`), whose backdrop is `LumiiBackdrop`
+(`LumiiDesignSystem.swift:418`) and whose card is `.lumiiGlassPanel`. All values
+resolve from the Platinum theme, so the web light palette already matched; these
+tokens add the **aurora + glassmorphism + light-default**.
+
+| Web token | Source | Value / derivation |
+| --- | --- | --- |
+| `--aurora` | `LumiiBackdrop` L432–512 (intensity 1.18) | DERIVED: mint base `--bg` + radial washes of `warmth`/`accent`/`accent-blue`/`gold`/`lilac` + a `white 58%` top wash, mirroring the app's layered linear washes + blurred bands |
+| `--glass-bg` / `--glass-bg-strong` | `.lumiiGlassPanel` (surface ~80–88% + blur) | `surface` @ 70% / 86% |
+| `--glass-blur` | glass panel `.background(.ultraThin…)` | `18px` backdrop blur |
+| `--glass-border` | glass gradient border (white→warmth→glow→border) | `white 55%` mixed with `--border` |
+| `--gradient-accent` (button) | `LumiiButton.bgFill` primary L1340–1348 | EXACT: `warmth 22% → accent #00A895 → accentBlue 14%`, topLeading→bottomTrailing |
+| toggle active | `TabButton` L607–611 | solid `accent #00A895`, ink text `#0B0F1A`, teal glow |
+| `--focus-ring-blue` (inputs) | login field focus | `accent-blue #315CFF` @ 42% — the blue field ring |
+| wordmark | lowercase `lumii`, teal `ii` | `--text` base + `--accent` on the `ii` (Nav/Footer) |
+
+**Default theme is LIGHT** — the `prefers-color-scheme: dark` auto-switch was
+removed; dark is opt-in via the toggle (`:root[data-theme="dark"]`), which also
+carries DERIVED dark `--aurora`/`--glass-*` overrides (no white wash).
