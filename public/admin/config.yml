@@ -28,7 +28,7 @@ collections:
     description: "Audience landing pages — drive nav + /sectors automatically."
     folder: src/content/sectors
     extension: mdx
-    format: frontmatter-with-body
+    format: yaml-frontmatter
     create: true
     identifier_field: audience
     fields:
@@ -79,7 +79,7 @@ collections:
     label_singular: Article
     folder: src/content/knowledge
     extension: mdx
-    format: frontmatter-with-body
+    format: yaml-frontmatter
     create: true
     identifier_field: title
     fields:
