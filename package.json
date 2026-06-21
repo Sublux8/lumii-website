@@ -5,7 +5,7 @@
   "private": true,
   "description": "Lumii marketing site, knowledge hub, and access-request platform. Astro 6 + Cloudflare Workers.",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.15.0"
   },
   "overrides": {
     "vite": "^7"
