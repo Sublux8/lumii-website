@@ -47,8 +47,15 @@ const columns = [
 <footer class="footer">
   <div class="container-page footer__inner">
     <div class="footer__brand">
-      <a class="footer__logo" href={lp("/")}>lum<span class="footer__logo-ii">ii</span></a
-      >
+      <a class="footer__logo" href={lp("/")}>
+        <img
+          class="footer__logo-img"
+          src="/logo.svg"
+          alt={t("site.name")}
+          width="92"
+          height="33"
+        />
+      </a>
       <p class="footer__residency">{t("footer.residency")}</p>
     </div>
 
@@ -95,14 +102,17 @@ const columns = [
     gap: var(--space-3xl);
   }
   .footer__logo {
-    font-family: var(--font-display);
-    font-size: var(--text-title);
-    font-weight: var(--weight-bold);
-    color: var(--text);
+    display: inline-flex;
+    align-items: center;
     text-decoration: none;
   }
-  .footer__logo-ii {
-    color: var(--accent);
+  .footer__logo-img {
+    block-size: 2rem;
+    inline-size: auto;
+    display: block;
+  }
+  :root[data-theme="dark"] .footer__logo-img {
+    filter: brightness(0) invert(1);
   }
   .footer__residency {
     margin-block-start: var(--space-md);
