@@ -1,0 +1,12 @@
+{
+  // Cloudflare Workers static-assets config for the Git-connected "Workers Build".
+  // The site is a pure static Astro build (output:"static" → dist/), so this is
+  // an ASSETS-ONLY Worker: no `main` entrypoint, Cloudflare serves dist/ directly.
+  // Without this file the Workers Build had no deploy target and failed every run.
+  // When Phase 2 adds an on-demand route, wire @astrojs/cloudflare and add `main`.
+  "name": "lumii-website",
+  "compatibility_date": "2026-06-01",
+  "assets": {
+    "directory": "./dist",
+  },
+}
