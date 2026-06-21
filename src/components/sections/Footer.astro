@@ -47,7 +47,8 @@ const columns = [
 <footer class="footer">
   <div class="container-page footer__inner">
     <div class="footer__brand">
-      <a class="footer__logo" href={lp("/")}>Lumii</a>
+      <a class="footer__logo" href={lp("/")}>lum<span class="footer__logo-ii">ii</span></a
+      >
       <p class="footer__residency">{t("footer.residency")}</p>
     </div>
 
@@ -99,6 +100,9 @@ const columns = [
     font-weight: var(--weight-bold);
     color: var(--text);
     text-decoration: none;
+  }
+  .footer__logo-ii {
+    color: var(--accent);
   }
   .footer__residency {
     margin-block-start: var(--space-md);

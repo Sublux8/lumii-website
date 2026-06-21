@@ -80,6 +80,51 @@
     transparent 58%
   );
 
+  /* ── Aurora backdrop — the app login/welcome screen (LumiiBackdrop,
+     LumiiDesignSystem.swift L418). Diffuse pastel washes (warmth/teal/blue/
+     gold/lilac) over the mint base + a white top wash. Kept airy so dark text
+     reading directly on it still passes WCAG AA. */
+  --aurora:
+    radial-gradient(
+      62% 52% at 12% 6%,
+      color-mix(in srgb, var(--brand-warmth) 44%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      55% 46% at 86% 12%,
+      color-mix(in srgb, var(--accent) 30%, transparent),
+      transparent 68%
+    ),
+    radial-gradient(
+      60% 55% at 80% 84%,
+      color-mix(in srgb, var(--accent-blue) 20%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      52% 46% at 16% 90%,
+      color-mix(in srgb, var(--brand-gold) 30%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      46% 42% at 52% 48%,
+      color-mix(in srgb, var(--brand-lilac) 18%, transparent),
+      transparent 74%
+    ),
+    linear-gradient(180deg, color-mix(in srgb, white 58%, transparent), transparent 42%),
+    var(--bg);
+
+  /* ── Glassmorphism (.lumiiGlassPanel) — translucent frosted surfaces.
+     Cards/nav use --glass-bg + backdrop blur + a soft white hairline. */
+  --glass-bg: color-mix(in srgb, var(--surface) 70%, transparent);
+  --glass-bg-strong: color-mix(in srgb, var(--surface) 86%, transparent);
+  --glass-blur: 18px;
+  --glass-border: color-mix(in srgb, white 55%, var(--border));
+  --glass-sheen: linear-gradient(
+    150deg,
+    color-mix(in srgb, white 22%, transparent),
+    transparent 55%
+  );
+
   /* ── Type families — system fonts, .rounded for display (the app signature) ── */
   --font-display:
     "SF Pro Rounded", ui-rounded, system-ui, -apple-system, "Segoe UI", Roboto,
@@ -189,8 +234,10 @@
   --z-toast: 1200;
   --z-max: 2147483647;
 
-  /* ── Focus ring — single accessible token, used by every interactive element ── */
+  /* ── Focus rings. Teal for general interactive elements; BLUE for form inputs
+     to match the login screen's blue field focus ring. ── */
   --focus-ring: 0 0 0 3px color-mix(in srgb, var(--accent) 45%, transparent);
+  --focus-ring-blue: 0 0 0 3px color-mix(in srgb, var(--accent-blue) 42%, transparent);
   --focus-ring-offset: var(--bg);
 }
 
@@ -231,40 +278,37 @@
     color-mix(in srgb, white 5%, transparent),
     transparent 58%
   );
+
+  /* Dark aurora + glass overrides (deep teal-night, no white wash). */
+  --aurora:
+    radial-gradient(
+      60% 50% at 14% 8%,
+      color-mix(in srgb, var(--accent) 18%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      55% 46% at 86% 14%,
+      color-mix(in srgb, var(--accent-blue) 16%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      58% 52% at 80% 86%,
+      color-mix(in srgb, var(--brand-lilac) 12%, transparent),
+      transparent 74%
+    ),
+    var(--bg);
+  --glass-bg: color-mix(in srgb, var(--surface) 64%, transparent);
+  --glass-bg-strong: color-mix(in srgb, var(--surface) 82%, transparent);
+  --glass-border: color-mix(in srgb, white 12%, var(--border));
+  --glass-sheen: linear-gradient(
+    150deg,
+    color-mix(in srgb, white 6%, transparent),
+    transparent 55%
+  );
 }
 
-/* OS-preference dark when the user has NOT made an explicit choice. The
-   theme-init script sets data-theme; absent that, honour the system. */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]):not([data-theme="dark"]) {
-    color-scheme: dark;
-
-    --bg: #07181a;
-    --surface: #0e2429;
-    --surface-2: #16343a;
-    --border: #2e5a60;
-    --accent: #3fd9c4;
-    --accent-blue: #6f91ff;
-    --accent-amber: #f2b943;
-    --danger: #ff5b82;
-    --success: #3fd98b;
-    --text: #f2fbf9;
-    --text-secondary: #c2dad6;
-    --text-muted: #87a6a2;
-
-    --on-accent: #07181a;
-    --on-danger: #fffdf8;
-
-    --shadow-hairline: 0 1px 1px rgba(0, 0, 0, 0.4);
-    --shadow-subtle: 0 3px 7px rgba(0, 0, 0, 0.45);
-    --shadow-card: 0 7px 18px rgba(0, 0, 0, 0.5);
-    --shadow-elevated: 0 12px 28px rgba(0, 0, 0, 0.55);
-    --shadow-modal: 0 16px 38px rgba(0, 0, 0, 0.62);
-
-    --gradient-surface-sheen: linear-gradient(
-      160deg,
-      color-mix(in srgb, white 5%, transparent),
-      transparent 58%
-    );
-  }
-}
+/*
+ * Default theme is LIGHT (the login/welcome aesthetic) — we deliberately do NOT
+ * auto-switch to the OS dark scheme. Dark is opt-in via the toggle, which sets
+ * :root[data-theme="dark"] (persisted by /scripts/theme-toggle.js).
+ */
