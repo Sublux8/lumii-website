@@ -1,0 +1,45 @@
+---
+/**
+ * On-brand 500. Served by the host for server errors. Copy is inline (no locale
+ * context is guaranteed on an error response).
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Button from "@components/primitives/Button.astro";
+import { localeFromPath, localizePath } from "@i18n/index.ts";
+
+const locale = localeFromPath(Astro.url.pathname);
+---
+
+<BaseLayout title="Something went wrong" noindex={true}>
+  <section class="container-page error">
+    <p class="error__code">500</p>
+    <h1>Something went wrong on our end</h1>
+    <p class="error__body measure">
+      A server error stopped this page from loading. It's not you — please try again in a
+      moment. If it keeps happening, email
+      <a href="mailto:support@lumii.com.au">support@lumii.com.au</a>.
+    </p>
+    <Button href={localizePath("/", locale)} size="lg">Back to home</Button>
+  </section>
+</BaseLayout>
+
+<style>
+  .error {
+    padding-block: var(--space-6xl);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
+  .error__code {
+    font-family: var(--font-mono);
+    font-size: var(--text-display-1);
+    font-weight: var(--weight-bold);
+    color: var(--accent);
+  }
+  .error__body {
+    color: var(--text-secondary);
+    margin-block-end: var(--space-lg);
+  }
+</style>
