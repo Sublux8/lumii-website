@@ -9,8 +9,8 @@ backend:
   name: github
   repo: Sublux8/lumii-website
   branch: drafts
-  # auth_endpoint / base_url point at a Sveltia OAuth Worker (sveltia-cms-auth)
-  # — set up per README before the CMS can authenticate.
+  # Sveltia OAuth relay (sveltia-cms-auth Worker) that brokers GitHub auth.
+  base_url: https://sveltia-cms-auth.lumii-health.workers.dev
 
 # Per-entry draft branches + PRs into `drafts` (never direct commits to main).
 publish_mode: editorial_workflow
