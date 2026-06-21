@@ -1,0 +1,51 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import CTA from "@components/sections/CTA.astro";
+import {
+  useTranslations,
+  localeFromPath,
+  localizePath,
+  localeStaticPaths,
+} from "@i18n/index.ts";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+const locale = localeFromPath(Astro.url.pathname);
+const t = useTranslations(locale);
+const lp = (p: string) => localizePath(p, locale);
+---
+
+<BaseLayout title={t("nav.about")}>
+  <section class="container-page prose">
+    <h1>About Lumii</h1>
+    <p class="lead measure">
+      Lumii is an Australian-built practice-management platform for multi-disciplinary
+      clinics — designed to make the everyday work of running a clinic feel calmer, and to
+      keep patient data on Australian soil.
+    </p>
+    <p class="measure">We're pre-launch, onboarding foundation clinics now.</p>
+  </section>
+  <CTA
+    title={t("cta.title")}
+    body={t("cta.body")}
+    buttonLabel={t("cta.button")}
+    buttonHref={lp("/request-access")}
+  />
+</BaseLayout>
+
+<style>
+  .prose {
+    padding-block: var(--space-section);
+  }
+  .lead {
+    margin-block: var(--space-md) var(--space-lg);
+    font-size: var(--text-lead);
+    color: var(--text-secondary);
+  }
+  .prose p {
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+</style>

@@ -1,0 +1,61 @@
+---
+/**
+ * Card — the web port of the app's .lumiiCard / .lumiiElevatedCard modifiers.
+ * `elevation` picks the shadow tier; `as` lets it render as <article>, <li>, or
+ * an <a> (interactive card). Surface sheen overlay mirrors the app's glass feel.
+ */
+interface Props {
+  elevation?: "flat" | "subtle" | "card" | "elevated";
+  as?: "div" | "article" | "li" | "a";
+  href?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+const { elevation = "subtle", as = "div", href, class: className, ...rest } = Astro.props;
+const Tag = href ? "a" : as;
+---
+
+<Tag
+  href={href}
+  class={["card", `card--${elevation}`, href && "card--interactive", className]
+    .filter(Boolean)
+    .join(" ")}
+  {...rest}
+>
+  <slot />
+</Tag>
+
+<style>
+  .card {
+    position: relative;
+    display: block;
+    padding: var(--space-xl);
+    background-color: var(--surface);
+    background-image: var(--gradient-surface-sheen);
+    border: var(--border-width) solid color-mix(in srgb, var(--border) 55%, transparent);
+    border-radius: var(--radius-lg);
+    color: inherit;
+    text-decoration: none;
+    transition:
+      transform var(--duration-standard) var(--ease-spring),
+      box-shadow var(--duration-standard) var(--ease-standard),
+      border-color var(--duration-standard) var(--ease-standard);
+  }
+  .card--flat {
+    box-shadow: none;
+  }
+  .card--subtle {
+    box-shadow: var(--shadow-subtle);
+  }
+  .card--card {
+    box-shadow: var(--shadow-card);
+  }
+  .card--elevated {
+    box-shadow: var(--shadow-elevated);
+  }
+  .card--interactive:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-elevated);
+    border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  }
+</style>

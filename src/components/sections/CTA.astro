@@ -1,0 +1,53 @@
+---
+/**
+ * Conversion CTA band. Aurora-washed panel with a single decisive action.
+ */
+import Button from "@components/primitives/Button.astro";
+
+interface Props {
+  title: string;
+  body: string;
+  buttonLabel: string;
+  buttonHref: string;
+}
+const { title, body, buttonLabel, buttonHref } = Astro.props;
+---
+
+<section class="cta container-page">
+  <div class="cta__panel">
+    <div class="cta__copy">
+      <h2 class="cta__title">{title}</h2>
+      <p class="cta__body measure">{body}</p>
+    </div>
+    <Button href={buttonHref} size="lg" id="cta-band">{buttonLabel}</Button>
+  </div>
+</section>
+
+<style>
+  .cta {
+    padding-block: var(--space-section);
+  }
+  .cta__panel {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xl);
+    padding: clamp(2rem, 1rem + 4vw, 3.5rem);
+    background-color: var(--surface);
+    background-image: var(--gradient-aurora);
+    border: var(--border-width) solid color-mix(in srgb, var(--border) 55%, transparent);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+  }
+  .cta__title {
+    font-size: var(--text-h2);
+  }
+  .cta__body {
+    margin-block-start: var(--space-md);
+    font-size: var(--text-lead);
+    color: var(--text-secondary);
+  }
+</style>

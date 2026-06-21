@@ -1,0 +1,7 @@
+# Canonical host: apex `lumii.com.au`. www → apex, 301. (Belt-and-braces — the
+# durable redirect should also live as a Cloudflare Bulk Redirect / Redirect
+# Rule at the edge; see runbook. This file covers the Pages/Workers fallback.)
+https://www.lumii.com.au/* https://lumii.com.au/:splat 301!
+
+# Bare root → default locale (also enforced by Astro i18n redirectToDefaultLocale).
+/  /en-au/  301

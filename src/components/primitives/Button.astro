@@ -1,0 +1,114 @@
+---
+/**
+ * Button — primary | ghost | danger, in sm | md | lg.
+ * Renders <a> when `href` is set, otherwise <button>. Mirrors the app's
+ * LumiiButton: gradient fill + warmth/accent glow on primary, hairline-bordered
+ * ghost, tinted danger. Every page CTA is built from this — never hand-rolled.
+ */
+interface Props {
+  variant?: "primary" | "ghost" | "danger";
+  size?: "sm" | "md" | "lg";
+  href?: string;
+  type?: "button" | "submit" | "reset";
+  /** Stable id used for analytics (data-cta) and testing. */
+  id?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  variant = "primary",
+  size = "md",
+  href,
+  type = "button",
+  id,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const Tag = href ? "a" : "button";
+const classes = ["btn", `btn--${variant}`, `btn--${size}`, className]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<Tag class={classes} href={href} type={href ? undefined : type} data-cta={id} {...rest}>
+  <span class="btn__label"><slot /></span>
+</Tag>
+
+<style>
+  .btn {
+    --_fg: var(--on-accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    font-family: var(--font-display);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tight);
+    text-decoration: none;
+    cursor: pointer;
+    border: var(--border-width) solid transparent;
+    border-radius: var(--radius-sm);
+    transition:
+      transform var(--duration-quick) var(--ease-spring),
+      box-shadow var(--duration-standard) var(--ease-standard),
+      background-color var(--duration-quick) var(--ease-standard),
+      border-color var(--duration-quick) var(--ease-standard);
+    white-space: nowrap;
+  }
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  /* Sizes (LumiiButton padding/radius/font) */
+  .btn--sm {
+    padding-block: var(--space-xs);
+    padding-inline: var(--space-md);
+    font-size: var(--text-caption);
+  }
+  .btn--md {
+    padding-block: 0.5rem;
+    padding-inline: var(--space-lg);
+    font-size: var(--text-subhead);
+  }
+  .btn--lg {
+    padding-block: var(--space-md);
+    padding-inline: var(--space-xl);
+    border-radius: var(--radius-md);
+    font-size: var(--text-headline);
+  }
+
+  /* Primary — signature gradient + accent glow */
+  .btn--primary {
+    color: var(--_fg);
+    background-image: var(--gradient-accent);
+    border-color: color-mix(in srgb, var(--accent) 18%, transparent);
+    box-shadow: var(--shadow-subtle);
+  }
+  .btn--primary:hover {
+    box-shadow: var(--shadow-accent);
+    transform: translateY(-1px);
+  }
+
+  /* Ghost — hairline border that strengthens on hover */
+  .btn--ghost {
+    color: var(--text);
+    background-color: transparent;
+    border-color: color-mix(in srgb, var(--border) 72%, transparent);
+  }
+  .btn--ghost:hover {
+    border-color: var(--border);
+    background-color: color-mix(in srgb, var(--surface-2) 40%, transparent);
+  }
+
+  /* Danger — tinted fill */
+  .btn--danger {
+    color: var(--danger);
+    background-color: color-mix(in srgb, var(--danger) 13%, transparent);
+    border-color: color-mix(in srgb, var(--danger) 40%, transparent);
+  }
+  .btn--danger:hover {
+    background-color: color-mix(in srgb, var(--danger) 20%, transparent);
+  }
+</style>

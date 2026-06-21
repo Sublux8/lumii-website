@@ -1,0 +1,70 @@
+---
+/**
+ * Access-request page. The form is rendered from primitives; SUBMISSION is wired
+ * in Phase 2 (POST to a Worker endpoint → Supabase `access_requests`, Sydney).
+ * For now the form posts to the same-origin endpoint placeholder and is marked
+ * accordingly so the conversion surface exists and is styleable.
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Input from "@components/primitives/Input.astro";
+import Button from "@components/primitives/Button.astro";
+import { useTranslations, localeFromPath, localeStaticPaths } from "@i18n/index.ts";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+const locale = localeFromPath(Astro.url.pathname);
+const t = useTranslations(locale);
+---
+
+<BaseLayout title={t("access.title")} description={t("access.subtitle")}>
+  <section class="container-page form-wrap">
+    <h1>{t("access.title")}</h1>
+    <p class="lead measure">{t("access.subtitle")}</p>
+
+    <!-- action wired in Phase 2; method/enctype set now so markup is final -->
+    <form
+      class="form"
+      method="post"
+      action="/api/access-request"
+      data-form="access-request"
+    >
+      <Input
+        id="ar-name"
+        name="name"
+        label={t("access.field.name")}
+        required
+        autocomplete="name"
+      />
+      <Input
+        id="ar-email"
+        name="email"
+        type="email"
+        label={t("access.field.email")}
+        required
+        autocomplete="email"
+      />
+      <Input id="ar-clinic" name="clinic" label={t("access.field.clinic")} required />
+      <Input id="ar-discipline" name="discipline" label={t("access.field.discipline")} />
+      <Input id="ar-message" name="message" label={t("access.field.message")} multiline />
+      <Button type="submit" size="lg" id="access-submit">{t("access.submit")}</Button>
+    </form>
+  </section>
+</BaseLayout>
+
+<style>
+  .form-wrap {
+    padding-block: var(--space-section);
+    max-inline-size: 36rem;
+  }
+  .lead {
+    margin-block: var(--space-md) var(--space-2xl);
+    font-size: var(--text-lead);
+    color: var(--text-secondary);
+  }
+  .form {
+    display: grid;
+    gap: var(--space-lg);
+  }
+</style>

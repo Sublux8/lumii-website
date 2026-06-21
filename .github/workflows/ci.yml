@@ -1,0 +1,78 @@
+name: CI
+
+# §19 pipeline: install → format → lint → typecheck → build → link-check →
+# Lighthouse budgets → axe a11y → deploy preview. Every gate blocks merge
+# (configure branch protection on `main` to require the "quality" job — see
+# README "Needs Garth"). `main` is protected; Sveltia writes only to `drafts`.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Quality gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Format check
+        run: npm run format:check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      - name: Broken-link / image check
+        run: npm run links
+
+      - name: Lighthouse CI (perf budgets + a11y/seo gates)
+        run: npm run lhci
+
+      - name: axe accessibility pass
+        run: npm run a11y
+
+  deploy-preview:
+    name: Deploy preview
+    runs-on: ubuntu-latest
+    needs: quality
+    if: github.event_name == 'pull_request'
+    # Requires CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID repo secrets (see
+    # README "Needs Garth"). Job is a no-op until they're set.
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Publish preview to Cloudflare
+        if: ${{ env.CLOUDFLARE_API_TOKEN != '' }}
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx wrangler pages deploy dist --project-name lumii-website --branch "${{ github.head_ref }}"

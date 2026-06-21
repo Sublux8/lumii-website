@@ -1,0 +1,31 @@
+# Build output
+dist/
+.astro/
+
+# Dependencies
+node_modules/
+
+# Secrets — NEVER commit. Local Worker secrets live here; production secrets
+# live in Cloudflare (wrangler secret put / dashboard). See .dev.vars.example.
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+.env
+.env.*
+!.env.example
+
+# Cloudflare / Wrangler
+.wrangler/
+.mf/
+
+# CI / tooling caches
+.lighthouseci/
+*.log
+npm-debug.log*
+
+# Editor / OS / local harness config (machine-specific absolute paths)
+.claude/
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea/

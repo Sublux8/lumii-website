@@ -1,0 +1,14 @@
+# Dependabot is scoped to GitHub Actions ONLY — npm dependencies are handled by
+# Renovate (renovate.json) to avoid duplicate PRs. Enable Renovate via the GitHub
+# App; this file needs no extra setup.
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      timezone: "Australia/Sydney"
+    labels:
+      - "dependencies"
+      - "github-actions"

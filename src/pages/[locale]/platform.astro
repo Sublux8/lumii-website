@@ -1,0 +1,79 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Hero from "@components/sections/Hero.astro";
+import FeatureBlock from "@components/sections/FeatureBlock.astro";
+import CTA from "@components/sections/CTA.astro";
+import {
+  useTranslations,
+  localeFromPath,
+  localizePath,
+  localeStaticPaths,
+} from "@i18n/index.ts";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+const locale = localeFromPath(Astro.url.pathname);
+const t = useTranslations(locale);
+const lp = (p: string) => localizePath(p, locale);
+
+const modules = [
+  {
+    title: "Booking & front desk",
+    body: "Online booking, SMS reminders, waitlist, and an iPad self-check-in kiosk.",
+  },
+  {
+    title: "Billing & claiming",
+    body: "Tyro EFTPOS and HealthPoint, Medicare, DVA, NDIS — claimed from one screen.",
+  },
+  {
+    title: "Care plans",
+    body: "Funded plans with automatic session tracking across Medicare, DVA and WorkCover.",
+  },
+  {
+    title: "Telehealth",
+    body: "Branded video consults with consent capture and post-call summaries.",
+  },
+  {
+    title: "Accounting",
+    body: "Two-way Xero sync — invoices, payments and quotes kept in lockstep.",
+  },
+  {
+    title: "Analytics",
+    body: "Practitioner-level revenue, outcomes and business intelligence.",
+  },
+];
+---
+
+<BaseLayout title={t("nav.platform")} description={t("site.description")}>
+  <Hero
+    eyebrow="Platform"
+    title="One workspace for the whole practice."
+    subtitle={t("site.description")}
+    primaryLabel={t("hero.ctaPrimary")}
+    primaryHref={lp("/request-access")}
+  />
+  <section class="container-page section">
+    <div class="grid-3">
+      {modules.map((m) => <FeatureBlock title={m.title} body={m.body} />)}
+    </div>
+  </section>
+  <CTA
+    title={t("cta.title")}
+    body={t("cta.body")}
+    buttonLabel={t("cta.button")}
+    buttonHref={lp("/request-access")}
+  />
+</BaseLayout>
+
+<style>
+  .section {
+    padding-block: var(--space-section);
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: var(--space-xl);
+  }
+</style>

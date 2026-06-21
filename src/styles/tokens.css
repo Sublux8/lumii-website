@@ -1,0 +1,270 @@
+/*
+ * ════════════════════════════════════════════════════════════════════════════
+ *  LUMII DESIGN TOKENS — the single source of truth for the website.
+ *
+ *  Every value here is traced to the macOS/SwiftUI app's design layer in
+ *  DESIGN-TOKENS.md. Light palette = the app's default "Lumii Platinum" theme
+ *  (ThemeManager.swift L34–40). Dark palette = "Platinum Night", derived for the
+ *  web from the app's dark-theme construction conventions (deep desaturated
+ *  ground, raised surfaces, brightened teal accent) — documented as DERIVED.
+ *
+ *  Scales (type / space / radius / shadow / motion) mirror the app's constants
+ *  (LumiiDesignSystem.swift). Web-only EDITORIAL extensions (fluid heading
+ *  sizes, large section spacing) continue the app's ratios and are marked.
+ *
+ *  Do NOT hardcode any of these values at a call site. Add new tokens here.
+ * ════════════════════════════════════════════════════════════════════════════
+ */
+
+:root {
+  color-scheme: light;
+
+  /* ── Brand constants — theme-independent (LumiiDesignSystem.swift L212–220) ──
+     Lumii's "warm clinical glow" signature. Stable across light/dark. */
+  --brand-teal: #00a895; /* the Platinum accent — the core mark */
+  --brand-warmth: #f4b6a6; /* platinumWarmth  */
+  --brand-gold: #f2c766; /* platinumGold    */
+  --brand-lilac: #afa7ff; /* platinumLilac   */
+  --brand-ink: #0b0f1a; /* inkOnLight      */
+
+  /* ── Semantic palette — LIGHT (app "Lumii Platinum", ThemeManager.swift L34) ── */
+  --bg: #effbf7;
+  --surface: #fffdf8;
+  --surface-2: #c7f0e5;
+  --border: #8fd4c3;
+  --accent: #00a895;
+  --accent-blue: #315cff;
+  --accent-amber: #e77c12;
+  --danger: #d72552;
+  --success: #009e63;
+  --text: #10202c;
+  --text-secondary: #264f67;
+  --text-muted: #587187;
+
+  /* Foreground for filled accent surfaces (buttons, pills). */
+  --on-accent: #fffdf8;
+  --on-danger: #fffdf8;
+
+  /* ── Tag tints (ThemeManager.swift L198–203) — semantic colour + low alpha.
+     color-mix keeps them derived from the palette, so they re-tint per theme. */
+  --tag-purple: #8b5cf6; /* the one non-palette tag colour in the app */
+  --tag-green-bg: color-mix(in srgb, var(--success) 30%, transparent);
+  --tag-green-fg: var(--success);
+  --tag-blue-bg: color-mix(in srgb, var(--accent-blue) 30%, transparent);
+  --tag-blue-fg: var(--accent-blue);
+  --tag-amber-bg: color-mix(in srgb, var(--accent-amber) 32%, transparent);
+  --tag-amber-fg: var(--accent-amber);
+  --tag-red-bg: color-mix(in srgb, var(--danger) 30%, transparent);
+  --tag-red-fg: var(--danger);
+  --tag-purple-bg: color-mix(in srgb, var(--tag-purple) 30%, transparent);
+  --tag-purple-fg: var(--tag-purple);
+  --tag-gray-bg: color-mix(in srgb, var(--text-muted) 26%, transparent);
+  --tag-gray-fg: var(--text-muted);
+
+  /* ── Signature gradients (mirrors LumiiButton primary + glass panels) ── */
+  --gradient-accent: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--brand-warmth) 26%, var(--accent)) 0%,
+    var(--accent) 48%,
+    color-mix(in srgb, var(--accent-blue) 20%, var(--accent)) 100%
+  );
+  --gradient-aurora: linear-gradient(
+    140deg,
+    color-mix(in srgb, var(--brand-warmth) 24%, transparent) 0%,
+    color-mix(in srgb, var(--brand-gold) 18%, transparent) 38%,
+    color-mix(in srgb, var(--brand-lilac) 22%, transparent) 100%
+  );
+  --gradient-surface-sheen: linear-gradient(
+    160deg,
+    color-mix(in srgb, white 9%, transparent),
+    transparent 58%
+  );
+
+  /* ── Type families — system fonts, .rounded for display (the app signature) ── */
+  --font-display:
+    "SF Pro Rounded", ui-rounded, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-sans:
+    system-ui, -apple-system, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif;
+  --font-mono:
+    ui-monospace, "SF Mono", "SFMono-Regular", "Cascadia Code", Menlo, Consolas,
+    "Liberation Mono", monospace;
+
+  /* ── Type scale — app-faithful steps (LumiiDesignSystem.swift L224–235, pt→rem) ── */
+  --text-micro: 0.625rem; /* 10pt  */
+  --text-label: 0.6875rem; /* 11pt  */
+  --text-caption: 0.75rem; /* 12pt  */
+  --text-body-compact: 0.8125rem; /* 13pt  — app body / data-dense surfaces */
+  --text-subhead: 0.875rem; /* 14pt  */
+  --text-card-headline: 0.9375rem; /* 15pt  */
+  --text-headline: 1.0625rem; /* 17pt  */
+  --text-title: 1.5rem; /* 24pt  */
+  --text-display: 1.75rem; /* 28pt  */
+
+  /* Web EDITORIAL extension — fluid, continues the app ratio for marketing. */
+  --text-body: 1.0625rem; /* default marketing body (≈ app headline) */
+  --text-lead: clamp(1.125rem, 1rem + 0.6vw, 1.375rem);
+  --text-h4: clamp(1.125rem, 1.02rem + 0.5vw, 1.375rem);
+  --text-h3: clamp(1.3rem, 1.12rem + 0.85vw, 1.7rem);
+  --text-h2: clamp(1.75rem, 1.4rem + 1.7vw, 2.5rem);
+  --text-h1: clamp(2.25rem, 1.7rem + 2.9vw, 3.5rem);
+  --text-display-1: clamp(2.75rem, 1.9rem + 4.4vw, 4.5rem);
+
+  /* ── Weights / leading / tracking (app uses 400/500/600/700, .rounded display) ── */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  --leading-none: 1;
+  --leading-tight: 1.1; /* display */
+  --leading-snug: 1.25; /* headings */
+  --leading-normal: 1.5; /* body */
+  --leading-relaxed: 1.65; /* long-form prose */
+
+  --tracking-tighter: -0.022em; /* display */
+  --tracking-tight: -0.012em; /* headings */
+  --tracking-normal: 0;
+  --tracking-wide: 0.02em;
+  --tracking-wider: 0.08em; /* eyebrows / uppercase labels */
+
+  /* ── Spacing — app scale (LumiiDesignSystem.swift L374–381) + web extension ── */
+  --space-xs: 0.25rem; /* 4  */
+  --space-sm: 0.5rem; /* 8  */
+  --space-md: 0.75rem; /* 12 */
+  --space-lg: 1rem; /* 16 */
+  --space-xl: 1.5rem; /* 24 */
+  --space-2xl: 2rem; /* 32 */
+  --space-3xl: 3rem; /* 48  — web layout extension */
+  --space-4xl: 4rem; /* 64  */
+  --space-5xl: 6rem; /* 96  */
+  --space-6xl: 8rem; /* 128 */
+  --space-section: clamp(4rem, 2.5rem + 6vw, 8rem); /* vertical rhythm between sections */
+  --space-gutter: clamp(1.25rem, 0.8rem + 2vw, 2.5rem); /* page side padding */
+  --measure: 68ch; /* max readable line length */
+  --content-max: 76rem; /* page content max width */
+  --content-wide: 90rem; /* wide layouts (logo walls, grids) */
+
+  /* ── Radii (LumiiDesignSystem.swift L384–391) ── */
+  --radius-xs: 0.375rem; /* 6  */
+  --radius-sm: 0.625rem; /* 10 */
+  --radius-md: 0.875rem; /* 14 */
+  --radius-lg: 1.125rem; /* 18 */
+  --radius-xl: 1.5rem; /* 24 */
+  --radius-pill: 999px;
+
+  /* ── Borders ── */
+  --border-hairline: 0.5px;
+  --border-width: 1px;
+  --border-thick: 1.5px;
+
+  /* ── Shadows (LumiiDesignSystem.swift L394–399, opacity + blur + y-offset) ── */
+  --shadow-hairline: 0 1px 1px rgba(0, 0, 0, 0.022);
+  --shadow-subtle: 0 3px 7px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 7px 18px rgba(0, 0, 0, 0.062);
+  --shadow-elevated: 0 12px 28px rgba(0, 0, 0, 0.095);
+  --shadow-modal: 0 16px 38px rgba(0, 0, 0, 0.16);
+  /* Signature accent glow for hero/CTA surfaces (mirrors button dual-shadow). */
+  --shadow-accent: 0 14px 38px color-mix(in srgb, var(--accent) 22%, transparent);
+
+  /* ── Motion (LumiiDesignSystem.swift L410–415) ── */
+  --duration-quick: 150ms;
+  --duration-standard: 220ms;
+  --duration-smooth: 300ms;
+  --duration-slow: 500ms;
+  --ease-standard: cubic-bezier(0.22, 0.61, 0.36, 1); /* easeOut */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.26, 0.64, 1); /* ≈ spring damping 0.85 */
+
+  /* ── Z-index / elevation scale ── */
+  --z-base: 0;
+  --z-raised: 10;
+  --z-sticky: 100;
+  --z-nav: 200;
+  --z-dropdown: 300;
+  --z-overlay: 1000;
+  --z-modal: 1100;
+  --z-toast: 1200;
+  --z-max: 2147483647;
+
+  /* ── Focus ring — single accessible token, used by every interactive element ── */
+  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--accent) 45%, transparent);
+  --focus-ring-offset: var(--bg);
+}
+
+/*
+ * Dark palette — "Platinum Night". DERIVED for web (not a 1:1 app theme):
+ * keeps the teal identity, follows the app dark-theme pattern of a deep
+ * desaturated ground + raised surfaces + brightened accents. Applied via an
+ * explicit [data-theme="dark"] (user toggle) OR the OS preference when the user
+ * hasn't chosen — see global.css for the resolution order.
+ */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #07181a;
+  --surface: #0e2429;
+  --surface-2: #16343a;
+  --border: #2e5a60;
+  --accent: #3fd9c4;
+  --accent-blue: #6f91ff;
+  --accent-amber: #f2b943;
+  --danger: #ff5b82;
+  --success: #3fd98b;
+  --text: #f2fbf9;
+  --text-secondary: #c2dad6;
+  --text-muted: #87a6a2;
+
+  --on-accent: #07181a;
+  --on-danger: #fffdf8;
+
+  --shadow-hairline: 0 1px 1px rgba(0, 0, 0, 0.4);
+  --shadow-subtle: 0 3px 7px rgba(0, 0, 0, 0.45);
+  --shadow-card: 0 7px 18px rgba(0, 0, 0, 0.5);
+  --shadow-elevated: 0 12px 28px rgba(0, 0, 0, 0.55);
+  --shadow-modal: 0 16px 38px rgba(0, 0, 0, 0.62);
+
+  --gradient-surface-sheen: linear-gradient(
+    160deg,
+    color-mix(in srgb, white 5%, transparent),
+    transparent 58%
+  );
+}
+
+/* OS-preference dark when the user has NOT made an explicit choice. The
+   theme-init script sets data-theme; absent that, honour the system. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    color-scheme: dark;
+
+    --bg: #07181a;
+    --surface: #0e2429;
+    --surface-2: #16343a;
+    --border: #2e5a60;
+    --accent: #3fd9c4;
+    --accent-blue: #6f91ff;
+    --accent-amber: #f2b943;
+    --danger: #ff5b82;
+    --success: #3fd98b;
+    --text: #f2fbf9;
+    --text-secondary: #c2dad6;
+    --text-muted: #87a6a2;
+
+    --on-accent: #07181a;
+    --on-danger: #fffdf8;
+
+    --shadow-hairline: 0 1px 1px rgba(0, 0, 0, 0.4);
+    --shadow-subtle: 0 3px 7px rgba(0, 0, 0, 0.45);
+    --shadow-card: 0 7px 18px rgba(0, 0, 0, 0.5);
+    --shadow-elevated: 0 12px 28px rgba(0, 0, 0, 0.55);
+    --shadow-modal: 0 16px 38px rgba(0, 0, 0, 0.62);
+
+    --gradient-surface-sheen: linear-gradient(
+      160deg,
+      color-mix(in srgb, white 5%, transparent),
+      transparent 58%
+    );
+  }
+}

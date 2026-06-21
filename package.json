@@ -1,0 +1,49 @@
+{
+  "name": "lumii-website",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Lumii marketing site, knowledge hub, and access-request platform. Astro 6 + Cloudflare Workers.",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "overrides": {
+    "vite": "^7"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "typecheck": "astro check",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lhci": "lhci autorun",
+    "a11y": "node ./scripts/axe-check.mjs",
+    "links": "node ./scripts/link-check.mjs"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^13.7.0",
+    "@astrojs/mdx": "^6.0.3",
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^6.4.8"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@axe-core/cli": "^4.10.0",
+    "@eslint/js": "^9.39.4",
+    "@lhci/cli": "^0.15.0",
+    "@tailwindcss/postcss": "^4.3.1",
+    "eslint": "^9.18.0",
+    "eslint-plugin-astro": "^1.3.0",
+    "globals": "^17.6.0",
+    "prettier": "^3.4.0",
+    "prettier-plugin-astro": "^0.14.0",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.61.1",
+    "wrangler": "^4.0.0"
+  }
+}

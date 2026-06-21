@@ -1,0 +1,115 @@
+---
+/**
+ * Home — served at /en-au/ (default locale). Assembled ENTIRELY from the section
+ * components; no bespoke markup. The feature grid is data-driven from the
+ * `sectors` collection (published only), proving the §5 content model.
+ */
+import { getCollection } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Hero from "@components/sections/Hero.astro";
+import FeatureBlock from "@components/sections/FeatureBlock.astro";
+import LogoWall from "@components/sections/LogoWall.astro";
+import CTA from "@components/sections/CTA.astro";
+import FAQ from "@components/sections/FAQ.astro";
+import {
+  useTranslations,
+  localeFromPath,
+  localizePath,
+  localeStaticPaths,
+} from "@i18n/index.ts";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+const locale = localeFromPath(Astro.url.pathname);
+const t = useTranslations(locale);
+const lp = (p: string) => localizePath(p, locale);
+
+const sectors = (await getCollection("sectors"))
+  .filter((s) => s.data.status === "published")
+  .sort((a, b) => a.data.order - b.data.order);
+
+const faqs = [
+  {
+    q: "Where is patient data stored?",
+    a: "In Australia. Lumii runs in Australian-region infrastructure, and lead data captured on this site is stored in Sydney.",
+  },
+  {
+    q: "Is Lumii available yet?",
+    a: "Lumii is pre-launch. Join the early-access list and we'll be in touch as we onboard foundation clinics.",
+  },
+  {
+    q: "Which disciplines does Lumii support?",
+    a: "Lumii is multi-disciplinary — allied health and general practice today, with more sectors on the way.",
+  },
+];
+---
+
+<BaseLayout>
+  <Hero
+    eyebrow={t("hero.eyebrow")}
+    title={t("hero.title")}
+    subtitle={t("hero.subtitle")}
+    primaryLabel={t("hero.ctaPrimary")}
+    primaryHref={lp("/request-access")}
+    secondaryLabel={t("hero.ctaSecondary")}
+    secondaryHref={lp("/platform")}
+  />
+
+  <section class="container-page section">
+    <header class="section__head">
+      <h2>{t("sectors.title")}</h2>
+      <p class="section__lead measure">{t("sectors.subtitle")}</p>
+    </header>
+    <div class="grid-3">
+      {
+        sectors.map((s) => (
+          <FeatureBlock title={s.data.audience} body={s.data.summary} icon={s.id} />
+        ))
+      }
+    </div>
+  </section>
+
+  <LogoWall
+    caption="Built on the integrations Australian clinics rely on"
+    logos={[
+      { name: "Tyro" },
+      { name: "Medicare" },
+      { name: "NDIS" },
+      { name: "DVA" },
+      { name: "Xero" },
+    ]}
+  />
+
+  <FAQ title="Frequently asked" items={faqs} />
+
+  <CTA
+    title={t("cta.title")}
+    body={t("cta.body")}
+    buttonLabel={t("cta.button")}
+    buttonHref={lp("/request-access")}
+  />
+</BaseLayout>
+
+<style>
+  .section {
+    padding-block: var(--space-section);
+  }
+  .section__head {
+    margin-block-end: var(--space-2xl);
+  }
+  .section__head h2 {
+    font-size: var(--text-h2);
+  }
+  .section__lead {
+    margin-block-start: var(--space-md);
+    font-size: var(--text-lead);
+    color: var(--text-secondary);
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: var(--space-xl);
+  }
+</style>

@@ -1,0 +1,54 @@
+---
+/**
+ * Feature block — one feature: optional icon slot, title, body. Designed to tile
+ * inside a CSS grid the page owns (it doesn't impose its own grid), so the same
+ * primitive serves a 2-up, 3-up, or adaptive layout.
+ */
+import Card from "@components/primitives/Card.astro";
+
+interface Props {
+  title: string;
+  body: string;
+  icon?: string;
+}
+const { title, body, icon } = Astro.props;
+---
+
+<Card elevation="subtle" as="article" class="feature">
+  {
+    icon && (
+      <span class="feature__icon" aria-hidden="true" data-icon={icon}>
+        ◆
+      </span>
+    )
+  }
+  <h3 class="feature__title">{title}</h3>
+  <p class="feature__body">{body}</p>
+</Card>
+
+<style>
+  .feature {
+    block-size: 100%;
+  }
+  .feature__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
+    border-radius: var(--radius-md);
+    background-image: var(--gradient-accent);
+    color: var(--on-accent);
+    font-size: var(--text-headline);
+    margin-block-end: var(--space-md);
+  }
+  .feature__title {
+    font-size: var(--text-h4);
+    margin-block-end: var(--space-sm);
+  }
+  .feature__body {
+    font-size: var(--text-body);
+    color: var(--text-secondary);
+    line-height: var(--leading-normal);
+  }
+</style>

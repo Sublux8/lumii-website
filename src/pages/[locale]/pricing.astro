@@ -1,0 +1,73 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PricingTable from "@components/sections/PricingTable.astro";
+import {
+  useTranslations,
+  localeFromPath,
+  localizePath,
+  localeStaticPaths,
+} from "@i18n/index.ts";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+const locale = localeFromPath(Astro.url.pathname);
+const t = useTranslations(locale);
+const lp = (p: string) => localizePath(p, locale);
+const href = lp("/request-access");
+---
+
+<BaseLayout title={t("nav.pricing")}>
+  <section class="container-page head">
+    <h1>{t("nav.pricing")}</h1>
+    <p class="lead measure">
+      Pricing is being finalised ahead of launch. Join the early-access list and we'll
+      share foundation-clinic pricing directly.
+    </p>
+  </section>
+  <PricingTable
+    tiers={[
+      {
+        name: "Starter",
+        price: "$—",
+        cadence: "/mo",
+        description: "For solo and small clinics.",
+        features: ["Online booking", "SMS reminders", "Telehealth"],
+        ctaLabel: t("cta.button"),
+        ctaHref: href,
+      },
+      {
+        name: "Practice",
+        price: "$—",
+        cadence: "/mo",
+        description: "For growing multi-practitioner clinics.",
+        features: ["Everything in Starter", "Tyro claiming", "Care plans", "Xero sync"],
+        ctaLabel: t("cta.button"),
+        ctaHref: href,
+        featured: true,
+        badge: "Popular",
+      },
+      {
+        name: "Network",
+        price: "$—",
+        cadence: "/mo",
+        description: "For multi-location groups.",
+        features: ["Everything in Practice", "Multi-location", "Advanced analytics"],
+        ctaLabel: t("cta.button"),
+        ctaHref: href,
+      },
+    ]}
+  />
+</BaseLayout>
+
+<style>
+  .head {
+    padding-block: var(--space-section) 0;
+  }
+  .lead {
+    margin-block-start: var(--space-md);
+    font-size: var(--text-lead);
+    color: var(--text-secondary);
+  }
+</style>

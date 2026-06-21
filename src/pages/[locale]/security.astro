@@ -1,0 +1,36 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { useTranslations, localeFromPath, localeStaticPaths } from "@i18n/index.ts";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+const t = useTranslations(localeFromPath(Astro.url.pathname));
+---
+
+<BaseLayout title={t("footer.security")} noindex={true}>
+  <section class="container-page prose measure">
+    <h1>{t("footer.security")}</h1>
+    <p>
+      Lumii is built for Australian healthcare data, with Australian data residency and a
+      defence-in-depth security posture.
+    </p>
+    <p>
+      To report a vulnerability, see our
+      <a href="/.well-known/security.txt">security.txt</a> or email
+      <a href="mailto:security@lumii.com.au">security@lumii.com.au</a>.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .prose {
+    padding-block: var(--space-section);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+  .prose h1 {
+    color: var(--text);
+    margin-block-end: var(--space-lg);
+  }
+</style>

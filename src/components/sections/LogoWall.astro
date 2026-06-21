@@ -1,0 +1,66 @@
+---
+/**
+ * Logo wall — a row of partner/integration marks with an optional caption.
+ * Pass `logos` as { name, src? }. Without `src` it renders a tasteful text
+ * placeholder so the layout is provable before real assets land (pre-launch).
+ */
+interface Props {
+  caption?: string;
+  logos: { name: string; src?: string }[];
+}
+const { caption, logos } = Astro.props;
+---
+
+<section class="logos container-page">
+  {caption && <p class="logos__caption">{caption}</p>}
+  <ul class="logos__row">
+    {
+      logos.map((logo) => (
+        <li class="logos__item">
+          {logo.src ? (
+            <img class="logos__img" src={logo.src} alt={logo.name} loading="lazy" />
+          ) : (
+            <span class="logos__placeholder">{logo.name}</span>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .logos {
+    padding-block: var(--space-2xl);
+  }
+  .logos__caption {
+    text-align: center;
+    font-size: var(--text-label);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-block-end: var(--space-xl);
+  }
+  .logos__row {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2xl) var(--space-4xl);
+  }
+  .logos__img {
+    block-size: 1.75rem;
+    opacity: 0.7;
+    filter: grayscale(1);
+  }
+  .logos__placeholder {
+    font-family: var(--font-display);
+    font-size: var(--text-headline);
+    font-weight: var(--weight-semibold);
+    color: var(--text-muted);
+    opacity: 0.8;
+  }
+</style>

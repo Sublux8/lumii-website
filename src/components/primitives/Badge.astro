@@ -1,0 +1,54 @@
+---
+/**
+ * Badge / tag — the web port of LumiiTag. Pill-shaped, semantic colour tints
+ * (green | blue | amber | red | purple | gray) drawn from the tag tokens.
+ */
+interface Props {
+  tone?: "green" | "blue" | "amber" | "red" | "purple" | "gray";
+  class?: string;
+}
+const { tone = "gray", class: className } = Astro.props;
+---
+
+<span class={["badge", `badge--${tone}`, className].filter(Boolean).join(" ")}>
+  <slot />
+</span>
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding-block: 0.1875rem;
+    padding-inline: var(--space-sm);
+    border-radius: var(--radius-pill);
+    font-size: var(--text-label);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wide);
+    line-height: var(--leading-none);
+    white-space: nowrap;
+  }
+  .badge--green {
+    color: var(--tag-green-fg);
+    background-color: var(--tag-green-bg);
+  }
+  .badge--blue {
+    color: var(--tag-blue-fg);
+    background-color: var(--tag-blue-bg);
+  }
+  .badge--amber {
+    color: var(--tag-amber-fg);
+    background-color: var(--tag-amber-bg);
+  }
+  .badge--red {
+    color: var(--tag-red-fg);
+    background-color: var(--tag-red-bg);
+  }
+  .badge--purple {
+    color: var(--tag-purple-fg);
+    background-color: var(--tag-purple-bg);
+  }
+  .badge--gray {
+    color: var(--tag-gray-fg);
+    background-color: var(--tag-gray-bg);
+  }
+</style>

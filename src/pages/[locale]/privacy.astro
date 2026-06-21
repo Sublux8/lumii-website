@@ -1,0 +1,32 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { useTranslations, localeFromPath, localeStaticPaths } from "@i18n/index.ts";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+const t = useTranslations(localeFromPath(Astro.url.pathname));
+---
+
+<BaseLayout title={t("footer.privacy")} noindex={true}>
+  <section class="container-page prose measure">
+    <h1>{t("footer.privacy")}</h1>
+    <p>
+      Our full privacy policy is being finalised with legal review ahead of launch. Lead
+      data submitted on this site is stored in Australia (Sydney).
+    </p>
+    <p>Questions: <a href="mailto:privacy@lumii.com.au">privacy@lumii.com.au</a>.</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .prose {
+    padding-block: var(--space-section);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+  .prose h1 {
+    color: var(--text);
+    margin-block-end: var(--space-lg);
+  }
+</style>

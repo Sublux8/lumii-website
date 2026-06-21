@@ -1,0 +1,93 @@
+---
+/**
+ * Knowledge hub index — lists published articles from the `knowledge` collection,
+ * newest first. Proves the taxonomy-driven content surface (§5).
+ */
+import { getCollection } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Card from "@components/primitives/Card.astro";
+import Badge from "@components/primitives/Badge.astro";
+import {
+  useTranslations,
+  localeFromPath,
+  formatDate,
+  getLocale,
+  localeStaticPaths,
+} from "@i18n/index.ts";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+const localePath = localeFromPath(Astro.url.pathname);
+const locale = getLocale(localePath);
+const t = useTranslations(localePath);
+
+const articles = (await getCollection("knowledge"))
+  .filter((a) => a.data.status === "published")
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+---
+
+<BaseLayout title={t("knowledge.title")} description={t("knowledge.subtitle")}>
+  <section class="container-page section">
+    <header class="section__head">
+      <h1>{t("knowledge.title")}</h1>
+      <p class="section__lead measure">{t("knowledge.subtitle")}</p>
+    </header>
+
+    {articles.length === 0 && <p>{t("knowledge.empty")}</p>}
+
+    <div class="grid">
+      {
+        articles.map((a) => (
+          <Card elevation="card" as="article">
+            <div class="topic">
+              <Badge tone="blue">{a.data.topic.replace(/-/g, " ")}</Badge>
+            </div>
+            <h2 class="card-title">{a.data.title}</h2>
+            <p class="card-summary">{a.data.summary}</p>
+            <p class="meta">
+              {formatDate(a.data.publishDate, locale, { dateStyle: "medium" })}
+              {a.data.readingMinutes && ` · ${a.data.readingMinutes} min read`}
+            </p>
+          </Card>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .section {
+    padding-block: var(--space-section);
+  }
+  .section__head {
+    margin-block-end: var(--space-2xl);
+  }
+  .section__lead {
+    margin-block-start: var(--space-md);
+    font-size: var(--text-lead);
+    color: var(--text-secondary);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: var(--space-xl);
+  }
+  .topic {
+    margin-block-end: var(--space-md);
+  }
+  .card-title {
+    font-size: var(--text-h4);
+    margin-block-end: var(--space-sm);
+  }
+  .card-summary {
+    color: var(--text-secondary);
+    line-height: var(--leading-normal);
+  }
+  .meta {
+    margin-block-start: var(--space-md);
+    font-size: var(--text-caption);
+    color: var(--text-muted);
+  }
+</style>

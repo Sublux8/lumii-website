@@ -1,0 +1,29 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { useTranslations, localeFromPath, localeStaticPaths } from "@i18n/index.ts";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+const t = useTranslations(localeFromPath(Astro.url.pathname));
+---
+
+<BaseLayout title={t("footer.terms")} noindex={true}>
+  <section class="container-page prose measure">
+    <h1>{t("footer.terms")}</h1>
+    <p>Our terms of service are being finalised ahead of launch.</p>
+    <p>Questions: <a href="mailto:support@lumii.com.au">support@lumii.com.au</a>.</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .prose {
+    padding-block: var(--space-section);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+  .prose h1 {
+    color: var(--text);
+    margin-block-end: var(--space-lg);
+  }
+</style>

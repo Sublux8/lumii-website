@@ -1,0 +1,124 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Sveltia CMS — CONFIG ONLY this phase. Editing is enabled once GitHub OAuth is
+# wired (see README "Needs Garth"). Guardrail §21: Sveltia must NEVER write to
+# `main`. `branch: drafts` makes every change land on (or PR into) the `drafts`
+# branch; `main` is protected by branch rules. Create the `drafts` branch before
+# enabling the CMS.
+# ─────────────────────────────────────────────────────────────────────────────
+backend:
+  name: github
+  repo: Sublux8/lumii-website
+  branch: drafts
+  # auth_endpoint / base_url point at a Sveltia OAuth Worker (sveltia-cms-auth)
+  # — set up per README before the CMS can authenticate.
+
+# Per-entry draft branches + PRs into `drafts` (never direct commits to main).
+publish_mode: editorial_workflow
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+# AU English in the editor UI.
+locale: en
+
+collections:
+  - name: sectors
+    label: Sectors
+    label_singular: Sector
+    description: "Audience landing pages — drive nav + /sectors automatically."
+    folder: src/content/sectors
+    extension: mdx
+    format: frontmatter-with-body
+    create: true
+    identifier_field: audience
+    fields:
+      - { name: audience, label: Audience, widget: string }
+      - { name: navLabel, label: Nav label, widget: string }
+      - {
+          name: status,
+          label: Status,
+          widget: select,
+          options: ["published", "draft", "reserved"],
+          default: "draft",
+        }
+      - { name: order, label: Order, widget: number, value_type: int, default: 100 }
+      - { name: summary, label: Summary, widget: text }
+      - name: hero
+        label: Hero
+        widget: object
+        fields:
+          - { name: eyebrow, label: Eyebrow, widget: string, required: false }
+          - { name: headline, label: Headline, widget: string }
+          - { name: subhead, label: Subhead, widget: text }
+      - name: valueProps
+        label: Value props
+        widget: list
+        required: false
+        fields:
+          - { name: title, label: Title, widget: string }
+          - { name: body, label: Body, widget: text }
+          - { name: icon, label: Icon token, widget: string, required: false }
+      - name: modules
+        label: Modules
+        widget: list
+        required: false
+        fields:
+          - { name: name, label: Name, widget: string }
+          - { name: description, label: Description, widget: text }
+      - { name: complianceNotes, label: Compliance notes, widget: list, required: false }
+      - name: cta
+        label: Call to action
+        widget: object
+        fields:
+          - { name: label, label: Label, widget: string, default: "Request access" }
+          - { name: href, label: Href, widget: string, required: false }
+      - { name: body, label: Body, widget: markdown, required: false }
+
+  - name: knowledge
+    label: Knowledge hub
+    label_singular: Article
+    folder: src/content/knowledge
+    extension: mdx
+    format: frontmatter-with-body
+    create: true
+    identifier_field: title
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: summary, label: Summary, widget: text }
+      - {
+          name: status,
+          label: Status,
+          widget: select,
+          options: ["published", "draft", "reserved"],
+          default: "draft",
+        }
+      - { name: publishDate, label: Publish date, widget: datetime }
+      - { name: updatedDate, label: Updated date, widget: datetime, required: false }
+      - name: audience
+        label: Audience
+        widget: select
+        multiple: true
+        options: ["clinician", "practice-owner", "patient", "researcher", "public"]
+        default: ["clinician"]
+      - name: topic
+        label: Topic
+        widget: select
+        options:
+          [
+            "getting-started",
+            "billing-claiming",
+            "compliance",
+            "telehealth",
+            "care-plans",
+            "growth",
+            "product-updates",
+          ]
+      - { name: author, label: Author, widget: string, default: "The Lumii team" }
+      - {
+          name: readingMinutes,
+          label: Reading minutes,
+          widget: number,
+          value_type: int,
+          required: false,
+        }
+      - { name: body, label: Body, widget: markdown }

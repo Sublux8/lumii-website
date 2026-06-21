@@ -1,0 +1,6 @@
+# Lumii vulnerability disclosure. https://securitytxt.org
+Contact: mailto:security@lumii.com.au
+Preferred-Languages: en
+Canonical: https://lumii.com.au/.well-known/security.txt
+# Expires must be refreshed periodically (RFC 9116 requires < 1 year out).
+Expires: 2027-06-21T00:00:00.000Z

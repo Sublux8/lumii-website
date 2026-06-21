@@ -1,0 +1,97 @@
+---
+/**
+ * Hero. Content is passed in (strings externalised at the page level). The aurora
+ * wash behind it uses the brand warmth/gold/lilac gradient — Lumii's signature,
+ * restrained to a soft backdrop rather than a loud banner.
+ */
+import Button from "@components/primitives/Button.astro";
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  subtitle: string;
+  primaryLabel: string;
+  primaryHref: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+}
+const {
+  eyebrow,
+  title,
+  subtitle,
+  primaryLabel,
+  primaryHref,
+  secondaryLabel,
+  secondaryHref,
+} = Astro.props;
+---
+
+<section class="hero">
+  <div class="hero__aurora" aria-hidden="true"></div>
+  <div class="container-page hero__inner">
+    {eyebrow && <p class="hero__eyebrow">{eyebrow}</p>}
+    <h1 class="hero__title">{title}</h1>
+    <p class="hero__subtitle measure">{subtitle}</p>
+    <div class="hero__actions">
+      <Button href={primaryHref} size="lg" id="hero-primary">{primaryLabel}</Button>
+      {
+        secondaryLabel && secondaryHref && (
+          <Button href={secondaryHref} size="lg" variant="ghost" id="hero-secondary">
+            {secondaryLabel}
+          </Button>
+        )
+      }
+    </div>
+    <slot />
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(3.5rem, 2rem + 8vw, 7rem);
+  }
+  .hero__aurora {
+    position: absolute;
+    inset-block-start: -30%;
+    inset-inline-end: -10%;
+    inline-size: 60vw;
+    block-size: 60vw;
+    max-inline-size: 720px;
+    max-block-size: 720px;
+    background-image: var(--gradient-aurora);
+    filter: blur(60px);
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: var(--z-base);
+  }
+  .hero__inner {
+    position: relative;
+    z-index: var(--z-raised);
+  }
+  .hero__eyebrow {
+    font-size: var(--text-label);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-block-end: var(--space-md);
+  }
+  .hero__title {
+    font-size: var(--text-display-1);
+    max-inline-size: 18ch;
+  }
+  .hero__subtitle {
+    margin-block-start: var(--space-lg);
+    font-size: var(--text-lead);
+    color: var(--text-secondary);
+    line-height: var(--leading-normal);
+  }
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-block-start: var(--space-xl);
+  }
+</style>
