@@ -22,6 +22,7 @@ function makeNonce(): string {
 const CONNECT_SRC = [
   "'self'",
   "https://scqxaziehzyekohhiuip.supabase.co",
+  "https://challenges.cloudflare.com",
   "https://*.ingest.sentry.io",
   "https://*.ingest.us.sentry.io",
 ].join(" ");
@@ -38,11 +39,12 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   const csp = [
     "default-src 'self'",
-    `script-src 'self' 'nonce-${nonce}'`,
+    `script-src 'self' 'nonce-${nonce}' https://challenges.cloudflare.com`,
     `style-src 'self' 'nonce-${nonce}'`,
     "img-src 'self' data:",
     "font-src 'self'",
     `connect-src ${CONNECT_SRC}`,
+    "frame-src https://challenges.cloudflare.com",
     "form-action 'self'",
     "frame-ancestors 'none'",
     "base-uri 'self'",

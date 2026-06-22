@@ -2,6 +2,7 @@
 import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
+import cloudflare from "@astrojs/cloudflare";
 
 import { DEFAULT_LOCALE } from "./src/i18n/config.ts";
 
@@ -12,12 +13,23 @@ const SITE = "https://lumii.com.au";
 export default defineConfig({
   site: SITE,
 
-  // PHASE 0 is 100% static (SSG) — no on-demand routes yet — so it builds and
-  // deploys to Cloudflare (Workers static assets or Pages) WITHOUT the SSR
-  // adapter. The adapter is added in Phase 2 when the signup endpoint and
-  // dynamic OG images need on-demand rendering; see README "Hosting" for the
-  // exact change (import @astrojs/cloudflare + adapter + output:"server").
+  // The site stays SSG-first: every marketing/knowledge page is prerendered to a
+  // static asset (cacheable, governed by public/_headers). The §12 access-request
+  // endpoint is the ONLY on-demand route — it opts out per-file with
+  // `export const prerender = false`, so Astro's hybrid model renders it through
+  // the Cloudflare Worker while everything else remains static. Keeping the
+  // dynamic surface to a single JSON endpoint means the static CSP/header posture
+  // is untouched for all HTML pages.
   output: "static",
+
+  // Cloudflare Workers adapter (static assets + the one on-demand route). The
+  // generated worker lands at dist/_worker.js/index.js — wrangler.jsonc points
+  // `main` there and binds ./dist as ASSETS. Adapter v13 runs the worker in
+  // workerd via @cloudflare/vite-plugin for BOTH `astro dev` and build, reading
+  // wrangler `vars` + .dev.vars, so `import { env } from "cloudflare:workers"`
+  // resolves identically in dev and production (Astro v6 removed
+  // `Astro.locals.runtime.env`).
+  adapter: cloudflare(),
 
   // §4 i18n is implemented with EXPLICIT `[locale]` routing (src/pages/[locale]/…)
   // rather than Astro's built-in i18n auto-router — the built-in router does not

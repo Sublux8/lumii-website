@@ -20,6 +20,15 @@ SENTRY_ENVIRONMENT="development"
 # Cloudflare Web Analytics token (cookieless). Public by design.
 PUBLIC_CF_ANALYTICS_TOKEN=""
 
-# Resend (transactional email — team notify on new access request). Phase 2.
-RESEND_API_KEY=""
+# Cloudflare Turnstile (bot protection on the §12 access-request form).
+# Site key is PUBLIC (inlined into the form); the secret key is server-only and
+# used for the siteverify call. In production the site key is a Workers Build
+# variable; the secret key is set via `wrangler secret put TURNSTILE_SECRET_KEY`.
+PUBLIC_TURNSTILE_SITE_KEY="REPLACE_ME_PUBLIC"
+TURNSTILE_SECRET_KEY="REPLACE_ME_SERVER_ONLY"
+
+# Resend (transactional email — requester confirmation + team alert).
+# Production: `wrangler secret put RESEND_API_KEY`. The sender domain must be
+# verified in Resend; override the default "from" with RESEND_FROM if needed.
+RESEND_API_KEY="REPLACE_ME_SERVER_ONLY"
 TEAM_NOTIFY_EMAIL="support@lumii.com.au"

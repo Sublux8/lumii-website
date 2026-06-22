@@ -87,7 +87,7 @@ export const strings = {
   "knowledge.readMore": "Read more",
   "knowledge.empty": "Articles are on the way.",
 
-  // Access request (form copy reserved for Phase 2)
+  // Access request form
   "access.title": "Request early access",
   "access.subtitle": "Tell us about your practice and we'll reach out.",
   "access.field.name": "Your name",
@@ -96,8 +96,16 @@ export const strings = {
   "access.field.discipline": "Primary discipline",
   "access.field.message": "Anything we should know?",
   "access.submit": "Request access",
-  "access.success": "Thanks — you're on the list. We'll be in touch.",
-  "access.error": "Something went wrong. Please try again or email support@lumii.com.au.",
+  "access.submitting": "Sending…",
+  "access.successTitle": "You're on the list.",
+  "access.success":
+    "Thanks — we've got your details and we'll be in touch as we onboard foundation clinics.",
+  "access.error":
+    "Something went wrong. Please try again, or email support@lumii.com.au.",
+  "access.challenge": "Please complete the verification challenge and try again.",
+  "access.privacyNote":
+    "Your details are stored securely in Australia and used only to contact you about Lumii early access.",
+  "access.hpLabel": "Leave this field blank",
 
   // Misc / a11y
   "a11y.externalLink": "(opens in a new tab)",
