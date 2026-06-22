@@ -21,6 +21,7 @@ export const strings = {
   "nav.changelog": "Changelog",
   "nav.pricing": "Pricing",
   "nav.about": "About",
+  "nav.download": "Download",
   "nav.requestAccess": "Request access",
   "nav.skipToContent": "Skip to content",
   "nav.openMenu": "Open menu",
@@ -52,6 +53,26 @@ export const strings = {
   "footer.contact": "Contact",
   "footer.rights": "All rights reserved.",
   "footer.residency": "Patient and lead data stored in Australia.",
+
+  // Download
+  "download.title": "Download Lumii for macOS",
+  "download.subtitle":
+    "The native Lumii desktop app for your clinic. Installs in seconds and keeps itself up to date.",
+  "download.cta": "Download for macOS",
+  "download.version": "Version {{version}}",
+  "download.requirements": "Requires macOS {{minMacOS}} or later · {{size}}",
+  "download.released": "Released {{date}}",
+  "download.autoUpdateTitle": "Updates itself",
+  "download.autoUpdate":
+    "Lumii checks for updates automatically and installs them securely — you'll always be on the latest release without lifting a finger.",
+  "download.securityTitle": "Signed & verified",
+  "download.security":
+    "Every release is cryptographically signed; the app verifies each update before installing.",
+  "download.residencyTitle": "Australian by design",
+  "download.residency":
+    "Your clinic and patient data stays in Australian-region infrastructure.",
+  "download.otherPlatforms":
+    "iPad, iPhone and Apple Vision builds are on the way — join the early-access list to be notified.",
 
   // Sectors index
   "sectors.title": "Built for your discipline",
