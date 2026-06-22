@@ -9,7 +9,20 @@
 import { readdir, readFile, stat } from "node:fs/promises";
 import { join, extname, resolve } from "node:path";
 
-const DIST = resolve("dist");
+async function exists(path) {
+  try {
+    await stat(path);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// The SSR adapter splits the build into dist/client (static assets + prerendered
+// HTML) and dist/_worker.js (the on-demand worker). Internal links resolve
+// against the client root. Fall back to flat dist/ for a pure-static build.
+const CLIENT = resolve("dist", "client");
+const DIST = (await exists(CLIENT)) ? CLIENT : resolve("dist");
 
 async function walk(dir) {
   const out = [];
@@ -19,15 +32,6 @@ async function walk(dir) {
     else if (entry.name.endsWith(".html")) out.push(full);
   }
   return out;
-}
-
-async function exists(path) {
-  try {
-    await stat(path);
-    return true;
-  } catch {
-    return false;
-  }
 }
 
 /** Resolve an internal URL path to a file in dist (dir → index.html, etc.). */
