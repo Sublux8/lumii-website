@@ -2,6 +2,8 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import Hero from "@components/sections/Hero.astro";
 import FeatureBlock from "@components/sections/FeatureBlock.astro";
+import LogoWall from "@components/sections/LogoWall.astro";
+import FAQ from "@components/sections/FAQ.astro";
 import CTA from "@components/sections/CTA.astro";
 import {
   useTranslations,
@@ -21,27 +23,52 @@ const lp = (p: string) => localizePath(p, locale);
 const modules = [
   {
     title: "Booking & front desk",
-    body: "Online booking, SMS reminders, waitlist, and an iPad self-check-in kiosk.",
+    body: "Online booking, SMS reminders with one-tap confirm, waitlist offers, and an iPad self-check-in kiosk.",
+    icon: "frontdesk",
   },
   {
     title: "Billing & claiming",
-    body: "Tyro EFTPOS and HealthPoint, Medicare, DVA, NDIS — claimed from one screen.",
+    body: "Tyro EFTPOS and HealthPoint, Medicare, DVA, NDIS and Comcare — claimed from the screen you finish the appointment on.",
+    icon: "claim",
   },
   {
     title: "Care plans",
-    body: "Funded plans with automatic session tracking across Medicare, DVA and WorkCover.",
+    body: "Funded plans with automatic session tracking across Medicare CDM, DVA, WorkCover and Private-Health Extras.",
+    icon: "careplan",
   },
   {
     title: "Telehealth",
-    body: "Branded video consults with consent capture and post-call summaries.",
+    body: "Branded video consults with consent capture, pre-visit forms, recording, and post-call summaries.",
+    icon: "telehealth",
   },
   {
     title: "Accounting",
-    body: "Two-way Xero sync — invoices, payments and quotes kept in lockstep.",
+    body: "Two-way Xero sync — contacts, invoices, payments and quotes kept in lockstep.",
+    icon: "xero",
   },
   {
     title: "Analytics",
-    body: "Practitioner-level revenue, outcomes and business intelligence.",
+    body: "Practitioner-level revenue, outcome tracking, and business intelligence across the practice.",
+    icon: "analytics",
+  },
+];
+
+const faqs = [
+  {
+    q: "What devices does Lumii run on?",
+    a: "Lumii is a native macOS app with compiled support for iPadOS and iPhone. The appointment book syncs live across Mac, iPad and the reception kiosk.",
+  },
+  {
+    q: "Which funders can I claim from?",
+    a: "Tyro HealthPoint (PHI), Medicare (bulk-bill and patient-claim), DVA, Comcare and icare, plus the NDIS module — all from a unified claims view.",
+  },
+  {
+    q: "Where is our data stored?",
+    a: "In Australian-region infrastructure (Sydney). See the Security & Compliance page for the full posture.",
+  },
+  {
+    q: "Can we migrate our existing data?",
+    a: "Lumii supports CSV patient import, and we'll work with foundation clinics on onboarding. Tell us your current system when you request access.",
   },
 ];
 ---
@@ -53,12 +80,30 @@ const modules = [
     subtitle={t("site.description")}
     primaryLabel={t("hero.ctaPrimary")}
     primaryHref={lp("/request-access")}
+    secondaryLabel={t("hero.ctaSecondary")}
+    secondaryHref={lp("/for-clinicians")}
   />
+
   <section class="container-page section">
     <div class="grid-3">
-      {modules.map((m) => <FeatureBlock title={m.title} body={m.body} />)}
+      {modules.map((m) => <FeatureBlock title={m.title} body={m.body} icon={m.icon} />)}
     </div>
   </section>
+
+  <LogoWall
+    caption="Built on the integrations Australian clinics rely on"
+    logos={[
+      { name: "Tyro" },
+      { name: "Medicare" },
+      { name: "NDIS" },
+      { name: "DVA" },
+      { name: "Xero" },
+      { name: "Twilio" },
+    ]}
+  />
+
+  <FAQ title="Platform FAQ" items={faqs} />
+
   <CTA
     title={t("cta.title")}
     body={t("cta.body")}

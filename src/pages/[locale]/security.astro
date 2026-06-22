@@ -1,36 +1,143 @@
 ---
+/**
+ * Security & Compliance — real content (§6/§18). Page-body copy is inline (the
+ * established pattern for marketing pages); shared chrome comes from i18n.
+ */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { useTranslations, localeFromPath, localeStaticPaths } from "@i18n/index.ts";
+import Hero from "@components/sections/Hero.astro";
+import FeatureBlock from "@components/sections/FeatureBlock.astro";
+import Badge from "@components/primitives/Badge.astro";
+import FAQ from "@components/sections/FAQ.astro";
+import CTA from "@components/sections/CTA.astro";
+import {
+  useTranslations,
+  localeFromPath,
+  localizePath,
+  localeStaticPaths,
+} from "@i18n/index.ts";
 
 export function getStaticPaths() {
   return localeStaticPaths();
 }
-const t = useTranslations(localeFromPath(Astro.url.pathname));
+
+const locale = localeFromPath(Astro.url.pathname);
+const t = useTranslations(locale);
+const lp = (p: string) => localizePath(p, locale);
+
+const pillars = [
+  {
+    title: "Australian data residency",
+    body: "Patient and clinic data lives in Australian-region infrastructure (Sydney). Lead data captured on this site is stored in Australia too — no offshore round-trips.",
+    icon: "au",
+  },
+  {
+    title: "Encrypted end to end",
+    body: "TLS in transit and encryption at rest across database, storage, and backups. Third-party credentials are encrypted with a per-environment key in a managed secret store — never in the client or git.",
+    icon: "lock",
+  },
+  {
+    title: "Mandatory staff MFA",
+    body: "TOTP multi-factor authentication is required for every staff role, with a trusted-device window and step-up re-auth for privileged actions. Patient MFA is available and can be made mandatory per clinic.",
+    icon: "mfa",
+  },
+  {
+    title: "Least-privilege access",
+    body: "Role-based permissions gate every surface, and database security rules enforce clinic-of-self isolation — one clinic can never read another's records, and cross-patient reads route through audited server functions.",
+    icon: "shield",
+  },
+  {
+    title: "Daily backups",
+    body: "Automated daily database exports to a dedicated per-project bucket, so a clinic's data is recoverable independent of day-to-day operations.",
+    icon: "backup",
+  },
+  {
+    title: "Defence in depth",
+    body: "Bot protection on public endpoints, sign-up abuse + disposable-email blocking, strict CSP and HSTS-preload security headers, and a vulnerability-disclosure channel.",
+    icon: "layers",
+  },
+];
+
+const faqs = [
+  {
+    q: "Where is our data stored?",
+    a: "In Australia — both production patient data and any leads captured on this website. Lumii runs in the Sydney region across compute, database, and storage.",
+  },
+  {
+    q: "Is Lumii ISO 27001 certified?",
+    a: "Lumii is built to ISO 27001 / iRAP-readiness standards as part of our compliance-hardening program ahead of NDIA B2B integration. Formal certification is on the roadmap; the controls (access management, encryption, logging, backups, incident response) are in place now.",
+  },
+  {
+    q: "How do you handle the Australian Privacy Principles?",
+    a: "Australian data residency, least-privilege access, audit logging, and a documented incident-response runbook underpin our APP alignment. Our privacy policy details collection, use, and disclosure.",
+  },
+  {
+    q: "How do I report a vulnerability?",
+    a: "Email security@lumii.com.au or see our security.txt. We welcome responsible disclosure.",
+  },
+];
 ---
 
-<BaseLayout title={t("footer.security")} noindex={true}>
-  <section class="container-page prose measure">
-    <h1>{t("footer.security")}</h1>
+<BaseLayout
+  title="Security & Compliance"
+  description="How Lumii protects Australian clinic and patient data: Australian data residency, encryption, mandatory MFA, least-privilege access, daily backups, and defence in depth."
+>
+  <Hero
+    eyebrow="Security & compliance"
+    title="Security that earns a clinic's trust."
+    subtitle="Lumii is built for Australian healthcare data — Australian residency, encryption everywhere, mandatory staff MFA, and least-privilege access by design."
+    primaryLabel={t("hero.ctaPrimary")}
+    primaryHref={lp("/request-access")}
+  />
+
+  <section class="container-page section">
+    <div class="badges">
+      <Badge tone="green">Australian data residency</Badge>
+      <Badge tone="blue">Encrypted in transit &amp; at rest</Badge>
+      <Badge tone="amber">Mandatory staff MFA</Badge>
+      <Badge tone="purple">ISO 27001 / iRAP-readiness</Badge>
+    </div>
+    <div class="grid-3">
+      {pillars.map((p) => <FeatureBlock title={p.title} body={p.body} icon={p.icon} />)}
+    </div>
+  </section>
+
+  <FAQ title="Security FAQ" items={faqs} />
+
+  <section class="container-page disclosure measure">
     <p>
-      Lumii is built for Australian healthcare data, with Australian data residency and a
-      defence-in-depth security posture.
-    </p>
-    <p>
-      To report a vulnerability, see our
-      <a href="/.well-known/security.txt">security.txt</a> or email
-      <a href="mailto:security@lumii.com.au">security@lumii.com.au</a>.
+      Found a security issue? Email
+      <a href="mailto:security@lumii.com.au">security@lumii.com.au</a> or see our
+      <a href="/.well-known/security.txt">security.txt</a>. Read our
+      <a href={lp("/privacy")}>privacy policy</a> for how we handle data.
     </p>
   </section>
+
+  <CTA
+    title={t("cta.title")}
+    body={t("cta.body")}
+    buttonLabel={t("cta.button")}
+    buttonHref={lp("/request-access")}
+  />
 </BaseLayout>
 
 <style>
-  .prose {
+  .section {
     padding-block: var(--space-section);
+  }
+  .badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-block-end: var(--space-2xl);
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: var(--space-xl);
+  }
+  .disclosure {
+    padding-block: 0 var(--space-2xl);
     color: var(--text-secondary);
     line-height: var(--leading-relaxed);
-  }
-  .prose h1 {
-    color: var(--text);
-    margin-block-end: var(--space-lg);
   }
 </style>

@@ -83,15 +83,21 @@ const {
     font-family: var(--font-sans);
     font-size: var(--text-body);
     color: var(--text);
-    background-color: var(--surface-2);
+    /* White rounded field (login screen), not the tinted surface-2 box. */
+    background-color: color-mix(in srgb, var(--surface) 92%, white);
     border: var(--border-width) solid color-mix(in srgb, var(--border) 75%, transparent);
     border-radius: var(--radius-md);
-    transition: border-color var(--duration-quick) var(--ease-standard);
+    transition:
+      border-color var(--duration-quick) var(--ease-standard),
+      box-shadow var(--duration-quick) var(--ease-standard);
   }
   .field__control::placeholder {
     color: var(--text-muted);
   }
+  /* Blue focus ring, matching the login screen's field focus. */
   .field__control:focus-visible {
-    border-color: var(--accent);
+    outline: none;
+    border-color: var(--accent-blue);
+    box-shadow: var(--focus-ring-blue);
   }
 </style>

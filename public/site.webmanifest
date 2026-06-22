@@ -1,0 +1,31 @@
+{
+  "name": "Lumii",
+  "short_name": "Lumii",
+  "description": "Practice management for Australian allied-health and general-practice clinics.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "lang": "en-AU",
+  "theme_color": "#00a895",
+  "background_color": "#effbf7",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -15,7 +15,10 @@ export const strings = {
   // Navigation
   "nav.sectors": "Who it's for",
   "nav.platform": "Platform",
+  "nav.forClinicians": "For clinicians",
+  "nav.security": "Security",
   "nav.knowledge": "Knowledge hub",
+  "nav.changelog": "Changelog",
   "nav.pricing": "Pricing",
   "nav.about": "About",
   "nav.download": "Download",
