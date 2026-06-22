@@ -1,12 +1,24 @@
 {
-  // Cloudflare Workers static-assets config for the Git-connected "Workers Build".
-  // The site is a pure static Astro build (output:"static" → dist/), so this is
-  // an ASSETS-ONLY Worker: no `main` entrypoint, Cloudflare serves dist/ directly.
-  // Without this file the Workers Build had no deploy target and failed every run.
-  // When Phase 2 adds an on-demand route, wire @astrojs/cloudflare and add `main`.
+  // Cloudflare Workers config for the Git-connected "Workers Build".
+  // The site is SSG-first; the @astrojs/cloudflare adapter emits a Worker at
+  // dist/_worker.js/index.js for the single on-demand route (§12 access-request)
+  // and serves every prerendered page from ./dist via the ASSETS binding.
+  // Static assets are matched FIRST; only unmatched paths (e.g. /api/*) reach the
+  // Worker, so the marketing pages keep their static-asset _headers posture.
   "name": "lumii-website",
+  "main": "./dist/_worker.js/index.js",
   "compatibility_date": "2026-06-01",
+  "compatibility_flags": ["nodejs_compat"],
   "assets": {
+    "binding": "ASSETS",
     "directory": "./dist",
+  },
+  // Non-secret runtime config, readable via locals.runtime.env. Public values
+  // only — the SUPABASE_URL is already public (CSP connect-src) and the notify
+  // address is a published support mailbox. SECRETS (service-role key, Turnstile
+  // secret, Resend key) are set with `wrangler secret put` and never committed.
+  "vars": {
+    "SUPABASE_URL": "https://scqxaziehzyekohhiuip.supabase.co",
+    "TEAM_NOTIFY_EMAIL": "support@lumii.com.au",
   },
 }

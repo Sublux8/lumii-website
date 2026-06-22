@@ -1,14 +1,20 @@
 ---
 /**
- * Access-request page. The form is rendered from primitives; SUBMISSION is wired
- * in Phase 2 (POST to a Worker endpoint → Supabase `access_requests`, Sydney).
- * For now the form posts to the same-origin endpoint placeholder and is marked
- * accordingly so the conversion surface exists and is styleable.
+ * Access-request page (§12). The form is progressive: real <form> markup that
+ * /scripts/access-request.js enhances into a same-origin JSON POST to
+ * /api/access-request (Turnstile-verified → Supabase Sydney → Resend). Every
+ * string comes from the catalogue; the Turnstile SITE key (public) is inlined
+ * from PUBLIC_TURNSTILE_SITE_KEY at build time.
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
 import Input from "@components/primitives/Input.astro";
 import Button from "@components/primitives/Button.astro";
-import { useTranslations, localeFromPath, localeStaticPaths } from "@i18n/index.ts";
+import {
+  useTranslations,
+  localeFromPath,
+  localizePath,
+  localeStaticPaths,
+} from "@i18n/index.ts";
 
 export function getStaticPaths() {
   return localeStaticPaths();
@@ -16,6 +22,9 @@ export function getStaticPaths() {
 
 const locale = localeFromPath(Astro.url.pathname);
 const t = useTranslations(locale);
+const lp = (p: string) => localizePath(p, locale);
+
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
 ---
 
 <BaseLayout title={t("access.title")} description={t("access.subtitle")}>
@@ -23,12 +32,16 @@ const t = useTranslations(locale);
     <h1>{t("access.title")}</h1>
     <p class="lead measure">{t("access.subtitle")}</p>
 
-    <!-- action wired in Phase 2; method/enctype set now so markup is final -->
     <form
       class="form"
       method="post"
       action="/api/access-request"
       data-form="access-request"
+      data-copy-submitting={t("access.submitting")}
+      data-copy-success-title={t("access.successTitle")}
+      data-copy-success={t("access.success")}
+      data-copy-error={t("access.error")}
+      data-copy-challenge={t("access.challenge")}
     >
       <Input
         id="ar-name"
@@ -48,10 +61,43 @@ const t = useTranslations(locale);
       <Input id="ar-clinic" name="clinic" label={t("access.field.clinic")} required />
       <Input id="ar-discipline" name="discipline" label={t("access.field.discipline")} />
       <Input id="ar-message" name="message" label={t("access.field.message")} multiline />
-      <Button type="submit" size="lg" id="access-submit">{t("access.submit")}</Button>
+
+      <input type="hidden" name="locale" value={locale} />
+
+      {/* Honeypot — visually hidden, off the tab order. Bots fill it; humans don't. */}
+      <div class="hp" aria-hidden="true">
+        <label for="ar-company-website">{t("access.hpLabel")}</label>
+        <input
+          id="ar-company-website"
+          name="company_website"
+          type="text"
+          tabindex="-1"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="form__turnstile">
+        <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="light">
+        </div>
+      </div>
+
+      <p class="form__status" data-form-status data-tone="error" role="alert" hidden></p>
+
+      <Button type="submit" size="lg" id="access-submit" data-form-submit="true">
+        {t("access.submit")}
+      </Button>
+
+      <p class="form__privacy">
+        {t("access.privacyNote")}{" "}
+        <a href={lp("/privacy")}>{t("footer.privacy")}</a>.
+      </p>
     </form>
   </section>
 </BaseLayout>
+
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer
+></script>
+<script is:inline src="/scripts/access-request.js"></script>
 
 <style>
   .form-wrap {
@@ -66,5 +112,57 @@ const t = useTranslations(locale);
   .form {
     display: grid;
     gap: var(--space-lg);
+  }
+  .form__turnstile {
+    min-block-size: 65px;
+  }
+  .form__status {
+    margin: 0;
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    font-size: var(--text-subhead);
+  }
+  .form__status[data-tone="error"] {
+    color: var(--danger);
+    background-color: color-mix(in srgb, var(--danger) 10%, transparent);
+    border: var(--border-width) solid color-mix(in srgb, var(--danger) 35%, transparent);
+  }
+  .form__privacy {
+    margin: 0;
+    font-size: var(--text-caption);
+    color: var(--text-muted);
+  }
+  .form__privacy a {
+    color: var(--text-secondary);
+  }
+
+  /* Honeypot: removed from layout and the accessibility tree, but still in the
+     DOM and submittable so bots that auto-fill every field reveal themselves. */
+  .hp {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* Success panel swapped in by the enhancement script. */
+  :global(.form-success) {
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
+    background-color: color-mix(in srgb, var(--accent) 8%, var(--surface));
+    border: var(--border-width) solid color-mix(in srgb, var(--accent) 25%, transparent);
+  }
+  :global(.form-success__title) {
+    margin: 0 0 var(--space-sm);
+    font-family: var(--font-display);
+    font-size: var(--text-headline);
+    font-weight: var(--weight-semibold);
+    color: var(--text);
+  }
+  :global(.form-success__body) {
+    margin: 0;
+    color: var(--text-secondary);
   }
 </style>
