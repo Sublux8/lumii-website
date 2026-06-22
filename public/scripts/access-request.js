@@ -50,6 +50,7 @@
     var panel = document.createElement("div");
     panel.className = "form-success";
     panel.setAttribute("role", "status");
+    panel.setAttribute("tabindex", "-1");
     var heading = document.createElement("p");
     heading.className = "form-success__title";
     heading.textContent = copy.successTitle;
@@ -59,7 +60,7 @@
     panel.appendChild(heading);
     panel.appendChild(body);
     form.replaceWith(panel);
-    panel.focus && panel.focus();
+    if (typeof panel.focus === "function") panel.focus();
   }
 
   form.addEventListener("submit", function (ev) {
