@@ -24,7 +24,14 @@ const locale = localeFromPath(Astro.url.pathname);
 const t = useTranslations(locale);
 const lp = (p: string) => localizePath(p, locale);
 
-const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
+// Turnstile SITE key — PUBLIC by design: it's rendered into the page for every
+// visitor and is domain-locked to lumii.com.au in the Turnstile dashboard, so it
+// carries no secret. Committed as the default so the widget renders without a
+// build-time env var (the build var lives in a different dashboard section than
+// the runtime secrets and is easy to miss). PUBLIC_TURNSTILE_SITE_KEY still
+// overrides it — `||` so an empty/unset env value falls back to the constant.
+const TURNSTILE_SITE_KEY = "0x4AAAAAADpGf87zcnmr0uq4";
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || TURNSTILE_SITE_KEY;
 ---
 
 <BaseLayout title={t("access.title")} description={t("access.subtitle")}>
