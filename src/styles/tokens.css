@@ -31,8 +31,8 @@
      Base + surface warmed a touch off cold-white (the "warm wash" direction) so
      the pastel aurora reads instead of washing out; cards are translucent glass,
      so this warmth carries through them too. */
-  --bg: #f6f3ea;
-  --surface: #fff7ee;
+  --bg: #faf0db;
+  --surface: #fef4e6;
   --surface-2: #c7f0e5;
   --border: #8fd4c3;
   --accent: #00a895;
@@ -90,30 +90,30 @@
   --aurora:
     radial-gradient(
       66% 56% at 10% 4%,
-      color-mix(in srgb, var(--brand-warmth) 74%, transparent),
+      color-mix(in srgb, var(--brand-warmth) 90%, transparent),
       transparent 68%
     ),
     radial-gradient(
       58% 50% at 88% 9%,
-      color-mix(in srgb, var(--brand-gold) 56%, transparent),
+      color-mix(in srgb, var(--brand-gold) 72%, transparent),
       transparent 66%
     ),
     radial-gradient(
       60% 55% at 84% 88%,
-      color-mix(in srgb, var(--accent) 30%, transparent),
+      color-mix(in srgb, var(--accent) 26%, transparent),
       transparent 70%
     ),
     radial-gradient(
       54% 48% at 12% 92%,
-      color-mix(in srgb, var(--accent-blue) 15%, transparent),
+      color-mix(in srgb, var(--accent-blue) 10%, transparent),
       transparent 72%
     ),
     radial-gradient(
       48% 44% at 50% 50%,
-      color-mix(in srgb, var(--brand-lilac) 18%, transparent),
+      color-mix(in srgb, var(--brand-lilac) 14%, transparent),
       transparent 72%
     ),
-    linear-gradient(180deg, color-mix(in srgb, white 10%, transparent), transparent 28%),
+    linear-gradient(180deg, color-mix(in srgb, white 4%, transparent), transparent 26%),
     var(--bg);
 
   /* ── Glassmorphism (.lumiiGlassPanel) — translucent frosted surfaces.
