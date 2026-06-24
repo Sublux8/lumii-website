@@ -34,9 +34,10 @@ const description = Astro.props.description ?? t("site.description");
 const canonical = canonicalUrl(pathname);
 const alternates = hreflangAlternates(pathname);
 const { noindex = false, ogImage } = Astro.props;
-// Default social image — the gold-star brand mark. TODO: a proper 1200×630
-// branded OG card (needs a raster render step); swap the default when it exists.
-const ogImageUrl = new URL(ogImage ?? "/lumii-icon.png", "https://lumii.com.au").href;
+// Default social image — the branded 1200×630 OG card (scripts/generate-og.mjs,
+// rebuild with `npm run og`). Per-page overrides pass `ogImage`.
+const ogImageUrl = new URL(ogImage ?? "/og.png", "https://lumii.com.au").href;
+const ogImageAlt = `${t("site.name")} — ${t("site.tagline")}`;
 ---
 
 <!doctype html>
@@ -66,7 +67,11 @@ const ogImageUrl = new URL(ogImage ?? "/lumii-icon.png", "https://lumii.com.au")
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
     <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
