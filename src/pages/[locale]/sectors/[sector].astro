@@ -49,6 +49,10 @@ const lp = (p: string) => localizePath(p, locale);
   {
     data.valueProps.length > 0 && (
       <section class="container-page section">
+        <header class="section__head">
+          <p class="section__eyebrow">Why Lumii fits</p>
+          <h2>Built around {data.audience.toLowerCase()}.</h2>
+        </header>
         <div class="grid-3">
           {data.valueProps.map((vp) => (
             <FeatureBlock title={vp.title} body={vp.body} icon={vp.icon} />
@@ -60,10 +64,13 @@ const lp = (p: string) => localizePath(p, locale);
 
   {
     data.complianceNotes.length > 0 && (
-      <section class="container-page compliance">
-        {data.complianceNotes.map((note) => (
-          <Badge tone="green">{note}</Badge>
-        ))}
+      <section class="container-page compliance-section">
+        <p class="section__eyebrow">Compliance</p>
+        <div class="compliance">
+          {data.complianceNotes.map((note) => (
+            <Badge tone="green">{note}</Badge>
+          ))}
+        </div>
       </section>
     )
   }
@@ -84,10 +91,28 @@ const lp = (p: string) => localizePath(p, locale);
   .section {
     padding-block: var(--space-section);
   }
+  .section__head {
+    margin-block-end: var(--space-2xl);
+    max-inline-size: 46ch;
+  }
+  .section__eyebrow {
+    font-size: var(--text-label);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-block-end: var(--space-sm);
+  }
+  .section__head h2 {
+    font-size: var(--text-h2);
+  }
   .grid-3 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
     gap: var(--space-xl);
+  }
+  .compliance-section .section__eyebrow {
+    margin-block-end: var(--space-md);
   }
   .compliance {
     display: flex;
