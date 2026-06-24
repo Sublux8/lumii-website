@@ -1,4 +1,12 @@
 ---
+/**
+ * Platform overview — the "See the platform" destination. The reference page for
+ * the site's platinum bar: warm, specific, Australian-built voice; real per-module
+ * icons; a differentiator ("why it feels different") section between the module
+ * grid and the integrations wall. Module + pillar + FAQ copy lives inline as
+ * structured content (single-locale, pre-launch); reusable chrome uses the i18n
+ * catalogue.
+ */
 import BaseLayout from "@layouts/BaseLayout.astro";
 import Hero from "@components/sections/Hero.astro";
 import FeatureBlock from "@components/sections/FeatureBlock.astro";
@@ -20,78 +28,124 @@ const locale = localeFromPath(Astro.url.pathname);
 const t = useTranslations(locale);
 const lp = (p: string) => localizePath(p, locale);
 
+const description =
+  "Booking, billing, Tyro claiming, care plans, telehealth and Xero — the whole practice in one Australian-built workspace.";
+
 const modules = [
   {
     title: "Booking & front desk",
-    body: "Online booking, SMS reminders with one-tap confirm, waitlist offers, and an iPad self-check-in kiosk.",
+    body: "Online booking, SMS reminders your patients confirm with one tap, smart waitlist offers, and an iPad kiosk that checks people in while reception takes a breath.",
     icon: "frontdesk",
   },
   {
     title: "Billing & claiming",
-    body: "Tyro EFTPOS and HealthPoint, Medicare, DVA, NDIS and Comcare — claimed from the screen you finish the appointment on.",
+    body: "Tyro EFTPOS and HealthPoint, Medicare, DVA, NDIS and Comcare — claimed from the very screen where you finish the appointment. No re-keying, no second system.",
     icon: "claim",
   },
   {
     title: "Care plans",
-    body: "Funded plans with automatic session tracking across Medicare CDM, DVA, WorkCover and Private-Health Extras.",
+    body: "Funded plans that track their own sessions across Medicare CDM, DVA, WorkCover and Private-Health Extras — so you always know what's left before the patient asks.",
     icon: "careplan",
   },
   {
     title: "Telehealth",
-    body: "Branded video consults with consent capture, pre-visit forms, recording, and post-call summaries.",
+    body: "Branded video consults with consent capture, pre-visit forms, recording and post-call summaries — the same standard of care, wherever your patient is sitting.",
     icon: "telehealth",
   },
   {
     title: "Accounting",
-    body: "Two-way Xero sync — contacts, invoices, payments and quotes kept in lockstep.",
+    body: "Two-way Xero sync that keeps contacts, invoices, payments and quotes in lockstep. Your bookkeeper sees the truth without a single export.",
     icon: "xero",
   },
   {
     title: "Analytics",
-    body: "Practitioner-level revenue, outcome tracking, and business intelligence across the practice.",
+    body: "Practitioner-level revenue, outcome tracking, and the kind of business intelligence that usually costs a consultant — built quietly into the practice.",
     icon: "analytics",
+  },
+];
+
+const pillars = [
+  {
+    title: "One workspace, not twelve tabs",
+    body: "One login, one window, one source of truth. The appointment book, the invoice and the claim all live in the same place — so the work stops falling between systems.",
+  },
+  {
+    title: "Australian to the core",
+    body: "Tyro, Medicare, NDIS, DVA and Xero, with patient data kept in Sydney. Built around how clinics here actually book, bill and get paid — not retrofitted from overseas.",
+  },
+  {
+    title: "Calm by design",
+    body: "Live sync across Mac, iPad and the front-desk kiosk means the day just flows. The software gets out of the way, so your team can stay with the person in front of them.",
   },
 ];
 
 const faqs = [
   {
     q: "What devices does Lumii run on?",
-    a: "Lumii is a native macOS app with compiled support for iPadOS and iPhone. The appointment book syncs live across Mac, iPad and the reception kiosk.",
+    a: "Lumii is a native macOS app with compiled support for iPad and iPhone. The appointment book syncs live across Mac, iPad and the reception kiosk, so everyone sees the same day in real time.",
   },
   {
     q: "Which funders can I claim from?",
-    a: "Tyro HealthPoint (PHI), Medicare (bulk-bill and patient-claim), DVA, Comcare and icare, plus the NDIS module — all from a unified claims view.",
+    a: "Tyro HealthPoint (PHI), Medicare (bulk-bill and patient-claim), DVA, Comcare and icare, plus the dedicated NDIS module — all from one unified claims view.",
   },
   {
     q: "Where is our data stored?",
-    a: "In Australian-region infrastructure (Sydney). See the Security & Compliance page for the full posture.",
+    a: "In Australian-region infrastructure, in Sydney. See the Security & Compliance page for the full posture, from encryption to multi-factor auth.",
   },
   {
     q: "Can we migrate our existing data?",
-    a: "Lumii supports CSV patient import, and we'll work with foundation clinics on onboarding. Tell us your current system when you request access.",
+    a: "Yes — Lumii supports CSV patient import, and we work hands-on with foundation clinics on onboarding. Tell us your current system when you request access and we'll map the move.",
   },
 ];
 ---
 
-<BaseLayout title={t("nav.platform")} description={t("site.description")}>
+<BaseLayout title={t("nav.platform")} description={description}>
   <Hero
-    eyebrow="Platform"
-    title="One workspace for the whole practice."
-    subtitle={t("site.description")}
+    eyebrow="The platform"
+    title="Everything your practice runs on, in one calm window."
+    subtitle="Booking, billing, claiming, care plans, telehealth and the books — Lumii brings the whole day into a single Australian-built workspace, so nothing slips between tabs."
     primaryLabel={t("hero.ctaPrimary")}
     primaryHref={lp("/request-access")}
-    secondaryLabel={t("hero.ctaSecondary")}
+    secondaryLabel={t("nav.forClinicians")}
     secondaryHref={lp("/for-clinicians")}
   />
 
   <section class="container-page section">
+    <header class="section__head">
+      <p class="section__eyebrow">What's inside</p>
+      <h2>Six modules. One source of truth.</h2>
+      <p class="section__lead measure">
+        Each one earns its place on its own — together they remove the double-entry, the
+        reconciliation, and the end-of-day guesswork.
+      </p>
+    </header>
     <div class="grid-3">
       {modules.map((m) => <FeatureBlock title={m.title} body={m.body} icon={m.icon} />)}
     </div>
   </section>
 
+  <section class="container-page section pillars-section">
+    <header class="section__head">
+      <p class="section__eyebrow">Why it feels different</p>
+      <h2>Built to disappear into the day.</h2>
+    </header>
+    <div class="pillars">
+      {
+        pillars.map((p, i) => (
+          <article class="pillar">
+            <span class="pillar__index" aria-hidden="true">
+              0{i + 1}
+            </span>
+            <h3 class="pillar__title">{p.title}</h3>
+            <p class="pillar__body">{p.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
   <LogoWall
-    caption="Built on the integrations Australian clinics rely on"
+    caption="Built on the integrations Australian clinics already trust"
     logos={[
       { name: "Tyro" },
       { name: "Medicare" },
@@ -102,7 +156,7 @@ const faqs = [
     ]}
   />
 
-  <FAQ title="Platform FAQ" items={faqs} />
+  <FAQ title="Platform questions, answered" items={faqs} />
 
   <CTA
     title={t("cta.title")}
@@ -116,9 +170,64 @@ const faqs = [
   .section {
     padding-block: var(--space-section);
   }
+  .section__head {
+    margin-block-end: var(--space-2xl);
+    max-inline-size: 44ch;
+  }
+  .section__eyebrow {
+    font-size: var(--text-label);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-block-end: var(--space-sm);
+  }
+  .section__head h2 {
+    font-size: var(--text-h2);
+  }
+  .section__lead {
+    margin-block-start: var(--space-md);
+    font-size: var(--text-lead);
+    color: var(--text-secondary);
+  }
   .grid-3 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
     gap: var(--space-xl);
+  }
+
+  /* "Why it feels different" — text-forward pillars with a gradient index, a
+     calmer counterpoint to the icon-chip module grid above. */
+  .pillars-section {
+    padding-block-start: 0;
+  }
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: var(--space-2xl);
+  }
+  .pillar {
+    border-block-start: 2px solid color-mix(in srgb, var(--accent) 28%, transparent);
+    padding-block-start: var(--space-lg);
+  }
+  .pillar__index {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: var(--weight-bold);
+    line-height: 1;
+    background-image: var(--gradient-accent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-block-end: var(--space-md);
+  }
+  .pillar__title {
+    font-size: var(--text-h4);
+    margin-block-end: var(--space-sm);
+  }
+  .pillar__body {
+    color: var(--text-secondary);
+    line-height: var(--leading-normal);
   }
 </style>

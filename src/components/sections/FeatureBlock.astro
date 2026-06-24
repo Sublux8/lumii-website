@@ -5,6 +5,7 @@
  * primitive serves a 2-up, 3-up, or adaptive layout.
  */
 import Card from "@components/primitives/Card.astro";
+import Icon from "@components/primitives/Icon.astro";
 
 interface Props {
   title: string;
@@ -17,8 +18,8 @@ const { title, body, icon } = Astro.props;
 <Card elevation="subtle" as="article" class="feature">
   {
     icon && (
-      <span class="feature__icon" aria-hidden="true" data-icon={icon}>
-        ◆
+      <span class="feature__icon" aria-hidden="true">
+        <Icon name={icon} size={22} />
       </span>
     )
   }

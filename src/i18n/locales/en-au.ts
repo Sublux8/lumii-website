@@ -8,7 +8,7 @@
  */
 export const strings = {
   "site.name": "Lumii",
-  "site.tagline": "Practice management with a warm clinical glow.",
+  "site.tagline": "Practice management, illuminated.",
   "site.description":
     "Lumii is the multi-disciplinary practice management platform for Australian allied-health and general-practice clinics — booking, billing, claiming, and care plans in one calm workspace.",
 
