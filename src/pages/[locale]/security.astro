@@ -96,6 +96,14 @@ const faqs = [
       <Badge tone="amber">Mandatory staff MFA</Badge>
       <Badge tone="purple">ISO 27001 / iRAP-readiness</Badge>
     </div>
+    <header class="section__head">
+      <p class="section__eyebrow">How we protect it</p>
+      <h2>Built for healthcare data from day one.</h2>
+      <p class="section__lead measure">
+        The controls a clinic should expect — residency, encryption, access and recovery —
+        in place now, not on a someday roadmap.
+      </p>
+    </header>
     <div class="grid-3">
       {pillars.map((p) => <FeatureBlock title={p.title} body={p.body} icon={p.icon} />)}
     </div>
@@ -129,6 +137,26 @@ const faqs = [
     flex-wrap: wrap;
     gap: var(--space-sm);
     margin-block-end: var(--space-2xl);
+  }
+  .section__head {
+    margin-block-end: var(--space-2xl);
+    max-inline-size: 46ch;
+  }
+  .section__eyebrow {
+    font-size: var(--text-label);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-block-end: var(--space-sm);
+  }
+  .section__head h2 {
+    font-size: var(--text-h2);
+  }
+  .section__lead {
+    margin-block-start: var(--space-md);
+    font-size: var(--text-lead);
+    color: var(--text-secondary);
   }
   .grid-3 {
     display: grid;
