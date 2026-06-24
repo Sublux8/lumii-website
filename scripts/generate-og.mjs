@@ -29,7 +29,7 @@ const ROUNDED =
 const SANS = "system-ui, -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif";
 
 const EYEBROW = "AUSTRALIAN-BUILT · PRE-LAUNCH";
-const TAGLINE = "Practice management with a warm clinical glow.";
+const TAGLINE = "Practice management, illuminated.";
 const DOMAIN = "lumii.com.au";
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
