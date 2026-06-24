@@ -20,10 +20,12 @@ const href = lp("/request-access");
 
 <BaseLayout title={t("nav.pricing")}>
   <section class="container-page head">
-    <h1>{t("nav.pricing")}</h1>
+    <p class="eyebrow">Pricing</p>
+    <h1>Fair, and finalised with our first clinics.</h1>
     <p class="lead measure">
-      Pricing is being finalised ahead of launch. Join the early-access list and we'll
-      share foundation-clinic pricing directly.
+      We're setting pricing ahead of launch alongside our foundation clinics, so it
+      reflects the real value — not a number plucked from thin air. Join the early-access
+      list and we'll share foundation-clinic pricing with you directly.
     </p>
   </section>
   <PricingTable
@@ -64,6 +66,14 @@ const href = lp("/request-access");
 <style>
   .head {
     padding-block: var(--space-section) 0;
+  }
+  .eyebrow {
+    font-size: var(--text-label);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-block-end: var(--space-sm);
   }
   .lead {
     margin-block-start: var(--space-md);

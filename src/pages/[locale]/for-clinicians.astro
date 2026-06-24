@@ -87,6 +87,14 @@ const faqs = [
   />
 
   <section class="container-page section">
+    <header class="section__head">
+      <p class="section__eyebrow">In the room</p>
+      <h2>Less between you and the patient.</h2>
+      <p class="section__lead measure">
+        The busywork of a consult — claiming, notes, tracking, reminders — handled inside
+        the workflow you're already in, not in three other tabs.
+      </p>
+    </header>
     <div class="grid-3">
       {values.map((v) => <FeatureBlock title={v.title} body={v.body} icon={v.icon} />)}
     </div>
@@ -105,6 +113,26 @@ const faqs = [
 <style>
   .section {
     padding-block: var(--space-section);
+  }
+  .section__head {
+    margin-block-end: var(--space-2xl);
+    max-inline-size: 46ch;
+  }
+  .section__eyebrow {
+    font-size: var(--text-label);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-block-end: var(--space-sm);
+  }
+  .section__head h2 {
+    font-size: var(--text-h2);
+  }
+  .section__lead {
+    margin-block-start: var(--space-md);
+    font-size: var(--text-lead);
+    color: var(--text-secondary);
   }
   .grid-3 {
     display: grid;
