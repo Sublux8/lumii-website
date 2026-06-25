@@ -22,12 +22,12 @@ export interface MacRelease {
 }
 
 export const macRelease: MacRelease = {
-  version: "0.9.54",
-  build: "954",
-  url: "https://download.lumii.com.au/macos/releases/Lumii-0.9.54.zip",
+  version: "0.9.55",
+  build: "955",
+  url: "https://download.lumii.com.au/macos/releases/Lumii-0.9.55.zip",
   minMacOS: "15.6",
-  bytes: 87_040_767,
-  releasedISO: "2026-06-23",
+  bytes: 87_044_778,
+  releasedISO: "2026-06-24",
 };
 
 /** Human-readable size, e.g. "82.7 MB". */
