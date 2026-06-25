@@ -1,0 +1,296 @@
+---
+/**
+ * Internal ops dashboard — behind the scenes, unlisted, noindex. Not in the nav
+ * and not localised (lives at `/internal/stats`, outside the `[locale]` tree).
+ *
+ * One quiet place to glance at how the site + product are doing: the live macOS
+ * release (real build-time data from release.ts), a link out to the uptime
+ * status page, and scaffolded metric slots wired to nothing yet — each names the
+ * source it will read from later (Cloudflare Web Analytics, R2 download counts,
+ * the access-request lead store) so wiring them is a known, small job.
+ *
+ * Deliberately static: no data is fetched at build or request time, so this page
+ * can never leak a credential or slow a deploy. When a metric goes live, replace
+ * its `value` and drop the `pending` flag.
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { macRelease, formatBytes } from "@data/release.ts";
+
+const STATUS_URL = "https://status.lumii.com.au";
+
+type Slot = {
+  label: string;
+  value: string;
+  caption: string;
+  source: string;
+  href?: string;
+  pending?: boolean;
+};
+
+// The one card backed by real data — bumped in lockstep with the appcast.
+const release: Slot = {
+  label: "Latest macOS release",
+  value: `v${macRelease.version}`,
+  caption: `Build ${macRelease.build} · ${formatBytes(macRelease.bytes)} · ${macRelease.releasedISO}`,
+  source: "release.ts (build-time)",
+  // Internal page is outside the [locale] tree, so the localised download path
+  // is spelled out (active locale = en-au).
+  href: "/en-au/download",
+};
+
+// Slots awaiting a data source. Each names where it will read from so the wiring
+// is a known job, not a mystery. `value: "—"` + `pending` renders the muted state.
+const metrics: Slot[] = [
+  {
+    label: "Site visitors (30d)",
+    value: "—",
+    caption: "Unique visitors across the marketing site",
+    source: "Cloudflare Web Analytics",
+    href: "https://dash.cloudflare.com/?to=/:account/web-analytics",
+    pending: true,
+  },
+  {
+    label: "macOS downloads",
+    value: "—",
+    caption: "Cumulative appcast + direct-zip pulls",
+    source: "R2 object access logs",
+    pending: true,
+  },
+  {
+    label: "Access requests",
+    value: "—",
+    caption: "Leads from the request-access form",
+    source: "Lead store (Turnstile-gated)",
+    pending: true,
+  },
+  {
+    label: "Knowledge articles",
+    value: "—",
+    caption: "Published posts in the Knowledge hub",
+    source: "knowledge content collection",
+    pending: true,
+  },
+];
+
+const links: { label: string; href: string }[] = [
+  { label: "Uptime status page", href: STATUS_URL },
+  {
+    label: "Cloudflare dashboard",
+    href: "https://dash.cloudflare.com",
+  },
+  { label: "Repository", href: "https://github.com/Sublux8/lumii-website" },
+  { label: "Public download page", href: "/en-au/download" },
+];
+---
+
+<BaseLayout title="Internal · Stats" noindex={true}>
+  <section class="container-page ops">
+    <header class="ops__head">
+      <p class="ops__eyebrow">Behind the scenes · unlisted</p>
+      <h1>Ops dashboard</h1>
+      <p class="ops__lead measure">
+        A quiet glance at the site and the macOS build. Not linked from anywhere and
+        excluded from search — bookmark it if you want it. Metrics marked
+        <em>not wired yet</em> are placeholders awaiting their data source.
+      </p>
+    </header>
+
+    <a class="status" href={STATUS_URL} rel="noopener">
+      <span class="status__dot" aria-hidden="true"></span>
+      <span class="status__text">
+        <strong>Service status</strong>
+        <span>Live uptime &amp; incident history — opens the status page</span>
+      </span>
+      <span class="status__arrow" aria-hidden="true">→</span>
+    </a>
+
+    <div class="ops__grid">
+      <a class="slot slot--live" href={release.href}>
+        <span class="slot__label">{release.label}</span>
+        <span class="slot__value">{release.value}</span>
+        <span class="slot__caption">{release.caption}</span>
+        <span class="slot__source">{release.source}</span>
+      </a>
+
+      {
+        metrics.map((m) => {
+          const Tag = m.href ? "a" : "div";
+          return (
+            <Tag
+              class:list={["slot", m.pending && "slot--pending"]}
+              href={m.href}
+              rel={m.href ? "noopener" : undefined}
+            >
+              <span class="slot__label">{m.label}</span>
+              <span class="slot__value">{m.value}</span>
+              <span class="slot__caption">{m.caption}</span>
+              <span class="slot__source">
+                {m.source}
+                {m.pending && <em class="slot__badge">not wired yet</em>}
+              </span>
+            </Tag>
+          );
+        })
+      }
+    </div>
+
+    <nav class="ops__links" aria-label="Operational links">
+      {
+        links.map((l) => (
+          <a href={l.href} rel="noopener">
+            {l.label}
+          </a>
+        ))
+      }
+    </nav>
+  </section>
+</BaseLayout>
+
+<style>
+  .ops {
+    padding-block: var(--space-3xl) var(--space-5xl);
+  }
+  .ops__head {
+    margin-block-end: var(--space-2xl);
+  }
+  .ops__eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-block-end: var(--space-sm);
+  }
+  .ops__head h1 {
+    font-size: var(--text-h1);
+  }
+  .ops__lead {
+    margin-block-start: var(--space-md);
+    color: var(--text-secondary);
+    line-height: var(--leading-normal);
+  }
+  .ops__lead em {
+    font-style: italic;
+    color: var(--text);
+  }
+
+  /* Status banner — the link out to the uptime page. */
+  .status {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    border: var(--border-width) solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--glass-bg-strong);
+    box-shadow: var(--shadow-subtle);
+    margin-block-end: var(--space-2xl);
+    transition: border-color var(--duration-standard) var(--ease-standard);
+  }
+  .status:hover {
+    border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+  .status__dot {
+    inline-size: 0.7rem;
+    block-size: 0.7rem;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);
+    flex: none;
+  }
+  .status__text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .status__text span {
+    font-size: var(--text-caption);
+    color: var(--text-secondary);
+  }
+  .status__arrow {
+    margin-inline-start: auto;
+    color: var(--text-muted);
+    font-size: var(--text-subhead);
+  }
+
+  /* Metric slots. */
+  .ops__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: var(--space-lg);
+  }
+  .slot {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-lg);
+    border: var(--border-width) solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--glass-bg-strong);
+    box-shadow: var(--shadow-subtle);
+    text-decoration: none;
+    transition: border-color var(--duration-standard) var(--ease-standard);
+  }
+  a.slot:hover {
+    border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+  .slot__label {
+    font-size: var(--text-caption);
+    font-weight: var(--weight-semibold);
+    color: var(--text-secondary);
+  }
+  .slot__value {
+    font-family: var(--font-display);
+    font-size: var(--text-h2);
+    font-weight: var(--weight-bold);
+    line-height: 1;
+    color: var(--text);
+  }
+  .slot--pending .slot__value {
+    color: var(--text-muted);
+  }
+  .slot__caption {
+    font-size: var(--text-caption);
+    color: var(--text-secondary);
+  }
+  .slot__source {
+    margin-block-start: var(--space-sm);
+    font-family: var(--font-mono);
+    font-size: var(--text-micro, 0.72rem);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+  .slot__badge {
+    font-family: var(--font-sans);
+    font-style: normal;
+    font-size: var(--text-micro, 0.72rem);
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    padding: 1px 7px;
+    border-radius: 999px;
+  }
+  .slot--live {
+    border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+
+  /* Quick links row. */
+  .ops__links {
+    margin-block-start: var(--space-2xl);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md) var(--space-xl);
+    padding-block-start: var(--space-lg);
+    border-block-start: 1px solid var(--border);
+  }
+  .ops__links a {
+    font-size: var(--text-caption);
+    font-weight: var(--weight-medium);
+    color: var(--text-secondary);
+  }
+  .ops__links a:hover {
+    color: var(--accent);
+  }
+</style>
