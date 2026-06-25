@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import Button from "@components/primitives/Button.astro";
+import LumiiStar from "@components/LumiiStar.astro";
 import { useTranslations, localeFromPath, localizePath } from "@i18n/index.ts";
 
 const locale = localeFromPath(Astro.url.pathname);
@@ -9,6 +10,7 @@ const t = useTranslations(locale);
 
 <BaseLayout title={t("error.404.title")} noindex={true}>
   <section class="container-page notfound">
+    <LumiiStar size={150} label="The Lumii star, a little lost too" />
     <p class="notfound__code">404</p>
     <h1>{t("error.404.title")}</h1>
     <p class="notfound__body measure">{t("error.404.body")}</p>
