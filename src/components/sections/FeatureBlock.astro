@@ -15,7 +15,7 @@ interface Props {
 const { title, body, icon } = Astro.props;
 ---
 
-<Card elevation="subtle" as="article" class="feature">
+<Card elevation="subtle" as="article" class="feature" data-reveal>
   {
     icon && (
       <span class="feature__icon" aria-hidden="true">
