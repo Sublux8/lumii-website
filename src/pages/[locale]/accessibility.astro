@@ -5,19 +5,13 @@
  * AA target, keyboard + reduced-motion support, logical-properties layout.
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import {
-  useTranslations,
-  localeFromPath,
-  localizePath,
-  localeStaticPaths,
-} from "@i18n/index.ts";
+import { localeFromPath, localizePath, localeStaticPaths } from "@i18n/index.ts";
 
 export function getStaticPaths() {
   return localeStaticPaths();
 }
 
 const locale = localeFromPath(Astro.url.pathname);
-const t = useTranslations(locale);
 const lp = (p: string) => localizePath(p, locale);
 
 const reviewed = "25 June 2026";
