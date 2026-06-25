@@ -50,6 +50,7 @@ export const strings = {
   "footer.privacy": "Privacy policy",
   "footer.security": "Security",
   "footer.terms": "Terms",
+  "footer.accessibility": "Accessibility",
   "footer.contact": "Contact",
   "footer.rights": "All rights reserved.",
   "footer.residency": "Patient and lead data stored in Australia.",

@@ -1,0 +1,142 @@
+---
+/**
+ * Accessibility statement (§ Phase 2). A genuine, public commitment — indexed
+ * (unlike the draft legal pages). Reflects what the site actually does: WCAG 2.1
+ * AA target, keyboard + reduced-motion support, logical-properties layout.
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { localeFromPath, localizePath, localeStaticPaths } from "@i18n/index.ts";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+const locale = localeFromPath(Astro.url.pathname);
+const lp = (p: string) => localizePath(p, locale);
+
+const reviewed = "25 June 2026";
+
+const measures = [
+  "Semantic, landmark-based HTML with a working skip-to-content link, so screen readers and keyboards can navigate the structure.",
+  "Every interactive element is reachable and operable by keyboard, with a single, clearly visible focus ring.",
+  "Text and interface colours are chosen to meet WCAG AA contrast on our light and dark themes.",
+  "All animation — including the Lumii star — is purely decorative and is switched off when your device requests reduced motion.",
+  "Layouts use relative units and logical properties, so the site reflows cleanly when you zoom to 200% or change text size.",
+  "Images and icons are either given descriptive alternatives or marked decorative so they don't add noise.",
+];
+---
+
+<BaseLayout
+  title="Accessibility"
+  description="Lumii's accessibility commitment for this website — our WCAG 2.1 AA target, what we've built in, known limitations, and how to give us feedback."
+>
+  <section class="container-page wrap">
+    <header class="head">
+      <p class="eyebrow">Accessibility</p>
+      <h1>Built to be used by everyone.</h1>
+      <p class="lead measure">
+        Lumii is for clinics that look after people, so this site should look after the
+        people using it. We aim to meet the
+        <strong>Web Content Accessibility Guidelines (WCAG) 2.1, Level AA</strong>, and we
+        treat accessibility as part of the work — not a box to tick later.
+      </p>
+    </header>
+
+    <div class="block measure">
+      <h2>What we've built in</h2>
+      <ul class="list">
+        {measures.map((m) => <li>{m}</li>)}
+      </ul>
+    </div>
+
+    <div class="block measure">
+      <h2>Where we're still improving</h2>
+      <p>
+        Lumii is pre-launch and the site grows every week, so some areas aren't perfect
+        yet. A small number of embedded third-party tools (for example, the bot-protection
+        challenge on the access form) don't fully meet our standard, and we're working
+        through the details as we add content. If something gets in your way, we'd rather
+        hear about it than have you assume we know.
+      </p>
+    </div>
+
+    <div class="block measure">
+      <h2>Tell us if something doesn't work</h2>
+      <p>
+        If you hit an accessibility barrier anywhere on this site — or you use assistive
+        technology and something feels off — please email
+        <a href="mailto:support@lumii.com.au">support@lumii.com.au</a>. Tell us the page
+        and what happened, and we'll get back to you and fix it. Your feedback genuinely
+        shapes what we build next.
+      </p>
+      <p class="reviewed">Last reviewed: {reviewed}.</p>
+    </div>
+
+    <p class="back">
+      <a href={lp("/security")}>Read about our security &amp; data posture →</a>
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .wrap {
+    padding-block: var(--space-section);
+  }
+  .head {
+    margin-block-end: var(--space-3xl);
+  }
+  .eyebrow {
+    font-size: var(--text-label);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-block-end: var(--space-sm);
+  }
+  .lead {
+    margin-block-start: var(--space-lg);
+    font-size: var(--text-lead);
+    color: var(--text-secondary);
+  }
+  .block {
+    margin-block-end: var(--space-2xl);
+  }
+  .block h2 {
+    font-size: var(--text-h3);
+    margin-block-end: var(--space-md);
+  }
+  .block p {
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-block-end: var(--space-md);
+  }
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .list li {
+    position: relative;
+    padding-inline-start: var(--space-xl);
+    color: var(--text-secondary);
+    line-height: var(--leading-normal);
+  }
+  .list li::before {
+    content: "✓";
+    position: absolute;
+    inset-inline-start: 0;
+    color: var(--success);
+    font-weight: var(--weight-bold);
+  }
+  .reviewed {
+    font-size: var(--text-caption);
+    color: var(--text-muted);
+  }
+  .back {
+    margin-block-start: var(--space-xl);
+    font-weight: var(--weight-semibold);
+  }
+</style>
