@@ -5,6 +5,9 @@
  * saved, the CSS prefers-color-scheme query takes over. Runs before first paint.
  */
 (function () {
+  // Marks JS as available, before paint, so scroll-reveal styles only hide
+  // content when they can be revealed (no-JS visitors see everything).
+  document.documentElement.classList.add("js");
   try {
     var saved = localStorage.getItem("lumii-theme");
     if (saved === "light" || saved === "dark") {
