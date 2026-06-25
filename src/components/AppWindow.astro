@@ -1,0 +1,82 @@
+---
+/**
+ * App-window frame — a calm macOS-style window chrome around a product surface.
+ * Holds either a real screenshot (`src`) or, for now, a stylised inline-SVG
+ * mockup passed as the default slot. Swapping a mockup for a real screenshot is
+ * just passing `src` instead of the slot — no layout change.
+ */
+interface Props {
+  /** Title-bar caption. */
+  label?: string;
+  /** Optional real screenshot; when set, replaces the slotted mockup. */
+  src?: string;
+  alt?: string;
+  class?: string;
+  /** Forwarded to the root figure — lets callers pass data-reveal etc. */
+  [key: string]: unknown;
+}
+const { label, src, alt = "", class: className, ...rest } = Astro.props;
+---
+
+<figure class={["appwin", className].filter(Boolean).join(" ")} {...rest}>
+  <div class="appwin__bar">
+    <span class="appwin__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    {label && <span class="appwin__label">{label}</span>}
+  </div>
+  <div class="appwin__screen">
+    {src ? <img src={src} alt={alt} loading="lazy" decoding="async" /> : <slot />}
+  </div>
+</figure>
+
+<style>
+  .appwin {
+    margin: 0;
+    inline-size: 100%;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background-color: var(--surface);
+    border: var(--border-width) solid color-mix(in srgb, var(--border) 45%, transparent);
+    box-shadow: var(--shadow-card);
+  }
+  .appwin__bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 0.6rem 0.85rem;
+    background-color: color-mix(in srgb, var(--surface-2) 24%, var(--surface));
+    border-block-end: var(--border-width) solid
+      color-mix(in srgb, var(--border) 40%, transparent);
+  }
+  .appwin__dots {
+    display: inline-flex;
+    gap: 6px;
+  }
+  .appwin__dots i {
+    inline-size: 11px;
+    block-size: 11px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--border) 70%, transparent);
+  }
+  .appwin__dots i:nth-child(1) {
+    background: var(--brand-warmth);
+  }
+  .appwin__dots i:nth-child(2) {
+    background: var(--brand-gold);
+  }
+  .appwin__dots i:nth-child(3) {
+    background: color-mix(in srgb, var(--accent) 55%, white);
+  }
+  .appwin__label {
+    font-size: var(--text-caption);
+    color: var(--text-muted);
+  }
+  .appwin__screen {
+    line-height: 0;
+  }
+  .appwin__screen :global(svg),
+  .appwin__screen img {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+  }
+</style>
