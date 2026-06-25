@@ -29,6 +29,13 @@ const {
 <section class="hero">
   <div class="hero__aurora" aria-hidden="true"></div>
   <div class="container-page hero__inner">
+    {
+      Astro.slots.has("mascot") && (
+        <div class="hero__mascot">
+          <slot name="mascot" />
+        </div>
+      )
+    }
     {eyebrow && <p class="hero__eyebrow">{eyebrow}</p>}
     <h1 class="hero__title">{title}</h1>
     <p class="hero__subtitle measure">{subtitle}</p>
@@ -69,6 +76,21 @@ const {
   .hero__inner {
     position: relative;
     z-index: var(--z-raised);
+  }
+  /* Mascot: centered above the copy on small screens; floats top-right beside
+     the headline on wide ones (the title is capped at 18ch, leaving room). */
+  .hero__mascot {
+    display: flex;
+    justify-content: center;
+    margin-block-end: var(--space-lg);
+  }
+  @media (min-width: 62rem) {
+    .hero__mascot {
+      position: absolute;
+      inset-block-start: 0;
+      inset-inline-end: 1rem;
+      margin: 0;
+    }
   }
   .hero__eyebrow {
     font-size: var(--text-label);
