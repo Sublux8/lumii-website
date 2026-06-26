@@ -55,10 +55,22 @@ const features = [
         <Button href={macRelease.url} size="lg" id="download-macos">
           {t("download.cta")}
         </Button>
-        <p class="dl__meta">
-          <span>{t("download.version", { version: macRelease.version })}</span>
+        <p
+          class="dl__meta"
+          data-download-meta
+          data-locale={localePath}
+          data-tmpl-version={t("download.version", { version: "{version}" })}
+          data-tmpl-requirements={t("download.requirements", {
+            minMacOS: "{minMacOS}",
+            size: "{size}",
+          })}
+          data-tmpl-released={t("download.released", { date: "{date}" })}
+        >
+          <span id="dl-version"
+            >{t("download.version", { version: macRelease.version })}</span
+          >
           <span aria-hidden="true">·</span>
-          <span>
+          <span id="dl-requirements">
             {
               t("download.requirements", {
                 minMacOS: macRelease.minMacOS,
@@ -67,7 +79,7 @@ const features = [
             }
           </span>
           <span aria-hidden="true">·</span>
-          <span>{t("download.released", { date: released })}</span>
+          <span id="dl-released">{t("download.released", { date: released })}</span>
         </p>
       </div>
     </div>
@@ -87,6 +99,10 @@ const features = [
     buttonLabel={t("cta.button")}
     buttonHref={lp("/request-access")}
   />
+
+  <!-- Live-refresh the version + download link from the appcast (no-JS shows the
+       server-rendered values above). See public/scripts/download-latest.js. -->
+  <script is:inline src="/scripts/download-latest.js"></script>
 </BaseLayout>
 
 <style>
