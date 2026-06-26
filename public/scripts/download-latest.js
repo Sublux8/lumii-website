@@ -7,7 +7,9 @@
 // path (connect-src 'self') — both already allowed.
 (function () {
   var meta = document.querySelector("[data-download-meta]");
-  var btn = document.getElementById("download-macos");
+  // The <Button> primitive maps its `id` prop to `data-cta` (analytics hook), not
+  // a real id attribute — so select on what actually renders, not getElementById.
+  var btn = document.querySelector('[data-cta="download-macos"]');
   if (!meta || !btn) return;
 
   var tmplVersion = meta.getAttribute("data-tmpl-version") || "";
