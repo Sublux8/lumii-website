@@ -68,7 +68,7 @@
         scene.classList.add("is-celebrating");
         setTimeout(function () {
           scene.classList.remove("is-celebrating");
-        }, 920);
+        }, 980);
       });
 
       if (!reduce) {
