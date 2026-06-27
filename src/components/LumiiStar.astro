@@ -257,17 +257,26 @@ const { size = 160, label = "The Lumii star", class: className } = Astro.props;
     }
   }
   .lumii-star.is-celebrating .lstar-float {
-    animation: lstar-spinhop 0.82s cubic-bezier(0.3, 1.3, 0.5, 1);
+    /* Spin about the star's true centre. The base rule's 110px/108px origin is
+       measured from the fill-box's top-left corner, which lands off-centre and
+       turns a spin into a wide orbit — `center` pivots in place. */
+    transform-origin: center;
+    animation: lstar-spinhop 0.9s ease-in-out;
   }
   @keyframes lstar-spinhop {
+    /* Rotation advances an even 90deg per quarter so angular velocity stays
+       constant (no lurch); translateY traces a smooth up-and-back hop. */
     0% {
-      transform: translateY(0) rotate(0) scale(1);
+      transform: translateY(0) rotate(0deg) scale(1);
     }
-    35% {
-      transform: translateY(-36px) rotate(200deg) scale(1.12);
+    25% {
+      transform: translateY(-26px) rotate(90deg) scale(1.1);
     }
-    70% {
-      transform: translateY(4px) rotate(340deg) scale(0.95);
+    50% {
+      transform: translateY(-34px) rotate(180deg) scale(1.12);
+    }
+    75% {
+      transform: translateY(-14px) rotate(270deg) scale(1.05);
     }
     100% {
       transform: translateY(0) rotate(360deg) scale(1);
