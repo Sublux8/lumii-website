@@ -256,27 +256,38 @@ const { size = 160, label = "The Lumii star", class: className } = Astro.props;
       transform: translateY(3px) scale(0.96, 1.06);
     }
   }
+  /* Freeze the shimmy during the spin. A real click keeps the cursor on the
+     star, so :hover is live and the shimmy is wobbling ±8deg (lstar-wiggle);
+     that oscillation layered under the rotation is the main thing that read as
+     "jagged". Idle shimmy (lstar-alive) is stilled by the same rule. (The JS
+     cursor-lean / eye-track set the SVG `transform` attribute, which a stylesheet
+     rule can't override — but they're static during a click, so they simply spin
+     along with the float and don't add jitter.) */
+  .lumii-star.is-celebrating .lstar-shimmy {
+    animation: none !important;
+    transform: none !important;
+  }
   .lumii-star.is-celebrating .lstar-float {
     /* Spin about the star's true centre. The base rule's 110px/108px origin is
        measured from the fill-box's top-left corner, which lands off-centre and
        turns a spin into a wide orbit — `center` pivots in place. */
     transform-origin: center;
-    animation: lstar-spinhop 0.9s ease-in-out;
+    /* Promote to a compositor layer for the spin so the body's drop-shadow
+       filter is rasterised once and rotated, not recomputed every frame. Set
+       only while celebrating, so no permanent layer is kept. */
+    will-change: transform;
+    animation: lstar-spinhop 0.95s cubic-bezier(0.45, 0, 0.55, 1);
   }
   @keyframes lstar-spinhop {
-    /* Rotation advances an even 90deg per quarter so angular velocity stays
-       constant (no lurch); translateY traces a smooth up-and-back hop. */
+    /* A single, symmetric spin: rotation 0→180→360 (even per half, so constant
+       interpolated angular speed) with a gentle symmetric lift + grow at the
+       midpoint. The cubic-bezier eases the whole turn in and out with no
+       overshoot, so there's nothing to lurch or snap. */
     0% {
       transform: translateY(0) rotate(0deg) scale(1);
     }
-    25% {
-      transform: translateY(-26px) rotate(90deg) scale(1.1);
-    }
     50% {
-      transform: translateY(-34px) rotate(180deg) scale(1.12);
-    }
-    75% {
-      transform: translateY(-14px) rotate(270deg) scale(1.05);
+      transform: translateY(-22px) rotate(180deg) scale(1.08);
     }
     100% {
       transform: translateY(0) rotate(360deg) scale(1);
