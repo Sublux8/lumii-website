@@ -276,21 +276,34 @@ const { size = 160, label = "The Lumii star", class: className } = Astro.props;
        filter is rasterised once and rotated, not recomputed every frame. Set
        only while celebrating, so no permanent layer is kept. */
     will-change: transform;
-    animation: lstar-spinhop 0.95s cubic-bezier(0.45, 0, 0.55, 1);
+    /* Rotation and hop are SEPARATE animations on SEPARATE transform
+       properties. CSS applies a timing function PER keyframe segment, so any
+       intermediate rotation keyframe (e.g. 180deg at 50%) makes the spin ease
+       out approaching it and ease back in leaving it — a visible halt at the
+       half-turn. A single from→to `rotate` has no intermediate boundary, so the
+       turn is one continuous motion. The hop keeps its own midpoint, which only
+       moves translate/scale and never stalls the rotation. */
+    animation:
+      lstar-spin 0.95s ease-in-out,
+      lstar-lift 0.95s ease-in-out;
   }
-  @keyframes lstar-spinhop {
-    /* A single, symmetric spin: rotation 0→180→360 (even per half, so constant
-       interpolated angular speed) with a gentle symmetric lift + grow at the
-       midpoint. The cubic-bezier eases the whole turn in and out with no
-       overshoot, so there's nothing to lurch or snap. */
-    0% {
-      transform: translateY(0) rotate(0deg) scale(1);
+  @keyframes lstar-spin {
+    from {
+      rotate: 0deg;
+    }
+    to {
+      rotate: 360deg;
+    }
+  }
+  @keyframes lstar-lift {
+    0%,
+    100% {
+      translate: 0 0;
+      scale: 1;
     }
     50% {
-      transform: translateY(-22px) rotate(180deg) scale(1.08);
-    }
-    100% {
-      transform: translateY(0) rotate(360deg) scale(1);
+      translate: 0 -22px;
+      scale: 1.08;
     }
   }
   .lstar-burst {
