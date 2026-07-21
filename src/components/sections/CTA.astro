@@ -5,19 +5,28 @@
 import Button from "@components/primitives/Button.astro";
 
 interface Props {
+  eyebrow?: string;
   title: string;
   body: string;
   buttonLabel: string;
   buttonHref: string;
+  note?: string;
 }
-const { title, body, buttonLabel, buttonHref } = Astro.props;
+const {
+  eyebrow = "Early access",
+  title,
+  body,
+  buttonLabel,
+  buttonHref,
+  note = "A thoughtful reply from a real person.",
+} = Astro.props;
 ---
 
 <section class="cta container-page">
   <div class="cta__panel">
     <span class="cta__halo" aria-hidden="true"></span>
     <div class="cta__copy">
-      <p class="cta__eyebrow">For foundation clinics</p>
+      <p class="cta__eyebrow">{eyebrow}</p>
       <h2 class="cta__title">{title}</h2>
       <p class="cta__body measure">{body}</p>
     </div>
@@ -25,7 +34,7 @@ const { title, body, buttonLabel, buttonHref } = Astro.props;
       <Button href={buttonHref} size="lg" id="cta-band"
         >{buttonLabel} <span aria-hidden="true">↗</span></Button
       >
-      <span>A thoughtful reply from a real person.</span>
+      <span>{note}</span>
     </div>
   </div>
 </section>

@@ -56,12 +56,12 @@ const modules = [
   },
   {
     title: "Accounting",
-    body: "Two-way Xero sync that keeps contacts, invoices, payments and quotes in lockstep. Your bookkeeper sees the truth without a single export.",
+    body: "Two-way Xero sync keeps contacts, invoices, payments and quotes aligned. Your bookkeeper gets a clear view without waiting for another export.",
     icon: "xero",
   },
   {
     title: "Analytics",
-    body: "Practitioner-level revenue, outcome tracking, and the kind of business intelligence that usually costs a consultant — built quietly into the practice.",
+    body: "Understand revenue, practitioner activity and patient outcomes without building another spreadsheet. The information practice leaders need is ready when they need it.",
     icon: "analytics",
   },
   {
@@ -74,7 +74,7 @@ const modules = [
 const pillars = [
   {
     title: "One workspace, not twelve tabs",
-    body: "One login, one window, one source of truth. The appointment book, the invoice and the claim all live in the same place — so the work stops falling between systems.",
+    body: "One login and one connected view. The appointment, invoice and claim stay together, so work is less likely to fall between systems.",
   },
   {
     title: "Australian to the core",
@@ -89,7 +89,7 @@ const pillars = [
 const faqs = [
   {
     q: "What devices does Lumii run on?",
-    a: "Lumii is a native macOS app with compiled support for iPad and iPhone. The appointment book syncs live across Mac, iPad and the reception kiosk, so everyone sees the same day in real time.",
+    a: "The clinic experience is native on macOS, with iPad and iPhone support included in Lumii's rollout. The appointment book and reception kiosk are designed to stay in step across devices.",
   },
   {
     q: "Which funders can I claim from?",
@@ -101,7 +101,7 @@ const faqs = [
   },
   {
     q: "Can we migrate our existing data?",
-    a: "Yes — Lumii supports CSV patient import, and we work hands-on with foundation clinics on onboarding. Tell us your current system when you request access and we'll map the move.",
+    a: "Yes. Lumii supports patient data import, and our team works with early-access practices to plan a careful move from their current system. Tell us what you use today and we'll talk through the right path.",
   },
 ];
 ---
@@ -110,7 +110,7 @@ const faqs = [
   <Hero
     eyebrow="The platform"
     title="Everything your practice runs on, in one calm window."
-    subtitle="Booking, billing, claiming, care plans, telehealth and the books — Lumii brings the whole day into a single Australian-built workspace, so nothing slips between tabs."
+    subtitle="Booking, billing, claiming, care plans, telehealth and reporting — Lumii brings the whole day into one Australian-built workspace, so nothing important slips between systems."
     primaryLabel={t("hero.ctaPrimary")}
     primaryHref={lp("/request-access")}
     secondaryLabel={t("nav.forClinicians")}
@@ -120,7 +120,7 @@ const faqs = [
   <section class="container-page section">
     <header class="section__head">
       <p class="section__eyebrow">What's inside</p>
-      <h2>Seven connected areas. One source of truth.</h2>
+      <h2>Seven connected areas. One clear practice.</h2>
       <p class="section__lead measure">
         Each one earns its place on its own — together they remove the double-entry, the
         reconciliation, and the end-of-day guesswork.
@@ -168,8 +168,8 @@ const faqs = [
       <div class="connected-care__shots" data-reveal>
         <ProductShot
           shotId="C04"
-          title="Connected patient record"
-          note="Appointments, invoices, claims and funded care in one patient timeline."
+          title="The patient story, kept together"
+          note="Appointments, invoices, claims and care-plan milestones in one clear timeline."
           src="/product/lumii-patient-record.webp"
           alt="Lumii patient timeline for Owen Reyes showing appointments, invoice, Comcare claim and active care plan"
           device="wide"
@@ -179,8 +179,8 @@ const faqs = [
         />
         <ProductShot
           shotId="M02"
-          title="The same care, in myLumii"
-          note="Records, rehabilitation and correspondence from connected clinics in one personal care hub."
+          title="Care continues in myLumii"
+          note="Records, rehabilitation and correspondence stay accessible between visits."
           src="/product/mylumii-care.webp"
           alt="myLumii Care records screen showing rehab programs, pathology results, a care plan, referral and clinic notes"
           device="phone"
@@ -207,8 +207,9 @@ const faqs = [
   <FAQ title="Platform questions, answered" items={faqs} />
 
   <CTA
-    title={t("cta.title")}
-    body={t("cta.body")}
+    eyebrow="For Australian practices"
+    title="See how much lighter the day could feel."
+    body="Tell us about your practice, your team and the systems you use now. We'll help you explore whether Lumii is the right fit."
     buttonLabel={t("cta.button")}
     buttonHref={lp("/request-access")}
   />

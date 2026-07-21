@@ -27,7 +27,7 @@ const pillars = [
   {
     icon: "spark",
     title: "Patterns, not pronouncements",
-    body: "myLumii brings sleep, movement, food, mood and care together on-device to help people bring better questions to a practitioner.",
+    body: "myLumii brings sleep, movement, food, mood and care together privately, helping you notice patterns and bring better questions to a practitioner.",
   },
 ];
 
@@ -64,8 +64,8 @@ const productAreas = [
     number: "05",
     name: "Insights",
     summary:
-      "An observational, on-device pattern engine with transparent source windows and a shareable appointment-question summary.",
-    proof: "Cross-metric patterns · Appointment summary · On-device",
+      "Notice patterns across your own data, see what each observation is based on and prepare useful questions for your next appointment.",
+    proof: "Personal patterns · Clear context · Appointment questions",
   },
 ];
 
@@ -89,30 +89,30 @@ const lifeModes = [
     <div class="myl-hero__glow" aria-hidden="true"></div>
     <div class="container-page myl-hero__inner">
       <div class="myl-hero__copy">
-        <p class="myl-kicker">The patient side of Lumii · in development</p>
+        <p class="myl-kicker">For people · early access opening progressively</p>
         <h1>Your health,<br /><em>held gently.</em></h1>
         <p class="myl-hero__lead">
-          myLumii brings every connected clinic, health signal and care conversation into
-          one warm place—then keeps you in control of what leaves it.
+          Bring your connected clinics, health information and care conversations into one
+          warm place—while staying in control of what you share and with whom.
         </p>
         <div class="myl-hero__actions">
           <Button href={lp("/request-access")} size="lg"
-            >Ask about myLumii <span aria-hidden="true">↗</span></Button
+            >Join myLumii early access <span aria-hidden="true">↗</span></Button
           >
           <Button href="#inside" size="lg" variant="ghost">See what’s inside</Button>
         </div>
         <ul class="myl-hero__proof">
-          <li><Icon name="shield" size={17} /> Consent-led clinic sharing</li>
-          <li><Icon name="au" size={17} /> Built for the Lumii care ecosystem</li>
-          <li><Icon name="spark" size={17} /> Insights calculated on-device</li>
+          <li><Icon name="shield" size={17} /> Your sharing, your choice</li>
+          <li><Icon name="au" size={17} /> Designed in Australia</li>
+          <li><Icon name="spark" size={17} /> Private insights on your device</li>
         </ul>
       </div>
 
       <div class="myl-hero__phones" data-reveal>
         <ProductShot
           shotId="M01"
-          title="Today and Vitality"
-          note="Vitality, the next appointment and the day’s health signals in one gentle view."
+          title="Start with what matters today"
+          note="Your Vitality, next appointment and daily health signals in one gentle view."
           src="/product/mylumii-today.webp"
           alt="myLumii Today screen showing Alex's Vitality, next appointment, steps, sleep and clinic connections"
           device="phone"
@@ -120,8 +120,8 @@ const lifeModes = [
         />
         <ProductShot
           shotId="M05"
-          title="Personal Insights"
-          note="Personal patterns explained with their sources, evidence window and careful language."
+          title="Understand your own patterns"
+          note="See what changed, what it may relate to and the information behind each observation."
           src="/product/mylumii-insight.webp"
           alt="myLumii Insights screen showing observational patterns across heart rate, exercise, caffeine, sleep, movement and mood"
           device="phone"
@@ -152,14 +152,14 @@ const lifeModes = [
         <p class="myl-kicker">Care that travels with you</p>
         <h2>The space between visits finally belongs to the same story.</h2>
         <p>
-          A person can link multiple clinics, book the right service, receive a record,
-          complete a clinic form, keep a conversation going and share rehabilitation
-          progress back to the prescribing team.
+          Link the clinics you choose, book the right service, receive records, complete
+          forms and keep care conversations together. When rehabilitation is assigned, you
+          can follow the plan and share progress back with the prescribing team.
         </p>
         <ul class="myl-checks">
           <li><span>✓</span> Book and cancel eligible appointments</li>
           <li><span>✓</span> Read clinic-shared records and letters</li>
-          <li><span>✓</span> Complete assigned forms natively</li>
+          <li><span>✓</span> Complete assigned forms in myLumii</li>
           <li><span>✓</span> Message each clinic in its own thread</li>
           <li><span>✓</span> Accept and log prescribed rehabilitation</li>
         </ul>
@@ -167,8 +167,8 @@ const lifeModes = [
       <div class="myl-phone-pair" data-reveal>
         <ProductShot
           shotId="M02"
-          title="Care hub"
-          note="Rehabilitation, results, care plans, letters and clinical notes from connected clinics."
+          title="Your care, without the paper trail"
+          note="Rehabilitation, results, care plans, letters and notes from your connected clinics."
           src="/product/mylumii-care.webp"
           alt="myLumii Care records screen showing rehab programs, pathology results, a care plan, referral and clinic notes"
           device="phone"
@@ -176,8 +176,8 @@ const lifeModes = [
         />
         <ProductShot
           shotId="M03"
-          title="Clinic-assigned care"
-          note="A clinic-assigned intake form that prepares the practitioner before the first visit."
+          title="Arrive with the important details already shared"
+          note="Complete a clinic's intake form in your own time, so your practitioner can prepare."
           src="/product/mylumii-assigned-care.webp"
           alt="myLumii new-patient intake form assigned by Harbourline Family Practice"
           device="phone"
@@ -192,8 +192,8 @@ const lifeModes = [
       <div class="myl-health__shots" data-reveal>
         <ProductShot
           shotId="M04"
-          title="Health overview"
-          note="Eight health signals with readable trends and five connected data sources."
+          title="Your health, made easier to read"
+          note="Bring key health signals and connected devices into one clear, readable view."
           src="/product/mylumii-health.webp"
           alt="myLumii Health screen showing heart rate, sleep, steps, blood glucose, blood pressure, weight, oxygen saturation and respiratory rate"
           device="phone"
@@ -201,8 +201,8 @@ const lifeModes = [
         />
         <ProductShot
           shotId="M05"
-          title="Pattern insight"
-          note="Transparent source labels, comparison windows and patterns framed as observations—not advice."
+          title="Useful context, never a diagnosis"
+          note="Every pattern shows its sources and time window, and is framed as an observation—not advice."
           src="/product/mylumii-insight.webp"
           alt="myLumii Insights screen showing observational patterns across heart rate, exercise, caffeine, sleep, movement and mood"
           device="phone"
@@ -214,15 +214,15 @@ const lifeModes = [
         <p class="myl-kicker">Health, with boundaries</p>
         <h2>See the whole picture without giving the whole picture away.</h2>
         <p>
-          myLumii reads supported data from Apple Health and Health Connect, fuses
-          overlapping sources without double-counting, and lets the person decide which
-          health categories each clinic can receive.
+          Connect supported data from Apple Health or Health Connect without double-counting
+          overlapping sources. You decide which health categories, if any, each clinic can
+          receive.
         </p>
         <div class="myl-privacy-note">
           <Icon name="lock" size={21} />
           <p>
-            Journal, food and personal exercise data have no clinic-sharing control by
-            design. They remain part of the person’s private record.
+            Your journal, food and personal exercise spaces are private by design. They do
+            not include a clinic-sharing option.
           </p>
         </div>
       </div>
@@ -231,11 +231,12 @@ const lifeModes = [
 
   <section class="myl-atlas container-page" id="inside">
     <header class="myl-atlas__head" data-reveal>
-      <p class="myl-kicker">Inside the verified client</p>
+      <p class="myl-kicker">Everything has its place</p>
       <h2>Five simple places. A surprisingly complete picture.</h2>
       <p>
-        The myLumii demo and client builds exercise these workflows end to end. Live
-        availability remains capability-gated until the shared Lumii release checks pass.
+        Move naturally between today's priorities, connected care, health information,
+        private wellbeing spaces and personal insights—without turning your life into a
+        dashboard.
       </p>
     </header>
     <div class="myl-atlas__list">
@@ -258,16 +259,16 @@ const lifeModes = [
         <p class="myl-kicker">Made for a whole life</p>
         <h2>More thoughtful than “track everything”.</h2>
         <p>
-          myLumii includes deeper spaces for the moments and routines that change how care
-          feels. Sensitive experiences use gentle language, explicit sharing and clear
-          exits—not gamification.
+          myLumii includes thoughtful spaces for the moments and routines that shape how
+          you feel. Sensitive experiences use gentle language, clear choices and no
+          pressure to chase streaks or perfect scores.
         </p>
       </div>
       <div class="myl-life__visual" data-reveal>
         <ProductShot
           shotId="M06"
           title="Nourish, without judgement"
-          note="Adaptive energy, macro guidance, hydration and diet quality in a private personal space."
+          note="Understand energy, protein, hydration and diet quality in a private space that learns with you."
           src="/product/mylumii-nourish.webp"
           alt="myLumii Nourish screen showing adaptive calorie and macro targets, fibre, added sugar, water and diet quality"
           device="phone"
@@ -288,24 +289,25 @@ const lifeModes = [
   <section class="myl-honesty container-page">
     <div class="myl-honesty__panel" data-reveal>
       <div>
-        <p class="myl-kicker">Release honesty</p>
-        <h2>Built, verified—and still gated with care.</h2>
+        <p class="myl-kicker">Early access</p>
+        <h2>We’ll open the doors thoughtfully.</h2>
       </div>
       <p>
-        The myLumii demo is a complete working product path, and the iOS, Android and web
-        clients build successfully. A real-patient release remains gated until the shared
-        Lumii functions, data rules, App Check and cross-repository integration tests are
-        deployed and passed. Cloud-wearable connections and paid subscriptions stay hidden
-        until their server contracts are ready.
+        myLumii will open progressively with participating Lumii practices and invited
+        individuals, so privacy, consent and support are clear from the very first day.
+        Join early access and tell us whether you're interested for yourself, your family
+        or the people your practice cares for.
       </p>
     </div>
   </section>
 
   <CTA
-    title="Care feels different when everyone can see the same story."
-    body="Join the foundation-clinic conversation and help us shape how Lumii and myLumii come together for your team and patients."
-    buttonLabel="Request early access"
+    eyebrow="For individuals, families and care teams"
+    title="Your health should feel connected—not scattered."
+    body="Join myLumii early access for yourself, or talk to us about bringing a more connected experience to your patients."
+    buttonLabel="Join early access"
     buttonHref={lp("/request-access")}
+    note="Tell us which side of Lumii you're interested in."
   />
 </BaseLayout>
 

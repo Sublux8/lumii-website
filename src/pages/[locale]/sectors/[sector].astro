@@ -10,7 +10,7 @@ import Hero from "@components/sections/Hero.astro";
 import FeatureBlock from "@components/sections/FeatureBlock.astro";
 import Badge from "@components/primitives/Badge.astro";
 import CTA from "@components/sections/CTA.astro";
-import { useTranslations, localeFromPath, localizePath } from "@i18n/index.ts";
+import { localeFromPath, localizePath } from "@i18n/index.ts";
 import { LOCALES } from "@i18n/config.ts";
 
 export async function getStaticPaths() {
@@ -29,7 +29,6 @@ const { data } = sector;
 const { Content } = await render(sector);
 
 const locale = localeFromPath(Astro.url.pathname);
-const t = useTranslations(locale);
 const lp = (p: string) => localizePath(p, locale);
 ---
 
@@ -80,8 +79,9 @@ const lp = (p: string) => localizePath(p, locale);
   </section>
 
   <CTA
-    title={t("cta.title")}
-    body={t("cta.body")}
+    eyebrow="For your practice"
+    title="See what a better-connected day could look like."
+    body="Tell us how your team works, which systems you use and where the friction lives. We'll help you explore whether Lumii fits."
     buttonLabel={data.cta.label}
     buttonHref={data.cta.href ?? lp("/request-access")}
   />

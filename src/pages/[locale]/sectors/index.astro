@@ -1,13 +1,12 @@
 ---
 /**
- * Sectors landing — data-driven from the `sectors` collection. Published sectors
- * render as interactive cards linking to their page; reserved sectors render as
- * "coming soon" tiles (no link) so the roadmap is visible without dead routes.
+ * Sectors landing — data-driven from the `sectors` collection. Only published
+ * clinical sectors appear publicly; future audience directions remain private
+ * until they have a genuine customer story.
  */
 import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import Card from "@components/primitives/Card.astro";
-import Badge from "@components/primitives/Badge.astro";
 import Icon from "@components/primitives/Icon.astro";
 import {
   useTranslations,
@@ -26,7 +25,6 @@ const lp = (p: string) => localizePath(p, locale);
 
 const all = (await getCollection("sectors")).sort((a, b) => a.data.order - b.data.order);
 const published = all.filter((s) => s.data.status === "published");
-const reserved = all.filter((s) => s.data.status === "reserved");
 ---
 
 <BaseLayout title={t("sectors.title")} description={t("sectors.subtitle")}>
@@ -50,17 +48,17 @@ const reserved = all.filter((s) => s.data.status === "reserved");
           </Card>
         ))
       }
-      {
-        reserved.map((s) => (
-          <Card elevation="flat" class="sector sector--reserved">
-            <div class="sector__badge">
-              <Badge tone="gray">{t("sectors.comingSoon")}</Badge>
-            </div>
-            <h2 class="sector__title">{s.data.audience}</h2>
-            <p class="sector__summary">{s.data.summary}</p>
-          </Card>
-        ))
-      }
+      <Card href={lp("/mylumii")} elevation="card" class="sector">
+        <span class="sector__icon" aria-hidden="true">
+          <Icon name="spark" size={22} />
+        </span>
+        <h2 class="sector__title">Individuals &amp; families</h2>
+        <p class="sector__summary">
+          Keep connected care, health information and personal insights in one private,
+          consent-led place with myLumii.
+        </p>
+        <span class="sector__cta">Meet myLumii →</span>
+      </Card>
     </div>
   </section>
 </BaseLayout>
@@ -103,12 +101,6 @@ const reserved = all.filter((s) => s.data.status === "reserved");
   }
   .sector {
     position: relative;
-  }
-  .sector--reserved {
-    opacity: 0.72;
-  }
-  .sector__badge {
-    margin-block-end: var(--space-md);
   }
   .sector__title {
     font-size: var(--text-h3);

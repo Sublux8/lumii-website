@@ -92,15 +92,15 @@ const learnSteps = [
 const faqs = [
   {
     q: "Is Lumii available yet?",
-    a: "Lumii is pre-launch. We are opening access progressively to foundation clinics and working closely with each team through setup and onboarding.",
+    a: "Lumii is opening progressively to early-access practices. We work closely with each team through migration, setup and onboarding so the move feels supported from the beginning.",
   },
   {
     q: "How will onboarding and training work?",
-    a: "Foundation clinics receive hands-on onboarding. Lumii Learn is the planned web-based training home for role-based lessons, clinic setup checklists and ongoing education as the platform grows.",
+    a: "Early-access practices receive hands-on onboarding. Lumii Learn will add short role-based lessons, practice setup checklists and ongoing education, so owners, reception teams and practitioners can learn what matters to them.",
   },
   {
     q: "What is myLumii?",
-    a: "myLumii is the patient companion being prepared alongside the clinic platform. It brings appointments, clinic-shared records, forms, messages, rehabilitation, health data and personal insights into one consent-led experience. Real-patient access will open only after the shared Lumii release checks are complete.",
+    a: "myLumii is the personal side of the Lumii experience. It brings appointments, clinic-shared records, forms, messages, rehabilitation, health data and personal insights into one private, consent-led place. Access will open progressively for individuals and participating Lumii practices.",
   },
   {
     q: "Where is patient data stored?",
@@ -108,7 +108,7 @@ const faqs = [
   },
   {
     q: "Which disciplines does Lumii support?",
-    a: "Lumii is multi-disciplinary—starting with allied health and general practice, with more clinic types planned as the platform grows.",
+    a: "Lumii is designed for multidisciplinary care, including allied health, general practice and medical specialists. Its workflows adapt to different teams, funding arrangements and ways of delivering care.",
   },
 ];
 ---
@@ -208,19 +208,20 @@ const faqs = [
       <div class="learn-section__glow" aria-hidden="true"></div>
       <div class="learn-section__intro" data-reveal>
         <p class="section-kicker section-kicker--light">
-          <span>In development</span> Lumii Learn
+          <span>Guided onboarding</span> Lumii Learn
         </p>
-        <h2>Go-live should feel like a shared milestone, not a leap of faith.</h2>
+        <h2>Your whole team should feel ready before the first busy morning.</h2>
         <p>
-          Lumii Learn is the planned web home for clinic onboarding and training—so every
-          person knows what to learn, what is ready, and where to get help.
+          Lumii Learn will give owners, reception teams and practitioners a clear path
+          through setup and training—so everyone knows what to learn, what is ready and
+          where to get help.
         </p>
         <a class="learn-section__link" href={lp("/request-access")}
-          >Help shape onboarding <span aria-hidden="true">→</span></a
+          >Talk to us about your team <span aria-hidden="true">→</span></a
         >
       </div>
 
-      <ol class="learn-path" aria-label="Planned Lumii Learn journey">
+      <ol class="learn-path" aria-label="Lumii Learn onboarding journey">
         {
           learnSteps.map((step) => (
             <li class="learn-step" data-reveal>
@@ -235,7 +236,7 @@ const faqs = [
       <div
         class="learn-preview"
         data-reveal
-        aria-label="Illustrative Lumii Learn progress overview"
+        aria-label="Preview of a Lumii Learn progress overview"
       >
         <div class="learn-preview__top">
           <div>
@@ -258,8 +259,8 @@ const faqs = [
 
   <section class="sectors-section container-page">
     <header class="story-head" data-reveal>
-      <p class="section-kicker">Made to fit your discipline</p>
-      <h2>One platform. Your kind of practice.</h2>
+      <p class="section-kicker">Made to fit your practice</p>
+      <h2>One platform. Many ways to care.</h2>
       <p>
         Funding, compliance and daily workflows change by discipline. Lumii starts from
         that reality instead of asking every clinic to work the same way.
@@ -288,9 +289,10 @@ const faqs = [
   <FAQ title="A few honest answers" items={faqs} />
 
   <CTA
-    title="Let’s make your clinic’s next chapter calmer."
-    body="Join the foundation-clinic list. Tell us what your team needs and a real person from Lumii will be in touch."
-    buttonLabel="Request early access"
+    eyebrow="For practices, practitioners and people"
+    title="Better care can feel lighter on both sides."
+    body="Tell us whether you're exploring Lumii for your practice, your work or your own health. A real person from our team will be in touch."
+    buttonLabel="Join early access"
     buttonHref={lp("/request-access")}
   />
 </BaseLayout>

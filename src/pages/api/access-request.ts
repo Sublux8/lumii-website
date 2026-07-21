@@ -20,6 +20,7 @@ export const prerender = false;
 const LIMITS = {
   name: 200,
   email: 320,
+  interest: 40,
   clinic: 200,
   discipline: 120,
   message: 5000,
@@ -27,6 +28,7 @@ const LIMITS = {
 } as const;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const INTERESTS = new Set(["practice", "practitioner", "personal"]);
 const TURNSTILE_VERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 const RESEND_URL = "https://api.resend.com/emails";
 const DEFAULT_FROM = "Lumii <hello@mail.lumii.com.au>";
@@ -82,6 +84,7 @@ async function verifyTurnstile(
 interface Lead {
   name: string;
   email: string;
+  interest: string;
   clinic: string;
   discipline: string;
   message: string;
@@ -103,7 +106,7 @@ async function sendEmails(lead: Lead): Promise<void> {
     subject: "We've got your Lumii access request",
     text: `Hi ${lead.name},
 
-Thanks for requesting early access to Lumii. We've received your details and will be in touch as we onboard foundation clinics.
+Thanks for joining Lumii early access. We've received your details and will be in touch as access opens for the experience you're interested in.
 
 If you need to add anything, just reply to this email.
 
@@ -114,6 +117,7 @@ ${REPLY_TO}`,
   const detail = [
     `Name:       ${lead.name}`,
     `Email:      ${lead.email}`,
+    `Interest:   ${lead.interest || "—"}`,
     `Clinic:     ${lead.clinic || "—"}`,
     `Discipline: ${lead.discipline || "—"}`,
     `Locale:     ${lead.locale}`,
@@ -173,15 +177,29 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   const lead: Lead = {
     name: clean(body.name, LIMITS.name),
     email: clean(body.email, LIMITS.email).toLowerCase(),
+    interest: clean(body.interest, LIMITS.interest),
     clinic: clean(body.clinic, LIMITS.clinic),
     discipline: clean(body.discipline, LIMITS.discipline),
     message: clean(body.message, LIMITS.message),
     locale: clean(body.locale, LIMITS.locale) || "en-AU",
   };
 
-  if (!lead.name || !lead.email || !EMAIL_RE.test(lead.email)) {
+  if (
+    !lead.name ||
+    !lead.email ||
+    !EMAIL_RE.test(lead.email) ||
+    !INTERESTS.has(lead.interest)
+  ) {
     return json({ ok: false, error: "invalid" }, 400);
   }
+
+  const storedMessage = [
+    lead.interest ? `Early-access interest: ${lead.interest}` : "",
+    lead.message,
+  ]
+    .filter(Boolean)
+    .join("\n\n")
+    .slice(0, LIMITS.message);
 
   const insert = await fetch(`${env.SUPABASE_URL}/rest/v1/access_requests`, {
     method: "POST",
@@ -196,7 +214,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       email: lead.email,
       clinic: lead.clinic || null,
       discipline: lead.discipline || null,
-      message: lead.message || null,
+      message: storedMessage || null,
       locale: lead.locale,
       source: "website:request-access",
     }),

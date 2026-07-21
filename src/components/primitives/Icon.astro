@@ -8,7 +8,7 @@
  *
  * Names map to features (frontdesk, claim, careplan, telehealth, xero, analytics,
  * shield, au, update, lock) and sector ids (allied-health, general-practice,
- * public-health, academic-research).
+ * medical-specialists, public-health, academic-research).
  */
 interface Props {
   name: string;
@@ -38,6 +38,7 @@ const ICONS: Record<string, string> = {
   spark: `<path d="M12 3.5l1.9 5.1a3 3 0 0 0 1.8 1.8L20.5 12l-4.9 1.6a3 3 0 0 0-1.8 1.8L12 20.5l-1.9-5.1a3 3 0 0 0-1.8-1.8L3.5 12l4.8-1.6a3 3 0 0 0 1.8-1.8z"/>`,
   "allied-health": `<path d="M3 12.5h4l2.4 6.5 5-14L17 12.5h4"/>`,
   "general-practice": `<circle cx="12" cy="12" r="8.5"/><path d="M12 8v8M8 12h8"/>`,
+  "medical-specialists": `<path d="M6 3.5h12v17H6z"/><path d="M9 3.5v4h6v-4M9 11h6M9 15h4"/><circle cx="17.5" cy="17.5" r="3"/><path d="M19.7 19.7L22 22"/>`,
   "public-health": `<circle cx="9" cy="9" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M15.8 6.4a3 3 0 0 1 0 5.6M16.5 19a5.6 5.6 0 0 0-1.8-4.1"/>`,
   "academic-research": `<path d="M9 3h6M10 3v5.8l-4.4 8a2 2 0 0 0 1.8 3h9.2a2 2 0 0 0 1.8-3L14 8.8V3"/><path d="M7.6 15h8.8"/>`,
 };
