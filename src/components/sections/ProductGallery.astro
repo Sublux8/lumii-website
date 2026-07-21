@@ -33,8 +33,13 @@ import ProductShot from "@components/ProductShot.astro";
     <ProductShot
       shotId="C02"
       title="Claims without the chase"
-      note="A populated claiming queue with several funders, statuses and demo amounts."
+      note="A live financial command centre for claims, payer exposure and the work that needs attention next."
+      src="/product/lumii-claims.png"
+      alt="Lumii billing command centre showing claiming queues, payer exposure, account hotlist and funder balances"
+      device="wide"
+      showChrome={false}
       variant="care"
+      class="gallery__claims"
     />
     <ProductShot
       shotId="C03"
@@ -42,6 +47,7 @@ import ProductShot from "@components/ProductShot.astro";
       note="A care-plan detail showing sessions used, referral validity and the next review."
       device="tablet"
       variant="care"
+      class="gallery__care"
     />
   </div>
 </section>
@@ -80,6 +86,15 @@ import ProductShot from "@components/ProductShot.astro";
     gap: var(--space-xl);
     max-inline-size: 65rem;
     margin: var(--space-2xl) auto 0;
+  }
+  .gallery__claims {
+    grid-column: 1 / -1;
+  }
+  .gallery__care {
+    grid-column: 1 / -1;
+    inline-size: 100%;
+    max-inline-size: 42rem;
+    justify-self: center;
   }
   @media (max-width: 44rem) {
     .gallery__row {

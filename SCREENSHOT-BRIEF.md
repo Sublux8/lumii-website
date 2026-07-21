@@ -14,6 +14,7 @@ The website is ready to accept these captures in `public/product/`. PNG or WebP 
 
 ### C02 — Claims queue
 
+- Status: supplied and integrated
 - Suggested file: `lumii-claims.webp`
 - Format: desktop, 16:10
 - Show: a populated claiming queue with several funders, statuses and believable demo amounts
