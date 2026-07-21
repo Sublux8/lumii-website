@@ -32,6 +32,7 @@ const {
 } = Astro.props;
 
 const useChrome = showChrome && device !== "phone";
+const dialogId = `product-shot-dialog-${shotId}`;
 ---
 
 <figure
@@ -43,6 +44,7 @@ const useChrome = showChrome && device !== "phone";
     className,
   ]}
   data-shot-id={shotId}
+  data-product-shot
   style={aspectRatio ? `--product-shot-aspect: ${aspectRatio}` : undefined}
 >
   <div class="product-shot__frame">
@@ -63,7 +65,45 @@ const useChrome = showChrome && device !== "phone";
 
     {
       src ? (
-        <img src={src} alt={alt} loading="lazy" decoding="async" />
+        <>
+          <button
+            type="button"
+            class="product-shot__open"
+            aria-label={`Enlarge ${title}`}
+            aria-controls={dialogId}
+            aria-haspopup="dialog"
+            data-product-shot-open
+          >
+            <img src={src} alt={alt} loading="lazy" decoding="async" />
+            <span class="product-shot__zoom" aria-hidden="true">View larger <b>↗</b></span>
+          </button>
+          <dialog
+            id={dialogId}
+            class="product-shot__dialog"
+            aria-labelledby={`${dialogId}-title`}
+            data-product-shot-dialog
+          >
+            <div class="product-shot__dialog-bar">
+              <div>
+                <strong id={`${dialogId}-title`}>{title}</strong>
+                {note && <span>{note}</span>}
+              </div>
+              <div class="product-shot__dialog-actions">
+                <a href={src} target="_blank" rel="noreferrer">Open full size</a>
+                <button
+                  type="button"
+                  aria-label={`Close enlarged ${title}`}
+                  data-product-shot-close
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+            </div>
+            <div class="product-shot__dialog-canvas">
+              <img src={src} alt={alt} decoding="async" />
+            </div>
+          </dialog>
+        </>
       ) : (
         <div
           class="product-shot__placeholder"
@@ -188,6 +228,47 @@ const useChrome = showChrome && device !== "phone";
   </figcaption>
 </figure>
 
+<script>
+  const syncDialogScrollLock = () => {
+    document.documentElement.classList.toggle(
+      "has-product-shot-dialog",
+      Boolean(document.querySelector("[data-product-shot-dialog][open]")),
+    );
+  };
+
+  document.querySelectorAll<HTMLElement>("[data-product-shot]").forEach((shot) => {
+    if (shot.dataset.lightboxReady === "true") return;
+
+    const opener = shot.querySelector<HTMLButtonElement>("[data-product-shot-open]");
+    const dialog = shot.querySelector<HTMLDialogElement>("[data-product-shot-dialog]");
+    const closer = shot.querySelector<HTMLButtonElement>("[data-product-shot-close]");
+
+    if (!opener || !dialog || !closer) return;
+    shot.dataset.lightboxReady = "true";
+
+    opener.addEventListener("click", () => {
+      if (typeof dialog.showModal === "function") {
+        dialog.showModal();
+        syncDialogScrollLock();
+      } else {
+        window.open(opener.querySelector("img")?.src, "_blank", "noopener,noreferrer");
+      }
+    });
+
+    closer.addEventListener("click", () => dialog.close());
+    dialog.addEventListener("close", syncDialogScrollLock);
+    dialog.addEventListener("click", (event) => {
+      const bounds = dialog.getBoundingClientRect();
+      const outside =
+        event.clientX < bounds.left ||
+        event.clientX > bounds.right ||
+        event.clientY < bounds.top ||
+        event.clientY > bounds.bottom;
+      if (outside) dialog.close();
+    });
+  });
+</script>
+
 <style>
   .product-shot {
     margin: 0;
@@ -249,17 +330,164 @@ const useChrome = showChrome && device !== "phone";
     font-size: 0.65rem;
     font-weight: 700;
   }
-  .product-shot__frame > img {
+  .product-shot__open {
+    position: relative;
+    display: block;
     inline-size: 100%;
     block-size: calc(100% - 2.45rem);
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: zoom-in;
+  }
+  .product-shot__open > img {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
     object-fit: cover;
     object-position: top center;
   }
-  .product-shot.is-chrome-free .product-shot__frame > img {
+  .product-shot__open:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--accent) 74%, white);
+    outline-offset: -4px;
+  }
+  .product-shot.is-chrome-free .product-shot__open {
     block-size: 100%;
   }
-  .product-shot--phone .product-shot__frame > img {
+  .product-shot--phone .product-shot__open {
     block-size: 100%;
+  }
+  .product-shot__zoom {
+    position: absolute;
+    inset-inline-end: 0.9rem;
+    inset-block-end: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.58rem 0.76rem;
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    border-radius: 99px;
+    background: rgba(17, 43, 39, 0.84);
+    color: white;
+    font-size: 0.72rem;
+    font-weight: 750;
+    letter-spacing: 0.01em;
+    opacity: 0;
+    transform: translateY(0.35rem);
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease,
+      background 180ms ease;
+    backdrop-filter: blur(12px);
+  }
+  .product-shot__zoom b {
+    font-size: 0.95rem;
+    line-height: 1;
+  }
+  .product-shot__open:hover .product-shot__zoom,
+  .product-shot__open:focus-visible .product-shot__zoom {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .product-shot__open:hover .product-shot__zoom {
+    background: rgba(10, 124, 108, 0.92);
+  }
+  .product-shot__dialog {
+    inline-size: min(96vw, 120rem);
+    max-inline-size: none;
+    max-block-size: 94dvh;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 1.35rem;
+    background: #eaf4f1;
+    color: #16322e;
+    box-shadow: 0 2rem 7rem rgba(0, 0, 0, 0.42);
+  }
+  .product-shot__dialog::backdrop {
+    background: rgba(8, 24, 22, 0.82);
+    backdrop-filter: blur(10px);
+  }
+  .product-shot__dialog-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    min-block-size: 4.25rem;
+    padding: 0.85rem 1rem 0.85rem 1.2rem;
+    border-block-end: 1px solid rgba(22, 50, 46, 0.1);
+    background: rgba(255, 253, 248, 0.96);
+  }
+  .product-shot__dialog-bar > div:first-child {
+    min-inline-size: 0;
+  }
+  .product-shot__dialog-bar strong,
+  .product-shot__dialog-bar span {
+    display: block;
+  }
+  .product-shot__dialog-bar strong {
+    color: #16322e;
+    font-size: 0.92rem;
+  }
+  .product-shot__dialog-bar > div:first-child > span {
+    margin-block-start: 0.18rem;
+    overflow: hidden;
+    color: #617571;
+    font-size: 0.72rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .product-shot__dialog-actions {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 0.65rem;
+  }
+  .product-shot__dialog-actions a {
+    color: #087c6c;
+    font-size: 0.76rem;
+    font-weight: 750;
+    text-decoration: none;
+  }
+  .product-shot__dialog-actions a:hover {
+    text-decoration: underline;
+  }
+  .product-shot__dialog-actions button {
+    display: grid;
+    place-items: center;
+    inline-size: 2.35rem;
+    block-size: 2.35rem;
+    padding: 0;
+    border: 1px solid rgba(22, 50, 46, 0.13);
+    border-radius: 50%;
+    background: white;
+    color: #16322e;
+    cursor: pointer;
+  }
+  .product-shot__dialog-actions button:hover {
+    background: #dff2ed;
+  }
+  .product-shot__dialog-actions button span {
+    font-size: 1.55rem;
+    font-weight: 300;
+    line-height: 1;
+    transform: translateY(-0.05rem);
+  }
+  .product-shot__dialog-canvas {
+    max-block-size: calc(94dvh - 4.25rem);
+    overflow: auto;
+    overscroll-behavior: contain;
+    background: #dcebe7;
+  }
+  .product-shot__dialog-canvas img {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+  }
+  :global(html.has-product-shot-dialog) {
+    overflow: hidden;
   }
   .product-shot__placeholder {
     position: relative;
@@ -578,6 +806,29 @@ const useChrome = showChrome && device !== "phone";
     }
     .product-shot__badge {
       font-size: 0.5rem;
+    }
+    .product-shot__dialog {
+      inline-size: calc(100vw - 1rem);
+      border-radius: 1rem;
+    }
+    .product-shot__dialog-bar {
+      gap: 0.75rem;
+      padding-inline: 0.85rem 0.7rem;
+    }
+    .product-shot__dialog-bar > div:first-child > span,
+    .product-shot__dialog-actions a {
+      display: none;
+    }
+  }
+  @media (hover: none) {
+    .product-shot__zoom {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .product-shot__zoom {
+      transition: none;
     }
   }
 </style>
