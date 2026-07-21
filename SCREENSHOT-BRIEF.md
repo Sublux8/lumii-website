@@ -40,6 +40,7 @@ The website is ready to accept these captures in `public/product/`. PNG or WebP 
 
 ### M01 — Today and Vitality
 
+- Status: supplied and integrated
 - Suggested file: `mylumii-today.webp`
 - Format: phone portrait; ideally 1290×2796 or a clean simulator export
 - Show: Vitality, next appointment, daily health glance and a care update
@@ -47,6 +48,7 @@ The website is ready to accept these captures in `public/product/`. PNG or WebP 
 
 ### M02 — Care hub
 
+- Status: supplied and integrated
 - Suggested file: `mylumii-care.webp`
 - Format: phone portrait
 - Show: the Care area with appointments, records, messages and forms visible or clearly represented
@@ -54,6 +56,7 @@ The website is ready to accept these captures in `public/product/`. PNG or WebP 
 
 ### M03 — Assigned form or rehabilitation
 
+- Status: supplied and integrated
 - Suggested file: `mylumii-assigned-care.webp`
 - Format: phone portrait
 - Show: one useful assigned form or rehabilitation detail, visibly connected to a fictional clinic
@@ -61,6 +64,7 @@ The website is ready to accept these captures in `public/product/`. PNG or WebP 
 
 ### M04 — Health overview
 
+- Status: supplied and integrated
 - Suggested file: `mylumii-health.webp`
 - Format: phone portrait
 - Show: four populated health metrics with readable trend sparklines
@@ -68,6 +72,7 @@ The website is ready to accept these captures in `public/product/`. PNG or WebP 
 
 ### M05 — Personal insight
 
+- Status: supplied and integrated
 - Suggested file: `mylumii-insight.webp`
 - Format: phone portrait
 - Show: a strong but non-sensitive insight card, with its source labels and data window visible
@@ -75,10 +80,11 @@ The website is ready to accept these captures in `public/product/`. PNG or WebP 
 
 ### M06 — Nourish or Exercise
 
+- Status: supplied and integrated
 - Suggested file: `mylumii-nourish.webp` or `mylumii-exercise.webp`
 - Format: phone portrait
 - Show: whichever screen feels most distinctively Lumii—nutrition quality, training readiness or recovery is ideal
-- Used on: a future myLumii lifestyle feature panel
+- Used on: myLumii lifestyle feature panel
 
 ## Capture checklist
 

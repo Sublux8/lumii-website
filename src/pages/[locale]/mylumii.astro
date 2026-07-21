@@ -112,16 +112,21 @@ const lifeModes = [
         <ProductShot
           shotId="M01"
           title="Today and Vitality"
-          note="Primary hero capture: full phone, no cropped navigation."
+          note="Vitality, the next appointment and the day’s health signals in one gentle view."
+          src="/product/mylumii-today.webp"
+          alt="myLumii Today screen showing Alex's Vitality, next appointment, steps, sleep and clinic connections"
           device="phone"
           variant="vitality"
         />
         <ProductShot
           shotId="M05"
           title="Personal Insights"
-          note="Secondary hero capture: a strong, non-sensitive pattern card."
+          note="Personal patterns explained with their sources, evidence window and careful language."
+          src="/product/mylumii-insight.webp"
+          alt="myLumii Insights screen showing observational patterns across heart rate, exercise, caffeine, sleep, movement and mood"
           device="phone"
           variant="insights"
+          instanceId="M05-hero"
         />
       </div>
     </div>
@@ -163,14 +168,18 @@ const lifeModes = [
         <ProductShot
           shotId="M02"
           title="Care hub"
-          note="Appointments tab with one upcoming in-person visit and one telehealth visit."
+          note="Rehabilitation, results, care plans, letters and clinical notes from connected clinics."
+          src="/product/mylumii-care.webp"
+          alt="myLumii Care records screen showing rehab programs, pathology results, a care plan, referral and clinic notes"
           device="phone"
           variant="care"
         />
         <ProductShot
           shotId="M03"
           title="Clinic-assigned care"
-          note="Forms or rehab capture showing the connection back to a named demo clinic."
+          note="A clinic-assigned intake form that prepares the practitioner before the first visit."
+          src="/product/mylumii-assigned-care.webp"
+          alt="myLumii new-patient intake form assigned by Harbourline Family Practice"
           device="phone"
           variant="care"
         />
@@ -184,16 +193,21 @@ const lifeModes = [
         <ProductShot
           shotId="M04"
           title="Health overview"
-          note="Health tab with four populated metrics and visible trend sparklines."
+          note="Eight health signals with readable trends and five connected data sources."
+          src="/product/mylumii-health.webp"
+          alt="myLumii Health screen showing heart rate, sleep, steps, blood glucose, blood pressure, weight, oxygen saturation and respiratory rate"
           device="phone"
           variant="health"
         />
         <ProductShot
           shotId="M05"
           title="Pattern insight"
-          note="Insight with source labels, evidence window and appointment-summary action."
+          note="Transparent source labels, comparison windows and patterns framed as observations—not advice."
+          src="/product/mylumii-insight.webp"
+          alt="myLumii Insights screen showing observational patterns across heart rate, exercise, caffeine, sleep, movement and mood"
           device="phone"
           variant="insights"
+          instanceId="M05-health"
         />
       </div>
       <div class="myl-copy" data-reveal>
@@ -249,12 +263,24 @@ const lifeModes = [
           exits—not gamification.
         </p>
       </div>
-      <div class="myl-life__cloud" data-reveal>
-        {
-          lifeModes.map((mode, index) => (
-            <span class:list={{ "is-warm": index % 3 === 1 }}>{mode}</span>
-          ))
-        }
+      <div class="myl-life__visual" data-reveal>
+        <ProductShot
+          shotId="M06"
+          title="Nourish, without judgement"
+          note="Adaptive energy, macro guidance, hydration and diet quality in a private personal space."
+          src="/product/mylumii-nourish.webp"
+          alt="myLumii Nourish screen showing adaptive calorie and macro targets, fibre, added sugar, water and diet quality"
+          device="phone"
+          variant="health"
+          class="myl-life__phone"
+        />
+        <div class="myl-life__cloud">
+          {
+            lifeModes.map((mode, index) => (
+              <span class:list={{ "is-warm": index % 3 === 1 }}>{mode}</span>
+            ))
+          }
+        </div>
       </div>
     </div>
   </section>
@@ -553,6 +579,22 @@ const lifeModes = [
     gap: var(--space-md);
     align-content: center;
   }
+  .myl-life__visual {
+    display: grid;
+    grid-template-columns: minmax(13rem, 17rem) minmax(12rem, 1fr);
+    align-items: center;
+    gap: var(--space-xl);
+  }
+  :global(.myl-life__phone) {
+    max-inline-size: 17rem;
+    margin-inline: auto;
+  }
+  .myl-life__visual :global(figcaption strong) {
+    color: #f4fbf8;
+  }
+  .myl-life__visual :global(figcaption span) {
+    color: #9eb9b3;
+  }
   .myl-life__cloud span {
     display: inline-flex;
     padding: 0.8rem 1rem;
@@ -636,6 +678,9 @@ const lifeModes = [
     .myl-area p,
     .myl-area small {
       grid-column: 2;
+    }
+    .myl-life__visual {
+      grid-template-columns: 1fr;
     }
   }
 </style>
