@@ -30,7 +30,7 @@ const { caption, logos } = Astro.props;
 
 <style>
   .logos {
-    padding-block: var(--space-2xl);
+    padding-block: var(--space-4xl);
   }
   .logos__caption {
     text-align: center;
@@ -50,6 +50,8 @@ const { caption, logos } = Astro.props;
     align-items: center;
     justify-content: center;
     gap: var(--space-2xl) var(--space-4xl);
+    padding-block: var(--space-xl);
+    border-block: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
   }
   .logos__img {
     block-size: 1.75rem;
@@ -57,9 +59,11 @@ const { caption, logos } = Astro.props;
     filter: grayscale(1);
   }
   .logos__placeholder {
-    font-family: var(--font-display);
-    font-size: var(--text-headline);
-    font-weight: var(--weight-semibold);
+    font-family: var(--font-sans);
+    font-size: var(--text-subhead);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
     color: var(--text-muted);
     opacity: 0.8;
   }

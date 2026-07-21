@@ -21,28 +21,28 @@
 
   /* ── Brand constants — theme-independent (LumiiDesignSystem.swift L212–220) ──
      Lumii's "warm clinical glow" signature. Stable across light/dark. */
-  --brand-teal: #00a895; /* the Platinum accent — the core mark */
-  --brand-warmth: #f4b6a6; /* platinumWarmth  */
-  --brand-gold: #f2c766; /* platinumGold    */
-  --brand-lilac: #afa7ff; /* platinumLilac   */
-  --brand-ink: #0b0f1a; /* inkOnLight      */
+  --brand-teal: #0d8176; /* the Platinum accent — the core mark */
+  --brand-warmth: #eeb6a5; /* platinumWarmth  */
+  --brand-gold: #e8c665; /* platinumGold    */
+  --brand-lilac: #aaa6e8; /* platinumLilac   */
+  --brand-ink: #132c2a; /* inkOnLight      */
 
   /* ── Semantic palette — LIGHT (app "Lumii Platinum", ThemeManager.swift L34) ──
      Base + surface warmed a touch off cold-white (the "warm wash" direction) so
      the pastel aurora reads instead of washing out; cards are translucent glass,
      so this warmth carries through them too. */
-  --bg: #f6f3ea;
-  --surface: #fff7ee;
-  --surface-2: #c7f0e5;
-  --border: #8fd4c3;
-  --accent: #00a895;
+  --bg: #f7f4ed;
+  --surface: #fffdf8;
+  --surface-2: #e6f1ec;
+  --border: #b7cec7;
+  --accent: #0d8176;
   --accent-blue: #315cff;
   --accent-amber: #e77c12;
   --danger: #d72552;
   --success: #009e63;
-  --text: #10202c;
-  --text-secondary: #264f67;
-  --text-muted: #587187;
+  --text: #142d2b;
+  --text-secondary: #405b57;
+  --text-muted: #6c817d;
 
   /* Foreground for filled accent surfaces (buttons, pills). */
   --on-accent: #fffdf8;
@@ -128,10 +128,9 @@
     transparent 55%
   );
 
-  /* ── Type families — system fonts, .rounded for display (the app signature) ── */
+  /* ── Type families — editorial display + familiar, highly legible UI sans. ── */
   --font-display:
-    "SF Pro Rounded", ui-rounded, system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+    "Iowan Old Style", "Baskerville", "Times New Roman", ui-serif, Georgia, serif;
   --font-sans:
     system-ui, -apple-system, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial,
     sans-serif;
@@ -157,7 +156,7 @@
   --text-h3: clamp(1.3rem, 1.12rem + 0.85vw, 1.7rem);
   --text-h2: clamp(1.75rem, 1.4rem + 1.7vw, 2.5rem);
   --text-h1: clamp(2.25rem, 1.7rem + 2.9vw, 3.5rem);
-  --text-display-1: clamp(2.75rem, 1.9rem + 4.4vw, 4.5rem);
+  --text-display-1: clamp(2.9rem, 1.9rem + 4.7vw, 4.8rem);
 
   /* ── Weights / leading / tracking (app uses 400/500/600/700, .rounded display) ── */
   --weight-regular: 400;
@@ -198,8 +197,8 @@
   --radius-xs: 0.375rem; /* 6  */
   --radius-sm: 0.625rem; /* 10 */
   --radius-md: 0.875rem; /* 14 */
-  --radius-lg: 1.125rem; /* 18 */
-  --radius-xl: 1.5rem; /* 24 */
+  --radius-lg: 1.25rem; /* 20 */
+  --radius-xl: 1.75rem; /* 28 */
   --radius-pill: 999px;
 
   /* ── Borders ── */
@@ -210,8 +209,8 @@
   /* ── Shadows (LumiiDesignSystem.swift L394–399, opacity + blur + y-offset) ── */
   --shadow-hairline: 0 1px 1px rgba(0, 0, 0, 0.022);
   --shadow-subtle: 0 3px 7px rgba(0, 0, 0, 0.04);
-  --shadow-card: 0 7px 18px rgba(0, 0, 0, 0.062);
-  --shadow-elevated: 0 12px 28px rgba(0, 0, 0, 0.095);
+  --shadow-card: 0 12px 32px rgba(20, 45, 43, 0.07);
+  --shadow-elevated: 0 22px 52px rgba(20, 45, 43, 0.12);
   --shadow-modal: 0 16px 38px rgba(0, 0, 0, 0.16);
   /* Signature accent glow for hero/CTA surfaces (mirrors button dual-shadow). */
   --shadow-accent: 0 14px 38px color-mix(in srgb, var(--accent) 22%, transparent);

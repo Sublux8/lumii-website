@@ -1,0 +1,641 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ProductShot from "@components/ProductShot.astro";
+import Button from "@components/primitives/Button.astro";
+import Icon from "@components/primitives/Icon.astro";
+import CTA from "@components/sections/CTA.astro";
+import { localeFromPath, localizePath, localeStaticPaths } from "@i18n/index.ts";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+const locale = localeFromPath(Astro.url.pathname);
+const lp = (path: string) => localizePath(path, locale);
+
+const pillars = [
+  {
+    icon: "layers",
+    title: "Every clinic, one warm home",
+    body: "Appointments, shared records, forms, messages and rehabilitation from every linked Lumii clinic—without building a second health identity.",
+  },
+  {
+    icon: "shield",
+    title: "Sharing starts with your yes",
+    body: "Clinic links are separate and revocable. Health data is shared by clinic, by category and only after explicit consent.",
+  },
+  {
+    icon: "spark",
+    title: "Patterns, not pronouncements",
+    body: "myLumii brings sleep, movement, food, mood and care together on-device to help people bring better questions to a practitioner.",
+  },
+];
+
+const productAreas = [
+  {
+    number: "01",
+    name: "Today",
+    summary:
+      "A daily view of Vitality, the next appointment, health signals, care updates and a gentle personal check-in.",
+    proof: "Recovery · Movement · Nutrition · Next appointment",
+  },
+  {
+    number: "02",
+    name: "Care",
+    summary:
+      "Book and cancel appointments, receive records, complete assigned forms, message clinics and follow prescribed rehabilitation.",
+    proof: "Appointments · Records · Messages · Forms · Rehab",
+  },
+  {
+    number: "03",
+    name: "Health",
+    summary:
+      "Bring in Apple Health or Health Connect data, add readings manually, choose preferred sources and control clinic sharing.",
+    proof: "Heart · Sleep · Activity · Metabolic · Body · Fitness",
+  },
+  {
+    number: "04",
+    name: "You",
+    summary:
+      "A private space for journal check-ins, nutrition, exercise, recovery, medications and supplements—kept personal by design.",
+    proof: "Journal · Nourish · Exercise · Reset · Supplements",
+  },
+  {
+    number: "05",
+    name: "Insights",
+    summary:
+      "An observational, on-device pattern engine with transparent source windows and a shareable appointment-question summary.",
+    proof: "Cross-metric patterns · Appointment summary · On-device",
+  },
+];
+
+const lifeModes = [
+  "Cycle and symptom rhythm",
+  "Pregnancy week-by-week",
+  "Menopause check-ins",
+  "Male health check-up",
+  "Nutrition and micronutrients",
+  "Strength, cardio and readiness",
+  "Recovery and guided Reset",
+  "Supplements and routines",
+];
+---
+
+<BaseLayout
+  title="myLumii"
+  description="myLumii is the patient companion for the Lumii practice ecosystem — appointments, records, forms, messages, health data and personal insights in one consent-led experience."
+>
+  <section class="myl-hero">
+    <div class="myl-hero__glow" aria-hidden="true"></div>
+    <div class="container-page myl-hero__inner">
+      <div class="myl-hero__copy">
+        <p class="myl-kicker">The patient side of Lumii · in development</p>
+        <h1>Your health,<br /><em>held gently.</em></h1>
+        <p class="myl-hero__lead">
+          myLumii brings every connected clinic, health signal and care conversation into
+          one warm place—then keeps you in control of what leaves it.
+        </p>
+        <div class="myl-hero__actions">
+          <Button href={lp("/request-access")} size="lg"
+            >Ask about myLumii <span aria-hidden="true">↗</span></Button
+          >
+          <Button href="#inside" size="lg" variant="ghost">See what’s inside</Button>
+        </div>
+        <ul class="myl-hero__proof">
+          <li><Icon name="shield" size={17} /> Consent-led clinic sharing</li>
+          <li><Icon name="au" size={17} /> Built for the Lumii care ecosystem</li>
+          <li><Icon name="spark" size={17} /> Insights calculated on-device</li>
+        </ul>
+      </div>
+
+      <div class="myl-hero__phones" data-reveal>
+        <ProductShot
+          shotId="M01"
+          title="Today and Vitality"
+          note="Primary hero capture: full phone, no cropped navigation."
+          device="phone"
+          variant="vitality"
+        />
+        <ProductShot
+          shotId="M05"
+          title="Personal Insights"
+          note="Secondary hero capture: a strong, non-sensitive pattern card."
+          device="phone"
+          variant="insights"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="myl-pillars container-page">
+    {
+      pillars.map((pillar) => (
+        <article class="myl-pillar" data-reveal>
+          <span aria-hidden="true">
+            <Icon name={pillar.icon} size={22} />
+          </span>
+          <h2>{pillar.title}</h2>
+          <p>{pillar.body}</p>
+        </article>
+      ))
+    }
+  </section>
+
+  <section class="myl-care">
+    <div class="container-page myl-care__inner">
+      <div class="myl-copy" data-reveal>
+        <p class="myl-kicker">Care that travels with you</p>
+        <h2>The space between visits finally belongs to the same story.</h2>
+        <p>
+          A person can link multiple clinics, book the right service, receive a record,
+          complete a clinic form, keep a conversation going and share rehabilitation
+          progress back to the prescribing team.
+        </p>
+        <ul class="myl-checks">
+          <li><span>✓</span> Book and cancel eligible appointments</li>
+          <li><span>✓</span> Read clinic-shared records and letters</li>
+          <li><span>✓</span> Complete assigned forms natively</li>
+          <li><span>✓</span> Message each clinic in its own thread</li>
+          <li><span>✓</span> Accept and log prescribed rehabilitation</li>
+        </ul>
+      </div>
+      <div class="myl-phone-pair" data-reveal>
+        <ProductShot
+          shotId="M02"
+          title="Care hub"
+          note="Appointments tab with one upcoming in-person visit and one telehealth visit."
+          device="phone"
+          variant="care"
+        />
+        <ProductShot
+          shotId="M03"
+          title="Clinic-assigned care"
+          note="Forms or rehab capture showing the connection back to a named demo clinic."
+          device="phone"
+          variant="care"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="myl-health">
+    <div class="container-page myl-health__inner">
+      <div class="myl-health__shots" data-reveal>
+        <ProductShot
+          shotId="M04"
+          title="Health overview"
+          note="Health tab with four populated metrics and visible trend sparklines."
+          device="phone"
+          variant="health"
+        />
+        <ProductShot
+          shotId="M05"
+          title="Pattern insight"
+          note="Insight with source labels, evidence window and appointment-summary action."
+          device="phone"
+          variant="insights"
+        />
+      </div>
+      <div class="myl-copy" data-reveal>
+        <p class="myl-kicker">Health, with boundaries</p>
+        <h2>See the whole picture without giving the whole picture away.</h2>
+        <p>
+          myLumii reads supported data from Apple Health and Health Connect, fuses
+          overlapping sources without double-counting, and lets the person decide which
+          health categories each clinic can receive.
+        </p>
+        <div class="myl-privacy-note">
+          <Icon name="lock" size={21} />
+          <p>
+            Journal, food and personal exercise data have no clinic-sharing control by
+            design. They remain part of the person’s private record.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="myl-atlas container-page" id="inside">
+    <header class="myl-atlas__head" data-reveal>
+      <p class="myl-kicker">Inside the verified client</p>
+      <h2>Five simple places. A surprisingly complete picture.</h2>
+      <p>
+        The myLumii demo and client builds exercise these workflows end to end. Live
+        availability remains capability-gated until the shared Lumii release checks pass.
+      </p>
+    </header>
+    <div class="myl-atlas__list">
+      {
+        productAreas.map((area) => (
+          <article class="myl-area" data-reveal>
+            <span class="myl-area__number">{area.number}</span>
+            <h3>{area.name}</h3>
+            <p>{area.summary}</p>
+            <small>{area.proof}</small>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="myl-life">
+    <div class="container-page myl-life__inner">
+      <div class="myl-copy" data-reveal>
+        <p class="myl-kicker">Made for a whole life</p>
+        <h2>More thoughtful than “track everything”.</h2>
+        <p>
+          myLumii includes deeper spaces for the moments and routines that change how care
+          feels. Sensitive experiences use gentle language, explicit sharing and clear
+          exits—not gamification.
+        </p>
+      </div>
+      <div class="myl-life__cloud" data-reveal>
+        {
+          lifeModes.map((mode, index) => (
+            <span class:list={{ "is-warm": index % 3 === 1 }}>{mode}</span>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="myl-honesty container-page">
+    <div class="myl-honesty__panel" data-reveal>
+      <div>
+        <p class="myl-kicker">Release honesty</p>
+        <h2>Built, verified—and still gated with care.</h2>
+      </div>
+      <p>
+        The myLumii demo is a complete working product path, and the iOS, Android and web
+        clients build successfully. A real-patient release remains gated until the shared
+        Lumii functions, data rules, App Check and cross-repository integration tests are
+        deployed and passed. Cloud-wearable connections and paid subscriptions stay hidden
+        until their server contracts are ready.
+      </p>
+    </div>
+  </section>
+
+  <CTA
+    title="Care feels different when everyone can see the same story."
+    body="Join the foundation-clinic conversation and help us shape how Lumii and myLumii come together for your team and patients."
+    buttonLabel="Request early access"
+    buttonHref={lp("/request-access")}
+  />
+</BaseLayout>
+
+<style>
+  .myl-kicker {
+    margin-block-end: var(--space-md);
+    color: var(--accent);
+    font-size: var(--text-label);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+  }
+  .myl-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-block: clamp(4rem, 7vw, 7.5rem);
+    background:
+      radial-gradient(circle at 84% 18%, rgba(170, 166, 232, 0.17), transparent 29rem),
+      radial-gradient(circle at 12% 0%, rgba(238, 182, 165, 0.19), transparent 26rem),
+      var(--bg);
+  }
+  .myl-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    opacity: 0.28;
+    background-image: radial-gradient(
+      color-mix(in srgb, var(--text) 14%, transparent) 0.7px,
+      transparent 0.7px
+    );
+    background-size: 7px 7px;
+    mask-image: linear-gradient(to bottom, black, transparent 72%);
+  }
+  .myl-hero__glow {
+    position: absolute;
+    z-index: -1;
+    inline-size: 38rem;
+    block-size: 38rem;
+    inset-inline-end: -22rem;
+    inset-block-end: -24rem;
+    border-radius: 50%;
+    background: rgba(13, 129, 118, 0.14);
+    filter: blur(18px);
+  }
+  .myl-hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(30rem, 1.1fr);
+    align-items: center;
+    gap: clamp(3rem, 7vw, 7rem);
+    max-inline-size: var(--content-wide);
+  }
+  .myl-hero h1 {
+    max-inline-size: 12ch;
+    font-size: clamp(3.5rem, 6.1vw, 6.3rem);
+    font-weight: var(--weight-regular);
+    line-height: 0.94;
+    letter-spacing: -0.055em;
+  }
+  .myl-hero h1 em {
+    color: var(--accent);
+    font-weight: var(--weight-regular);
+  }
+  .myl-hero__lead {
+    max-inline-size: 42rem;
+    margin-block-start: var(--space-xl);
+    color: var(--text-secondary);
+    font-size: var(--text-lead);
+    line-height: 1.58;
+  }
+  .myl-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-block-start: var(--space-2xl);
+  }
+  .myl-hero__proof {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md) var(--space-xl);
+    margin: var(--space-xl) 0 0;
+    padding: 0;
+    list-style: none;
+    color: var(--text-muted);
+    font-size: var(--text-caption);
+    font-weight: var(--weight-semibold);
+  }
+  .myl-hero__proof li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .myl-hero__proof :global(svg) {
+    color: var(--accent);
+  }
+  .myl-hero__phones {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    gap: clamp(0.8rem, 2.5vw, 2rem);
+  }
+  .myl-hero__phones :global(.product-shot:nth-child(2)) {
+    margin-block-start: 4.25rem;
+  }
+
+  .myl-pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+    max-inline-size: var(--content-wide);
+    padding-block: var(--space-section);
+  }
+  .myl-pillar {
+    padding-block-start: var(--space-xl);
+    border-block-start: 1px solid color-mix(in srgb, var(--text) 13%, transparent);
+  }
+  .myl-pillar > span {
+    display: grid;
+    place-items: center;
+    inline-size: 2.7rem;
+    block-size: 2.7rem;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+    color: var(--accent);
+  }
+  .myl-pillar h2 {
+    margin-block-start: var(--space-lg);
+    font-size: var(--text-h3);
+    font-weight: var(--weight-regular);
+  }
+  .myl-pillar p {
+    margin-block-start: var(--space-md);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  .myl-care,
+  .myl-health,
+  .myl-life {
+    padding-block: var(--space-section);
+  }
+  .myl-care {
+    background: var(--surface);
+    border-block: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
+  }
+  .myl-care__inner,
+  .myl-health__inner,
+  .myl-life__inner {
+    display: grid;
+    grid-template-columns: minmax(19rem, 0.88fr) minmax(26rem, 1.12fr);
+    align-items: center;
+    gap: clamp(3rem, 8vw, 8rem);
+    max-inline-size: var(--content-wide);
+  }
+  .myl-copy h2,
+  .myl-atlas__head h2 {
+    max-inline-size: 16ch;
+    font-size: clamp(2.6rem, 4.7vw, 4.8rem);
+    font-weight: var(--weight-regular);
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+  }
+  .myl-copy > p:not(.myl-kicker),
+  .myl-atlas__head > p:last-child {
+    max-inline-size: 42rem;
+    margin-block-start: var(--space-xl);
+    color: var(--text-secondary);
+    font-size: var(--text-lead);
+    line-height: 1.58;
+  }
+  .myl-checks {
+    display: grid;
+    gap: var(--space-sm);
+    margin: var(--space-xl) 0 0;
+    padding: 0;
+    list-style: none;
+    color: var(--text-secondary);
+    font-size: var(--text-subhead);
+  }
+  .myl-checks span {
+    color: var(--accent);
+    font-weight: var(--weight-bold);
+  }
+  .myl-phone-pair,
+  .myl-health__shots {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    gap: clamp(0.7rem, 2vw, 1.5rem);
+  }
+  .myl-phone-pair :global(.product-shot:nth-child(2)),
+  .myl-health__shots :global(.product-shot:nth-child(2)) {
+    margin-block-start: 3.5rem;
+  }
+  .myl-health__inner {
+    grid-template-columns: minmax(26rem, 1.12fr) minmax(19rem, 0.88fr);
+  }
+  .myl-privacy-note {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-md);
+    margin-block-start: var(--space-xl);
+    padding: var(--space-lg);
+    border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+    color: var(--text-secondary);
+    font-size: var(--text-subhead);
+    line-height: var(--leading-relaxed);
+  }
+  .myl-privacy-note :global(svg) {
+    color: var(--accent);
+  }
+
+  .myl-atlas {
+    max-inline-size: var(--content-wide);
+    padding-block: var(--space-section);
+  }
+  .myl-atlas__head {
+    max-inline-size: 54rem;
+  }
+  .myl-atlas__list {
+    margin-block-start: var(--space-3xl);
+    border-block-start: 1px solid color-mix(in srgb, var(--text) 13%, transparent);
+  }
+  .myl-area {
+    display: grid;
+    grid-template-columns: 3rem 0.5fr 1.1fr 0.9fr;
+    align-items: start;
+    gap: var(--space-xl);
+    padding-block: var(--space-xl);
+    border-block-end: 1px solid color-mix(in srgb, var(--text) 13%, transparent);
+  }
+  .myl-area__number {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+  }
+  .myl-area h3 {
+    font-size: var(--text-h3);
+    font-weight: var(--weight-regular);
+  }
+  .myl-area p {
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+  .myl-area small {
+    color: var(--text-muted);
+    font-size: var(--text-caption);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-relaxed);
+  }
+
+  .myl-life {
+    background: #15322f;
+    color: #f2fbf8;
+  }
+  .myl-life .myl-kicker {
+    color: #9ad8cd;
+  }
+  .myl-life .myl-copy h2 {
+    color: #f4fbf8;
+  }
+  .myl-life .myl-copy > p:not(.myl-kicker) {
+    color: #b9d0ca;
+  }
+  .myl-life__cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    align-content: center;
+  }
+  .myl-life__cloud span {
+    display: inline-flex;
+    padding: 0.8rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #d9ebe7;
+    font-size: var(--text-subhead);
+  }
+  .myl-life__cloud span.is-warm {
+    border-color: rgba(232, 198, 101, 0.24);
+    color: #f3dda0;
+  }
+
+  .myl-honesty {
+    max-inline-size: var(--content-wide);
+    padding-block: var(--space-section) 0;
+  }
+  .myl-honesty__panel {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(2rem, 6vw, 6rem);
+    padding: clamp(1.5rem, 4vw, 3.5rem);
+    border: 1px solid color-mix(in srgb, var(--brand-gold) 34%, transparent);
+    border-radius: var(--radius-xl);
+    background: color-mix(in srgb, var(--brand-gold) 7%, var(--surface));
+  }
+  .myl-honesty h2 {
+    max-inline-size: 15ch;
+    font-size: var(--text-h2);
+    font-weight: var(--weight-regular);
+  }
+  .myl-honesty__panel > p {
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  @media (max-width: 62rem) {
+    .myl-hero__inner,
+    .myl-care__inner,
+    .myl-health__inner,
+    .myl-life__inner {
+      grid-template-columns: 1fr;
+    }
+    .myl-hero__copy,
+    .myl-copy {
+      max-inline-size: 46rem;
+    }
+    .myl-pillars {
+      grid-template-columns: 1fr;
+    }
+    .myl-health__shots {
+      order: 2;
+    }
+    .myl-honesty__panel {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 44rem) {
+    .myl-hero__actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .myl-hero__proof {
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .myl-hero__phones,
+    .myl-phone-pair,
+    .myl-health__shots {
+      margin-inline: -1rem;
+    }
+    .myl-hero__phones :global(.product-shot--phone),
+    .myl-phone-pair :global(.product-shot--phone),
+    .myl-health__shots :global(.product-shot--phone) {
+      max-inline-size: 47%;
+    }
+    .myl-area {
+      grid-template-columns: 2.5rem 1fr;
+    }
+    .myl-area p,
+    .myl-area small {
+      grid-column: 2;
+    }
+  }
+</style>

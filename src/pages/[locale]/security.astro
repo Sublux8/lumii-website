@@ -55,6 +55,11 @@ const pillars = [
     body: "Bot protection on public endpoints, sign-up abuse + disposable-email blocking, strict CSP and HSTS-preload security headers, and a vulnerability-disclosure channel.",
     icon: "layers",
   },
+  {
+    title: "Consent-led patient sharing",
+    body: "In myLumii, clinic connections are separate and revocable. Supported health categories are shared clinic by clinic only after explicit consent, while journal, food and personal exercise spaces remain private by design.",
+    icon: "shield",
+  },
 ];
 
 const faqs = [
@@ -73,6 +78,10 @@ const faqs = [
   {
     q: "How do I report a vulnerability?",
     a: "Email security@lumii.com.au or see our security.txt. We welcome responsible disclosure.",
+  },
+  {
+    q: "Can every connected clinic see everything in myLumii?",
+    a: "No. Clinic links are kept separate, health sharing is category-specific and consented clinic by clinic, and several personal areas have no clinic-sharing path by design. Live patient use will remain gated until the shared rules and integration checks are verified.",
   },
 ];
 ---

@@ -34,10 +34,10 @@ const description = Astro.props.description ?? t("site.description");
 const canonical = canonicalUrl(pathname);
 const alternates = hreflangAlternates(pathname);
 const { noindex = false, ogImage } = Astro.props;
-// Default social image — the branded 1200×630 OG card (scripts/generate-og.mjs,
-// rebuild with `npm run og`). Per-page overrides pass `ogImage`.
-const ogImageUrl = new URL(ogImage ?? "/og.png", "https://lumii.com.au").href;
-const ogImageAlt = `${t("site.name")} — ${t("site.tagline")}`;
+// Default social image — the branded 1200×630 connected-care card. Per-page
+// overrides pass `ogImage`.
+const ogImageUrl = new URL(ogImage ?? "/og-ecosystem.png", "https://lumii.com.au").href;
+const ogImageAlt = `${t("site.name")} — care, connected for clinics and people.`;
 ---
 
 <!doctype html>
@@ -89,5 +89,6 @@ const ogImageAlt = `${t("site.name")} — ${t("site.tagline")}`;
     </main>
     <Footer {locale} />
     <script is:inline src="/scripts/reveal.js"></script>
+    <script is:inline src="/scripts/experience.js"></script>
   </body>
 </html>

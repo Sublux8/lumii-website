@@ -1,196 +1,48 @@
 ---
 /**
- * "Lumii, on screen" — stylised product surfaces inside app-window frames. The
- * surfaces are inline SVG built here at build time (no raster step, crisp at any
- * size, fully themeable). They stand in for real screenshots; AppWindow takes a
- * `src` too, so dropping in real captures later is a one-line swap per window.
+ * Screenshot-ready clinic gallery. ProductShot keeps the finished layout intact
+ * while the labelled compositions are replaced with approved product captures.
  */
-import AppWindow from "@components/AppWindow.astro";
-
-const INK = "#17212d",
-  SUB = "#3c5566",
-  MUTE = "#7d8b95",
-  SURF = "#fffdf9",
-  LINE = "#ece2d2",
-  TEAL = "#00a895",
-  GREEN = "#2aa564",
-  AMBER = "#e7873a",
-  BLUE = "#4f74e0";
-const SANS = "system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif";
-const RND = "'SF Pro Rounded', 'Arial Rounded MT Bold', system-ui, sans-serif";
-
-function txt(
-  x: number,
-  y: number,
-  s: string,
-  size: number,
-  col: string,
-  weight = 400,
-  family = SANS,
-  anchor = "start",
-): string {
-  return `<text x="${x}" y="${y}" font-family="${family}" font-size="${size}" font-weight="${weight}" fill="${col}" text-anchor="${anchor}">${s}</text>`;
-}
-function chip(x: number, y: number, w: number, label: string, col: string): string {
-  return (
-    `<rect x="${x}" y="${y}" width="${w}" height="22" rx="11" fill="${col}" fill-opacity="0.14"/>` +
-    txt(x + w / 2, y + 15.5, label, 11.5, col, 600, SANS, "middle")
-  );
-}
-function appt(
-  x: number,
-  y: number,
-  w: number,
-  h: number,
-  col: string,
-  name: string,
-  svc: string,
-): string {
-  return (
-    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="9" fill="${col}" fill-opacity="0.13"/>` +
-    `<rect x="${x}" y="${y}" width="3.5" height="${h}" rx="1.75" fill="${col}"/>` +
-    `<circle cx="${x + 15}" cy="${y + 17}" r="3.2" fill="${col}"/>` +
-    txt(x + 26, y + 21, name, 13.5, INK, 600) +
-    (h > 40 ? txt(x + 16, y + 40, svc, 11.5, SUB) : "")
-  );
-}
-
-function bookSvg(): string {
-  const W = 1000,
-    gut = 66,
-    top = 96,
-    colW = (W - gut - 24) / 3,
-    rowH = 62,
-    H = 640;
-  const cols = ["Dr Maya Rao", "Jess Allen", "Sam Tukimoto"];
-  let s = `<rect width="${W}" height="${H}" fill="${SURF}"/>`;
-  s += txt(28, 42, "Thursday, 25 June", 21, INK, 700, RND);
-  s +=
-    txt(28, 64, "Day", 13, TEAL, 600) +
-    txt(64, 64, "Week", 13, MUTE, 500) +
-    txt(112, 64, "Month", 13, MUTE, 500);
-  s += chip(W - 150, 30, 126, "+  New booking", TEAL);
-  s += `<line x1="0" y1="80" x2="${W}" y2="80" stroke="${LINE}"/>`;
-  cols.forEach((c, i) => {
-    s += txt(gut + colW * i + 16, top - 8, c, 13.5, SUB, 600);
-  });
-  s += `<line x1="0" y1="${top + 4}" x2="${W}" y2="${top + 4}" stroke="${LINE}"/>`;
-  for (let r = 0; r < 8; r++) {
-    const y = top + 8 + r * rowH,
-      hr = 8 + r,
-      lab = (hr > 12 ? hr - 12 : hr) + (hr >= 12 ? " PM" : " AM");
-    s += txt(gut - 12, y + 16, lab, 12, MUTE, 500, SANS, "end");
-    s += `<line x1="${gut}" y1="${y}" x2="${W - 8}" y2="${y}" stroke="${LINE}" stroke-opacity="0.7"/>`;
-  }
-  for (let i = 1; i < 3; i++)
-    s += `<line x1="${gut + colW * i}" y1="${top + 4}" x2="${gut + colW * i}" y2="${H}" stroke="${LINE}" stroke-opacity="0.6"/>`;
-  const cx = (i: number) => gut + colW * i + 10,
-    cw = colW - 20,
-    yAt = (r: number) => top + 10 + r * rowH;
-  s += appt(
-    cx(0),
-    yAt(0),
-    cw,
-    rowH - 6,
-    GREEN,
-    "Eleanor Webb",
-    "Initial consult · Arrived",
-  );
-  s += appt(cx(0), yAt(2), cw, rowH - 6, TEAL, "Tom Harding", "Review · Confirmed");
-  s += appt(cx(0), yAt(5), cw, rowH * 2 - 6, BLUE, "Priya Nair", "Telehealth · 60 min");
-  s += appt(cx(1), yAt(1), cw, rowH - 6, TEAL, "Lucas Bianchi", "Follow-up");
-  s += appt(cx(1), yAt(3), cw, rowH - 6, AMBER, "Grace Lim", "Did not attend");
-  s += appt(cx(1), yAt(6), cw, rowH - 6, TEAL, "Owen Reyes", "Care plan review");
-  s += appt(cx(2), yAt(0), cw, rowH - 6, TEAL, "Mara Field", "New patient");
-  s += appt(
-    cx(2),
-    yAt(2),
-    cw,
-    rowH * 2 - 6,
-    GREEN,
-    "The Okafor family",
-    "Group · Arrived",
-  );
-  s += appt(cx(2), yAt(6), cw, rowH - 6, TEAL, "Iris Donnelly", "Standard");
-  return s;
-}
-
-function carePlanSvg(): string {
-  const W = 520,
-    H = 360;
-  let s = `<rect width="${W}" height="${H}" fill="${SURF}"/>`;
-  s += chip(28, 28, 132, "MEDICARE · CDM", TEAL);
-  s += txt(28, 92, "Chronic disease plan", 22, INK, 700, RND);
-  s += txt(28, 118, "Eleanor Webb · GP referral", 13.5, SUB, 500);
-  s += txt(28, 168, "Sessions used", 12.5, MUTE, 500);
-  s += txt(W - 28, 168, "3 of 5", 13.5, INK, 600, SANS, "end");
-  s += `<rect x="28" y="180" width="${W - 56}" height="12" rx="6" fill="${TEAL}" fill-opacity="0.15"/>`;
-  s += `<rect x="28" y="180" width="${(W - 56) * 0.6}" height="12" rx="6" fill="${TEAL}"/>`;
-  const rows = [
-    ["Referral valid to", "14 Mar 2027"],
-    ["Funder", "Medicare CDM"],
-    ["Next review", "2 sessions away"],
-  ];
-  rows.forEach((rw, i) => {
-    const y = 236 + i * 36;
-    s += txt(28, y, rw[0], 13, SUB, 500);
-    s += txt(W - 28, y, rw[1], 13, INK, 600, SANS, "end");
-    s += `<line x1="28" y1="${y + 14}" x2="${W - 28}" y2="${y + 14}" stroke="${LINE}"/>`;
-  });
-  return s;
-}
-
-function claimsSvg(): string {
-  const W = 520,
-    H = 360;
-  let s = `<rect width="${W}" height="${H}" fill="${SURF}"/>`;
-  s += txt(28, 48, "Claims", 22, INK, 700, RND);
-  s += chip(W - 150, 30, 126, "All funders", BLUE);
-  s += `<line x1="0" y1="72" x2="${W}" y2="72" stroke="${LINE}"/>`;
-  const rows: [string, string, string, string, string][] = [
-    ["Eleanor Webb", "Medicare", "Paid", GREEN, "$78.45"],
-    ["Tom Harding", "HealthPoint", "Approved", TEAL, "$54.00"],
-    ["Grace Lim", "DVA", "Submitted", BLUE, "$92.10"],
-    ["Owen Reyes", "Comcare", "Paid", GREEN, "$110.00"],
-    ["Priya Nair", "Medicare", "Outstanding", AMBER, "$64.30"],
-  ];
-  rows.forEach((rw, i) => {
-    const y = 104 + i * 50;
-    s += txt(28, y, rw[0], 14, INK, 600);
-    s += txt(28, y + 18, rw[1], 12, MUTE, 500);
-    s += chip(300, y - 14, 92, rw[2], rw[3]);
-    s += txt(W - 28, y + 2, rw[4], 14, INK, 600, SANS, "end");
-    s += `<line x1="28" y1="${y + 30}" x2="${W - 28}" y2="${y + 30}" stroke="${LINE}"/>`;
-  });
-  return s;
-}
-
-const book = bookSvg();
-const carePlan = carePlanSvg();
-const claims = claimsSvg();
+import ProductShot from "@components/ProductShot.astro";
 ---
 
 <section class="gallery container-page section">
-  <header class="section__head">
+  <header class="section__head" data-reveal>
     <p class="section__eyebrow">Lumii, on screen</p>
     <h2>A workspace that feels as calm as it looks.</h2>
     <p class="section__lead measure">
-      The day's book, claims and care plans — the same warm, uncluttered surfaces your
-      team works in, all day.
+      The day’s book, claiming and funded care stay close together. These frames are ready
+      for the real product captures that will take the website from polished to
+      unmistakably Lumii.
     </p>
   </header>
 
-  <AppWindow label="Lumii — Appointment book" class="gallery__hero" data-reveal>
-    <svg viewBox="0 0 1000 640" xmlns="http://www.w3.org/2000/svg" set:html={book} />
-  </AppWindow>
+  <ProductShot
+    shotId="C01"
+    title="The clinic day at a glance"
+    note="A live day across physiotherapy, occupational therapy, general practice and psychology."
+    src="/product/lumii-clinic-day.png"
+    alt="Lumii appointment book showing a populated clinic day across Jess Allen, Aisha Malik, Dr Maya Rao and Sam Tukimoto"
+    device="wide"
+    showChrome={false}
+    variant="calendar"
+    class="gallery__hero"
+  />
 
   <div class="gallery__row">
-    <AppWindow label="Lumii — Care plans" data-reveal>
-      <svg viewBox="0 0 520 360" xmlns="http://www.w3.org/2000/svg" set:html={carePlan} />
-    </AppWindow>
-    <AppWindow label="Lumii — Claims" data-reveal>
-      <svg viewBox="0 0 520 360" xmlns="http://www.w3.org/2000/svg" set:html={claims} />
-    </AppWindow>
+    <ProductShot
+      shotId="C02"
+      title="Claims without the chase"
+      note="A populated claiming queue with several funders, statuses and demo amounts."
+      variant="care"
+    />
+    <ProductShot
+      shotId="C03"
+      title="Funded care that keeps count"
+      note="A care-plan detail showing sessions used, referral validity and the next review."
+      device="tablet"
+      variant="care"
+    />
   </div>
 </section>
 
@@ -200,34 +52,38 @@ const claims = claimsSvg();
   }
   .section__head {
     margin-block-end: var(--space-2xl);
-    max-inline-size: 46ch;
+    max-inline-size: 46rem;
   }
   .section__eyebrow {
+    margin-block-end: var(--space-sm);
+    color: var(--accent);
     font-size: var(--text-label);
     font-weight: var(--weight-semibold);
     letter-spacing: var(--tracking-wider);
     text-transform: uppercase;
-    color: var(--accent);
-    margin-block-end: var(--space-sm);
   }
   .section__head h2 {
     font-size: var(--text-h2);
   }
   .section__lead {
     margin-block-start: var(--space-md);
-    font-size: var(--text-lead);
     color: var(--text-secondary);
+    font-size: var(--text-lead);
   }
   .gallery__hero {
-    max-inline-size: 56rem;
+    max-inline-size: 65rem;
     margin-inline: auto;
   }
   .gallery__row {
-    margin-block-start: var(--space-xl);
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-xl);
-    max-inline-size: 56rem;
-    margin-inline: auto;
+    max-inline-size: 65rem;
+    margin: var(--space-2xl) auto 0;
+  }
+  @media (max-width: 44rem) {
+    .gallery__row {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

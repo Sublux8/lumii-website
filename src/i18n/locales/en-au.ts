@@ -10,11 +10,12 @@ export const strings = {
   "site.name": "Lumii",
   "site.tagline": "Practice management, illuminated.",
   "site.description":
-    "Lumii is the multi-disciplinary practice management platform for Australian allied-health and general-practice clinics — booking, billing, claiming, and care plans in one calm workspace.",
+    "Lumii connects a calm Australian practice platform with myLumii, the consent-led patient companion for care, health data and the spaces between visits.",
 
   // Navigation
   "nav.sectors": "Who it's for",
   "nav.platform": "Platform",
+  "nav.myLumii": "myLumii",
   "nav.forClinicians": "For clinicians",
   "nav.security": "Security",
   "nav.knowledge": "Knowledge hub",
@@ -73,7 +74,7 @@ export const strings = {
   "download.residency":
     "Your clinic and patient data stays in Australian-region infrastructure.",
   "download.otherPlatforms":
-    "iPad, iPhone and Apple Vision builds are on the way — join the early-access list to be notified.",
+    "myLumii for iOS and Android is in release preparation — join the early-access list to follow its progress.",
 
   // Sectors index
   "sectors.title": "Built for your discipline",

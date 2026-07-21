@@ -14,6 +14,7 @@ import LogoWall from "@components/sections/LogoWall.astro";
 import FAQ from "@components/sections/FAQ.astro";
 import CTA from "@components/sections/CTA.astro";
 import ProductGallery from "@components/sections/ProductGallery.astro";
+import ProductShot from "@components/ProductShot.astro";
 import {
   useTranslations,
   localeFromPath,
@@ -62,6 +63,11 @@ const modules = [
     title: "Analytics",
     body: "Practitioner-level revenue, outcome tracking, and the kind of business intelligence that usually costs a consultant — built quietly into the practice.",
     icon: "analytics",
+  },
+  {
+    title: "Connected patient care",
+    body: "Appointments, clinic-shared records, assigned forms, messages and prescribed rehabilitation can continue in myLumii, with each person controlling what is shared back.",
+    icon: "layers",
   },
 ];
 
@@ -114,7 +120,7 @@ const faqs = [
   <section class="container-page section">
     <header class="section__head">
       <p class="section__eyebrow">What's inside</p>
-      <h2>Six modules. One source of truth.</h2>
+      <h2>Seven connected areas. One source of truth.</h2>
       <p class="section__lead measure">
         Each one earns its place on its own — together they remove the double-entry, the
         reconciliation, and the end-of-day guesswork.
@@ -142,6 +148,38 @@ const faqs = [
           </article>
         ))
       }
+    </div>
+  </section>
+
+  <section class="connected-care">
+    <div class="container-page connected-care__inner">
+      <div class="connected-care__copy" data-reveal>
+        <p class="section__eyebrow">Beyond the appointment</p>
+        <h2>The clinic view is only half of connected care.</h2>
+        <p>
+          Lumii holds the operational story for the team. myLumii carries the right parts
+          forward for the person—appointments, shared records, forms, messages and rehab—
+          with consent kept clear and specific to each clinic.
+        </p>
+        <a href={lp("/mylumii")}
+          >Explore the myLumii experience <span aria-hidden="true">→</span></a
+        >
+      </div>
+      <div class="connected-care__shots" data-reveal>
+        <ProductShot
+          shotId="C04"
+          title="Connected patient record"
+          note="Record timeline with a shared form, rehabilitation assignment and recent correspondence."
+          variant="care"
+        />
+        <ProductShot
+          shotId="M02"
+          title="The same care, in myLumii"
+          note="Care hub showing the matching appointment, record and clinic message."
+          device="phone"
+          variant="care"
+        />
+      </div>
     </div>
   </section>
 
@@ -199,6 +237,57 @@ const faqs = [
     gap: var(--space-xl);
   }
 
+  .connected-care {
+    padding-block: var(--space-section);
+    background: #15322f;
+    color: #f2fbf8;
+  }
+  .connected-care__inner {
+    display: grid;
+    grid-template-columns: minmax(18rem, 0.78fr) minmax(28rem, 1.22fr);
+    align-items: center;
+    gap: clamp(3rem, 7vw, 7rem);
+    max-inline-size: var(--content-wide);
+  }
+  .connected-care .section__eyebrow {
+    color: #9ad8cd;
+  }
+  .connected-care h2 {
+    max-inline-size: 15ch;
+    color: #f4fbf8;
+    font-size: clamp(2.6rem, 4.6vw, 4.7rem);
+    font-weight: var(--weight-regular);
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+  }
+  .connected-care__copy > p:not(.section__eyebrow) {
+    max-inline-size: 40rem;
+    margin-block-start: var(--space-xl);
+    color: #bad2cc;
+    font-size: var(--text-lead);
+    line-height: 1.58;
+  }
+  .connected-care__copy > a {
+    display: inline-flex;
+    gap: var(--space-sm);
+    margin-block-start: var(--space-xl);
+    color: #f2d778;
+    font-weight: var(--weight-bold);
+    text-decoration: none;
+  }
+  .connected-care__shots {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(10rem, 0.38fr);
+    align-items: center;
+    gap: var(--space-xl);
+  }
+  .connected-care__shots :global(figcaption strong) {
+    color: #f4fbf8;
+  }
+  .connected-care__shots :global(figcaption span) {
+    color: #94b2ac;
+  }
+
   /* "Why it feels different" — text-forward pillars with a gradient index, a
      calmer counterpoint to the icon-chip module grid above. */
   .pillars-section {
@@ -232,5 +321,19 @@ const faqs = [
   .pillar__body {
     color: var(--text-secondary);
     line-height: var(--leading-normal);
+  }
+  @media (max-width: 58rem) {
+    .connected-care__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 38rem) {
+    .connected-care__shots {
+      grid-template-columns: 1fr;
+    }
+    .connected-care__shots :global(.product-shot--phone) {
+      max-inline-size: 15rem;
+      margin-inline: auto;
+    }
   }
 </style>

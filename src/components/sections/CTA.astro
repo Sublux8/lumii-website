@@ -15,17 +15,25 @@ const { title, body, buttonLabel, buttonHref } = Astro.props;
 
 <section class="cta container-page">
   <div class="cta__panel">
+    <span class="cta__halo" aria-hidden="true"></span>
     <div class="cta__copy">
+      <p class="cta__eyebrow">For foundation clinics</p>
       <h2 class="cta__title">{title}</h2>
       <p class="cta__body measure">{body}</p>
     </div>
-    <Button href={buttonHref} size="lg" id="cta-band">{buttonLabel}</Button>
+    <div class="cta__action">
+      <Button href={buttonHref} size="lg" id="cta-band"
+        >{buttonLabel} <span aria-hidden="true">↗</span></Button
+      >
+      <span>A thoughtful reply from a real person.</span>
+    </div>
   </div>
 </section>
 
 <style>
   .cta {
     padding-block: var(--space-section);
+    max-inline-size: var(--content-wide);
   }
   .cta__panel {
     position: relative;
@@ -35,19 +43,72 @@ const { title, body, buttonLabel, buttonHref } = Astro.props;
     align-items: center;
     justify-content: space-between;
     gap: var(--space-xl);
-    padding: clamp(2rem, 1rem + 4vw, 3.5rem);
-    background-color: var(--surface);
-    background-image: var(--gradient-aurora);
-    border: var(--border-width) solid color-mix(in srgb, var(--border) 55%, transparent);
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-card);
+    padding: clamp(2.25rem, 1rem + 5vw, 5rem);
+    background: var(--text);
+    border: var(--border-width) solid color-mix(in srgb, white 10%, transparent);
+    border-radius: clamp(1.5rem, 4vw, 3rem);
+    box-shadow: 0 2rem 5rem color-mix(in srgb, var(--text) 18%, transparent);
+  }
+  .cta__halo {
+    position: absolute;
+    inline-size: 34rem;
+    block-size: 34rem;
+    inset-block-start: -23rem;
+    inset-inline-end: -12rem;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--brand-gold) 18%, transparent);
+    filter: blur(12px);
+    pointer-events: none;
+  }
+  .cta__copy {
+    position: relative;
+    z-index: 1;
+    max-inline-size: 46rem;
+  }
+  .cta__eyebrow {
+    margin-block-end: var(--space-md);
+    color: color-mix(in srgb, var(--brand-gold) 82%, white);
+    font-size: var(--text-label);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
   }
   .cta__title {
-    font-size: var(--text-h2);
+    max-inline-size: 17ch;
+    color: #f5fbf8;
+    font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+    font-weight: var(--weight-regular);
+    line-height: 1.02;
+    letter-spacing: -0.045em;
   }
   .cta__body {
     margin-block-start: var(--space-md);
     font-size: var(--text-lead);
-    color: var(--text-secondary);
+    color: #bcd2cd;
+  }
+  .cta__action {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+  .cta__action > span {
+    color: #8eaaa4;
+    font-size: var(--text-micro);
+  }
+  .cta__action :global(.btn--primary) {
+    background: #f3d675;
+    color: #17302d;
+    box-shadow: 0 0.7rem 2rem rgba(243, 214, 117, 0.16);
+  }
+  .cta__action :global(.btn--primary:hover) {
+    background: #f8e59e;
+  }
+  @media (max-width: 48rem) {
+    .cta__action {
+      align-items: flex-start;
+    }
   }
 </style>

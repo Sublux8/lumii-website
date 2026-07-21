@@ -119,13 +119,12 @@
   body {
     margin: 0;
     min-block-size: 100dvh;
-    /* Signature aurora backdrop (the app login/welcome screen). Fixed so the
-       wash stays put while content scrolls over it; --bg is the base layer. */
     background-color: var(--bg);
-    background-image: var(--aurora);
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-image: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--brand-warmth) 5%, transparent),
+      transparent 28rem
+    );
     color: var(--text);
     font-family: var(--font-sans);
     font-size: var(--text-body);
@@ -146,7 +145,7 @@
   h4 {
     margin: 0;
     font-family: var(--font-display);
-    font-weight: var(--weight-semibold);
+    font-weight: var(--weight-regular);
     line-height: var(--leading-snug);
     letter-spacing: var(--tracking-tight);
     text-wrap: balance;
@@ -180,6 +179,13 @@
     transition: color var(--duration-quick) var(--ease-standard);
   }
 
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
   img,
   picture,
   svg,
@@ -206,10 +212,19 @@
      theme-init.js) so no-JS visitors always see the content. */
   html.js [data-reveal] {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(22px);
     transition:
-      opacity 0.6s var(--ease-out),
-      transform 0.6s var(--ease-out);
+      opacity 0.72s var(--ease-out),
+      transform 0.72s var(--ease-out);
+  }
+  html.js [data-reveal]:nth-child(2) {
+    transition-delay: 70ms;
+  }
+  html.js [data-reveal]:nth-child(3) {
+    transition-delay: 140ms;
+  }
+  html.js [data-reveal]:nth-child(4) {
+    transition-delay: 210ms;
   }
   html.js [data-reveal].is-visible {
     opacity: 1;
