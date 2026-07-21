@@ -22,6 +22,7 @@ The website is ready to accept these captures in `public/product/`. PNG or WebP 
 
 ### C03 — Funded care plan
 
+- Status: supplied and integrated
 - Suggested file: `lumii-care-plan.webp`
 - Format: desktop or tablet, 4:3
 - Show: sessions used, referral validity, funder and next review

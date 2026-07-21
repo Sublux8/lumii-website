@@ -44,8 +44,11 @@ import ProductShot from "@components/ProductShot.astro";
     <ProductShot
       shotId="C03"
       title="Funded care that keeps count"
-      note="A care-plan detail showing sessions used, referral validity and the next review."
-      device="tablet"
+      note="Medicare, DVA and workplace care plans with session usage, expiry dates and caseload status in one view."
+      src="/product/lumii-care-plan.png"
+      alt="Lumii care plans management showing active Medicare, DVA and Comcare plans with session usage and expiry dates"
+      device="wide"
+      showChrome={false}
       variant="care"
       class="gallery__care"
     />
@@ -76,7 +79,7 @@ import ProductShot from "@components/ProductShot.astro";
     color: var(--text-secondary);
     font-size: var(--text-lead);
   }
-  .gallery__hero {
+  :global(.gallery__hero) {
     max-inline-size: 65rem;
     margin-inline: auto;
   }
@@ -87,14 +90,16 @@ import ProductShot from "@components/ProductShot.astro";
     max-inline-size: 65rem;
     margin: var(--space-2xl) auto 0;
   }
-  .gallery__claims {
+  :global(.gallery__claims) {
     grid-column: 1 / -1;
   }
-  .gallery__care {
+  :global(.gallery__care) {
     grid-column: 1 / -1;
     inline-size: 100%;
-    max-inline-size: 42rem;
     justify-self: center;
+  }
+  :global(.gallery__care .product-shot__frame) {
+    aspect-ratio: 1707 / 785;
   }
   @media (max-width: 44rem) {
     .gallery__row {
