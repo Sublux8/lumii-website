@@ -1,0 +1,94 @@
+---
+/**
+ * Base document layout. Owns the document head (SEO, hreflang, canonical, theme
+ * colour, the no-flash theme script) and the Nav/Footer chrome. Every page
+ * renders through this. Strings flow from the catalogue; nothing hardcoded.
+ *
+ * No inline scripts or styles are emitted here — global.css is an external
+ * bundle and the theme init is an external file — so the static CSP stays
+ * self-only.
+ */
+import "@styles/global.css";
+import Nav from "@components/sections/Nav.astro";
+import Footer from "@components/sections/Footer.astro";
+import { useTranslations, localeFromPath } from "@i18n/index.ts";
+import { canonicalUrl, hreflangAlternates, htmlLangAttrs } from "@lib/seo.ts";
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** When true, emit noindex (component reference, drafts). */
+  noindex?: boolean;
+  ogImage?: string;
+}
+
+const pathname = Astro.url.pathname;
+const locale = localeFromPath(pathname);
+const t = useTranslations(locale);
+const { lang, dir } = htmlLangAttrs(locale);
+
+const title = Astro.props.title
+  ? `${Astro.props.title} · ${t("site.name")}`
+  : `${t("site.name")} — ${t("site.tagline")}`;
+const description = Astro.props.description ?? t("site.description");
+const canonical = canonicalUrl(pathname);
+const alternates = hreflangAlternates(pathname);
+const { noindex = false, ogImage } = Astro.props;
+// Default social image — the branded 1200×630 connected-care card. Per-page
+// overrides pass `ogImage`.
+const ogImageUrl = new URL(ogImage ?? "/og-ecosystem.png", "https://lumii.com.au").href;
+const ogImageAlt = `${t("site.name")} — care, connected for clinics and people.`;
+---
+
+<!doctype html>
+<html {lang} {dir}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <link rel="canonical" href={canonical} />
+    {
+      alternates.map((alt) => (
+        <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
+      ))
+    }
+
+    <meta name="theme-color" content="#effbf7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#07181a" media="(prefers-color-scheme: dark)" />
+
+    <!-- OpenGraph / social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={t("site.name")} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- No-flash theme resolver — external, runs before paint. -->
+    <script is:inline src="/scripts/theme-init.js"></script>
+  </head>
+  <body>
+    <Nav {locale} currentPath={pathname} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer {locale} />
+    <script is:inline src="/scripts/reveal.js"></script>
+    <script is:inline src="/scripts/experience.js"></script>
+  </body>
+</html>

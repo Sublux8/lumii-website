@@ -1,0 +1,32 @@
+<svg width="420" height="150" viewBox="0 0 420 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="lumii">
+  <style>
+    :root { color-scheme: light only; }
+    text, tspan, rect { forced-color-adjust: none; }
+  </style>
+  <defs>
+    <linearGradient id="ii-gradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F4B6A6"/>
+      <stop offset="52%" stop-color="#10B9A7"/>
+      <stop offset="100%" stop-color="#5F7CE6"/>
+    </linearGradient>
+    <linearGradient id="underline-gradient" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#F4B6A6" stop-opacity="0"/>
+      <stop offset="35%" stop-color="#F4B6A6" stop-opacity="0.56"/>
+      <stop offset="72%" stop-color="#10B9A7" stop-opacity="0.76"/>
+      <stop offset="100%" stop-color="#5F7CE6" stop-opacity="0.42"/>
+    </linearGradient>
+    <filter id="warm-shadow" x="-30%" y="-40%" width="160%" height="190%">
+      <feDropShadow dx="0" dy="4.4" stdDeviation="7.9" flood-color="#F4B6A6" flood-opacity="0.16"/>
+    </filter>
+  </defs>
+  <g filter="url(#warm-shadow)">
+    <text x="42" y="94"
+          font-family="'SF Pro Rounded', 'Arial Rounded MT Bold', 'Nunito Sans', system-ui, sans-serif"
+          font-size="88"
+          font-weight="700"
+          letter-spacing="0">
+      <tspan fill="#17212D">lum</tspan><tspan fill="url(#ii-gradient)">ii</tspan>
+    </text>
+  </g>
+  <rect x="166" y="111" width="76" height="5" rx="2.5" fill="url(#underline-gradient)"/>
+</svg>

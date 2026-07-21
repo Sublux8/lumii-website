@@ -1,0 +1,42 @@
+---
+/**
+ * Text link with automatic external-link handling. External hrefs get
+ * target=_blank + rel=noopener noreferrer and an sr-only "(opens in a new tab)"
+ * hint (text passed in so it stays translatable).
+ */
+interface Props {
+  href: string;
+  /** Translatable "(opens in a new tab)" string for external links. */
+  externalHint?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { href, externalHint, class: className, ...rest } = Astro.props;
+const isExternal = /^https?:\/\//.test(href) && !href.includes("lumii.com.au");
+---
+
+<a
+  href={href}
+  class={["link", className].filter(Boolean).join(" ")}
+  target={isExternal ? "_blank" : undefined}
+  rel={isExternal ? "noopener noreferrer" : undefined}
+  {...rest}
+>
+  <slot />{
+    isExternal && externalHint && <span class="sr-only">{` ${externalHint}`}</span>
+  }
+</a>
+
+<style>
+  .link {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+    text-underline-offset: 0.18em;
+    transition: text-decoration-color var(--duration-quick) var(--ease-standard);
+  }
+  .link:hover {
+    text-decoration-color: var(--accent);
+  }
+</style>

@@ -1,0 +1,90 @@
+---
+/**
+ * Terms of service — DRAFT scaffold. NOT final and NOT legal advice; noindex
+ * until reviewed (§18). Replace with the reviewed terms before launch.
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { useTranslations, localeFromPath, localeStaticPaths } from "@i18n/index.ts";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+const t = useTranslations(localeFromPath(Astro.url.pathname));
+---
+
+<BaseLayout title={t("footer.terms")} noindex={true}>
+  <section class="container-page prose measure">
+    <p class="draft">Draft — pending legal review. Not yet the binding terms.</p>
+
+    <h1>{t("footer.terms")}</h1>
+    <p>
+      These terms govern access to the Lumii website and, where applicable, the Lumii
+      pre-launch program. Full product terms of service will accompany commercial launch.
+    </p>
+
+    <h2>Pre-launch access</h2>
+    <p>
+      Lumii is in a pre-launch phase. Requesting access does not create a binding
+      agreement to provide the service. We may contact you about onboarding and may
+      decline or withdraw access at our discretion.
+    </p>
+
+    <h2>Acceptable use</h2>
+    <p>
+      Don't misuse this site — no attempts to breach security, disrupt the service, or
+      access data you're not authorised to. Report security issues to
+      <a href="mailto:security@lumii.com.au">security@lumii.com.au</a>.
+    </p>
+
+    <h2>Intellectual property</h2>
+    <p>
+      The Lumii name, logo, and site content are owned by Lumii. You may not reproduce
+      them without permission.
+    </p>
+
+    <h2>No warranty</h2>
+    <p>
+      This site is provided "as is" during pre-launch, without warranties. To the extent
+      permitted by law, we're not liable for loss arising from its use.
+    </p>
+
+    <h2>Privacy</h2>
+    <p>
+      Our handling of personal information is described in our
+      <a href="/en-au/privacy">privacy policy</a>.
+    </p>
+
+    <h2>Contact</h2>
+    <p>Questions: <a href="mailto:support@lumii.com.au">support@lumii.com.au</a>.</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .prose {
+    padding-block: var(--space-section);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+  .prose h1 {
+    color: var(--text);
+    margin-block-end: var(--space-lg);
+  }
+  .prose h2 {
+    color: var(--text);
+    font-size: var(--text-h4);
+    margin-block: var(--space-xl) var(--space-sm);
+  }
+  .prose p {
+    margin-block-end: var(--space-md);
+  }
+  .draft {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-pill);
+    background-color: var(--tag-amber-bg);
+    color: var(--tag-amber-fg);
+    font-size: var(--text-caption);
+    font-weight: var(--weight-semibold);
+    margin-block-end: var(--space-lg);
+  }
+</style>

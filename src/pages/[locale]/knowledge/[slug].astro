@@ -1,0 +1,150 @@
+---
+/**
+ * Knowledge article page — renders each published/draft `knowledge` entry.
+ * Reserved entries are excluded from getStaticPaths; drafts build but noindex so
+ * they're reviewable by URL. Article body is the MDX content; the header carries
+ * topic, byline and reading time from frontmatter.
+ */
+import { getCollection, render } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Badge from "@components/primitives/Badge.astro";
+import CTA from "@components/sections/CTA.astro";
+import {
+  useTranslations,
+  localeFromPath,
+  localizePath,
+  formatDate,
+  getLocale,
+} from "@i18n/index.ts";
+import { LOCALES } from "@i18n/config.ts";
+
+export async function getStaticPaths() {
+  const articles = await getCollection("knowledge", (a) => a.data.status !== "reserved");
+  return LOCALES.flatMap((l) =>
+    articles.map((article) => ({
+      params: { locale: l.path, slug: article.id },
+      props: { article },
+    })),
+  );
+}
+
+const { article } = Astro.props;
+const { data } = article;
+const { Content } = await render(article);
+
+const localePath = localeFromPath(Astro.url.pathname);
+const locale = getLocale(localePath);
+const t = useTranslations(localePath);
+const lp = (p: string) => localizePath(p, localePath);
+
+const topicLabel = data.topic.replace(/-/g, " ");
+const published = formatDate(data.publishDate, locale, { dateStyle: "long" });
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.summary}
+  noindex={data.status === "draft"}
+>
+  <article class="wrap container-page">
+    <header class="head measure">
+      <a class="back" href={lp("/knowledge")}>← {t("knowledge.title")}</a>
+      <div class="topic"><Badge tone="blue">{topicLabel}</Badge></div>
+      <h1>{data.title}</h1>
+      <p class="summary">{data.summary}</p>
+      <p class="byline">
+        {data.author} · {published}{
+          data.readingMinutes && ` · ${data.readingMinutes} min read`
+        }
+      </p>
+    </header>
+
+    <div class="body measure">
+      <Content />
+    </div>
+
+    <p class="more measure">
+      <a href={lp("/knowledge")}>← {t("knowledge.readMore")} from the Knowledge hub</a>
+    </p>
+  </article>
+
+  <CTA
+    title={t("cta.title")}
+    body={t("cta.body")}
+    buttonLabel={t("cta.button")}
+    buttonHref={lp("/request-access")}
+  />
+</BaseLayout>
+
+<style>
+  .wrap {
+    padding-block: var(--space-section) var(--space-2xl);
+  }
+  .head {
+    margin-block-end: var(--space-2xl);
+  }
+  .back {
+    display: inline-block;
+    font-size: var(--text-subhead);
+    font-weight: var(--weight-semibold);
+    margin-block-end: var(--space-lg);
+  }
+  .topic {
+    margin-block-end: var(--space-md);
+  }
+  .head h1 {
+    font-size: var(--text-h1);
+  }
+  .summary {
+    margin-block-start: var(--space-lg);
+    font-size: var(--text-lead);
+    color: var(--text-secondary);
+  }
+  .byline {
+    margin-block-start: var(--space-md);
+    font-size: var(--text-caption);
+    color: var(--text-muted);
+  }
+
+  /* Article prose — the rendered MDX body. */
+  .body {
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+  .body :global(h2) {
+    font-size: var(--text-h3);
+    color: var(--text);
+    margin-block: var(--space-2xl) var(--space-md);
+  }
+  .body :global(h3) {
+    font-size: var(--text-h4);
+    color: var(--text);
+    margin-block: var(--space-xl) var(--space-sm);
+  }
+  .body :global(p) {
+    margin-block-end: var(--space-lg);
+  }
+  .body :global(ul),
+  .body :global(ol) {
+    margin-block-end: var(--space-lg);
+    padding-inline-start: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+  .body :global(strong) {
+    color: var(--text);
+    font-weight: var(--weight-semibold);
+  }
+  .body :global(blockquote) {
+    margin: var(--space-xl) 0;
+    padding-inline-start: var(--space-lg);
+    border-inline-start: 3px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    color: var(--text);
+    font-style: italic;
+  }
+  .more {
+    margin-block-start: var(--space-3xl);
+    font-weight: var(--weight-semibold);
+  }
+</style>

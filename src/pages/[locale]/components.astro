@@ -1,0 +1,175 @@
+---
+/**
+ * Internal component reference — noindex. A living gallery of every primitive and
+ * section so the design system is reviewable in one place. Not linked in nav; not
+ * in the sitemap-worthy set (noindex). Keep this in sync as components evolve.
+ */
+import { localeStaticPaths } from "@i18n/index.ts";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Button from "@components/primitives/Button.astro";
+import Badge from "@components/primitives/Badge.astro";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+import Card from "@components/primitives/Card.astro";
+import Input from "@components/primitives/Input.astro";
+import Stat from "@components/primitives/Stat.astro";
+import Testimonial from "@components/sections/Testimonial.astro";
+import FAQ from "@components/sections/FAQ.astro";
+import PricingTable from "@components/sections/PricingTable.astro";
+
+const tones = ["green", "blue", "amber", "red", "purple", "gray"] as const;
+---
+
+<BaseLayout title="Component reference" noindex={true}>
+  <div class="container-page ref">
+    <h1>Component reference</h1>
+    <p class="ref__note">
+      Internal · noindex. Every page is assembled from these primitives and sections.
+      Tokens are defined in <code>src/styles/tokens.css</code>.
+    </p>
+
+    <section class="ref__block">
+      <h2>Buttons</h2>
+      <div class="row">
+        <Button variant="primary" size="lg">Primary large</Button>
+        <Button variant="primary">Primary</Button>
+        <Button variant="ghost">Ghost</Button>
+        <Button variant="danger">Danger</Button>
+        <Button variant="primary" size="sm">Small</Button>
+      </div>
+    </section>
+
+    <section class="ref__block">
+      <h2>Badges</h2>
+      <div class="row">
+        {tones.map((tone) => <Badge tone={tone}>{tone}</Badge>)}
+      </div>
+    </section>
+
+    <section class="ref__block">
+      <h2>Cards</h2>
+      <div class="row row--cards">
+        <Card elevation="subtle"><strong>Subtle</strong><p>Surface + hairline.</p></Card>
+        <Card elevation="card"><strong>Card</strong><p>Standard elevation.</p></Card>
+        <Card elevation="elevated"><strong>Elevated</strong><p>Lifted surface.</p></Card>
+        <Card href="#" elevation="card"
+          ><strong>Interactive →</strong><p>Hover me.</p></Card
+        >
+      </div>
+    </section>
+
+    <section class="ref__block">
+      <h2>Stats</h2>
+      <div class="row">
+        <Stat value="52" label="Modules" accent />
+        <Stat value="100%" label="AU data residency" />
+        <Stat value="9pm" label="Settlement window AET" />
+      </div>
+    </section>
+
+    <section class="ref__block">
+      <h2>Input</h2>
+      <div class="row--form">
+        <Input
+          id="ref-name"
+          name="name"
+          label="Your name"
+          required
+          placeholder="Dr Jane Doe"
+        />
+        <Input
+          id="ref-msg"
+          name="msg"
+          label="Message"
+          multiline
+          placeholder="Tell us more"
+        />
+      </div>
+    </section>
+
+    <section class="ref__block">
+      <h2>Testimonial</h2>
+      <Testimonial
+        quote="Placeholder pull-quote for layout review only."
+        author="Name"
+        role="Role, Clinic"
+      />
+    </section>
+
+    <section class="ref__block">
+      <h2>Pricing table</h2>
+      <PricingTable
+        tiers={[
+          {
+            name: "Starter",
+            price: "$—",
+            cadence: "/mo",
+            description: "Placeholder tier.",
+            features: ["Online booking", "SMS reminders", "Telehealth"],
+            ctaLabel: "Request access",
+            ctaHref: "#",
+          },
+          {
+            name: "Practice",
+            price: "$—",
+            cadence: "/mo",
+            description: "Placeholder tier.",
+            features: ["Everything in Starter", "Tyro claiming", "Care plans"],
+            ctaLabel: "Request access",
+            ctaHref: "#",
+            featured: true,
+            badge: "Popular",
+          },
+        ]}
+      />
+    </section>
+
+    <section class="ref__block">
+      <h2>FAQ</h2>
+      <FAQ
+        items={[
+          { q: "Is this real content?", a: "No — placeholder for component review." },
+          { q: "JS-free?", a: "Yes, native details/summary." },
+        ]}
+      />
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .ref {
+    padding-block: var(--space-2xl);
+  }
+  .ref__note {
+    color: var(--text-muted);
+    margin-block: var(--space-md) var(--space-2xl);
+  }
+  .ref__block {
+    padding-block: var(--space-xl);
+    border-block-start: var(--border-hairline) solid
+      color-mix(in srgb, var(--border) 40%, transparent);
+  }
+  .ref__block h2 {
+    font-size: var(--text-h3);
+    margin-block-end: var(--space-lg);
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-md);
+  }
+  .row--cards {
+    align-items: stretch;
+  }
+  .row--cards > * {
+    flex: 1 1 14rem;
+  }
+  .row--form {
+    display: grid;
+    gap: var(--space-lg);
+    max-inline-size: 28rem;
+  }
+</style>

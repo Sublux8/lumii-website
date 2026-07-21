@@ -1,0 +1,55 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# §15 Security headers, applied at the Cloudflare edge.
+#
+# IMPORTANT — why CSP is path-scoped instead of on `/*`:
+# Cloudflare Workers static-assets `_headers` APPENDS headers from every matching
+# rule (it does not let a more-specific rule override a less-specific one), and
+# Modify-Response-Header Transform Rules do NOT apply to static-asset responses.
+# So a strict CSP on `/*` plus a relaxed CSP on `/admin/*` produced TWO CSP
+# headers on /admin — browsers enforce the intersection, which re-blocked the
+# CMS. The only reliable fix is to ensure each path matches exactly ONE CSP rule:
+#   - the strict marketing CSP is scoped to the HTML routes (`/`, `/en-*/*`)
+#   - `/admin/*` carries its own relaxed CSP (CMS loads from a CDN + talks to
+#     GitHub and the OAuth relay)
+# Non-CSP security headers stay on `/*` (identical everywhere, no conflict).
+# Marketing CSP posture is still zero-third-party, `script-src 'self'`.
+# ─────────────────────────────────────────────────────────────────────────────
+
+/*
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()
+  # same-origin-allow-popups (not same-origin): the CMS at /admin opens a
+  # cross-origin OAuth popup and needs window.opener to deliver the token back.
+  # COOP same-origin severs window.opener for cross-origin popups → login aborts.
+  Cross-Origin-Opener-Policy: same-origin-allow-popups
+  Cross-Origin-Resource-Policy: same-origin
+
+# Strict marketing CSP — scoped to the HTML routes so /admin never inherits it.
+/
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://challenges.cloudflare.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
+/en-au/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://challenges.cloudflare.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
+/en-us/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://challenges.cloudflare.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
+/en-gb/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://challenges.cloudflare.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
+
+# Long-cache fingerprinted build assets.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/scripts/*
+  Cache-Control: public, max-age=3600
+
+# security.txt and well-known served as text.
+/.well-known/security.txt
+  Content-Type: text/plain; charset=utf-8
+
+# Sveltia CMS admin — its OWN relaxed CSP (the only CSP rule matching /admin).
+# Loads the CMS bundle from unpkg, talks to GitHub + the OAuth relay.
+/admin/*
+  X-Robots-Tag: noindex
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://unpkg.com https://api.github.com https://raw.githubusercontent.com https://www.githubstatus.com https://cms-auth.lumii.com.au; frame-ancestors 'none'; base-uri 'self'

@@ -1,0 +1,341 @@
+---
+/**
+ * The Lumii star — the brand mascot, alive. Static SVG (the version-1 logo body
+ * shape) + scoped animation CSS; the interactivity (cursor-following eyes, lean,
+ * spontaneous hop, wink, click celebration) lives in /scripts/lumii-star.js so
+ * it runs under the strict `script-src 'self'` CSP (no inline JS). Multiple
+ * instances per page are safe — the script wires each `[data-lumii-star]`.
+ *
+ * All motion is disabled under `prefers-reduced-motion`.
+ */
+interface Props {
+  /** Rendered size in px (square). */
+  size?: number;
+  /** Accessible label; the star is decorative-but-friendly. */
+  label?: string;
+  class?: string;
+}
+const { size = 160, label = "The Lumii star", class: className } = Astro.props;
+---
+
+<div
+  class={["lumii-star", className].filter(Boolean).join(" ")}
+  data-lumii-star
+  role="img"
+  aria-label={label}
+  style={`--lstar-size:${size}px`}
+>
+  <svg viewBox="0 0 220 220" shape-rendering="geometricPrecision" aria-hidden="true">
+    <defs>
+      <radialGradient id="lstar-glow" cx="50%" cy="47%" r="56%">
+        <stop offset="0%" stop-color="#f4b6a6" stop-opacity="0.5"></stop>
+        <stop offset="54%" stop-color="#f2c766" stop-opacity="0.16"></stop>
+        <stop offset="100%" stop-color="#f2c766" stop-opacity="0"></stop>
+      </radialGradient>
+      <linearGradient id="lstar-body" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"></stop>
+        <stop offset="100%" stop-color="#f4e8d4"></stop>
+      </linearGradient>
+      <filter id="lstar-shadow" x="-40%" y="-40%" width="180%" height="180%">
+        <feDropShadow
+          dx="0"
+          dy="7"
+          stdDeviation="9"
+          flood-color="#e2895f"
+          flood-opacity="0.3"></feDropShadow>
+      </filter>
+    </defs>
+    <circle cx="110" cy="106" r="106" fill="url(#lstar-glow)"></circle>
+    <g class="lstar-float">
+      <g class="lstar-lean">
+        <g class="lstar-shimmy">
+          <g class="lstar-star">
+            <polygon
+              points="110,46 129,84 171,90 138,118 147,160 110,139 73,160 82,118 49,90 91,84"
+              fill="url(#lstar-body)"
+              stroke="#fbf2e3"
+              stroke-width="22"
+              stroke-linejoin="round"
+              filter="url(#lstar-shadow)"></polygon>
+            <path
+              d="M96 116 Q110 128 124 116"
+              fill="none"
+              stroke="#39474f"
+              stroke-width="3.6"
+              stroke-linecap="round"></path>
+            <g class="lstar-eyetrack">
+              <ellipse
+                class="lstar-eye lstar-eyeL"
+                cx="97"
+                cy="104"
+                rx="4.9"
+                ry="6.8"
+                fill="#39474f"></ellipse>
+              <ellipse
+                class="lstar-eye"
+                cx="123"
+                cy="104"
+                rx="4.9"
+                ry="6.8"
+                fill="#39474f"></ellipse>
+              <circle cx="98.7" cy="101.6" r="1.8" fill="#fff"></circle>
+              <circle cx="124.7" cy="101.6" r="1.8" fill="#fff"></circle>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+    <g class="lstar-sparkles" fill="#f2c766">
+      <path
+        class="lstar-sp s1"
+        d="M174 52 l3.2 8.4 8.4 3.2 -8.4 3.2 -3.2 8.4 -3.2 -8.4 -8.4 -3.2 8.4 -3.2z"
+      ></path>
+      <path
+        class="lstar-sp s2"
+        d="M38 150 l2.6 6.6 6.6 2.6 -6.6 2.6 -2.6 6.6 -2.6 -6.6 -6.6 -2.6 6.6 -2.6z"
+      ></path>
+      <path
+        class="lstar-sp s3"
+        d="M184 138 l2.2 5.6 5.6 2.2 -5.6 2.2 -2.2 5.6 -2.2 -5.6 -5.6 -2.2 5.6 -2.2z"
+      ></path>
+      <path
+        class="lstar-sp s4"
+        d="M42 58 l2.2 5.6 5.6 2.2 -5.6 2.2 -2.2 5.6 -2.2 -5.6 -5.6 -2.2 5.6 -2.2z"
+      ></path>
+      <path class="lstar-sp s5" d="M150 178 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z"></path>
+    </g>
+    <g class="lstar-burst" fill="#f2c766" opacity="0">
+      <path d="M110 28 l2.6 6.2 6.2 2.6 -6.2 2.6 -2.6 6.2 -2.6 -6.2 -6.2 -2.6 6.2 -2.6z"
+      ></path>
+      <path d="M188 100 l2.6 6.2 6.2 2.6 -6.2 2.6 -2.6 6.2 -2.6 -6.2 -6.2 -2.6 6.2 -2.6z"
+      ></path>
+      <path d="M152 186 l2.6 6.2 6.2 2.6 -6.2 2.6 -2.6 6.2 -2.6 -6.2 -6.2 -2.6 6.2 -2.6z"
+      ></path>
+      <path d="M60 186 l2.6 6.2 6.2 2.6 -6.2 2.6 -2.6 6.2 -2.6 -6.2 -6.2 -2.6 6.2 -2.6z"
+      ></path>
+      <path d="M28 100 l2.6 6.2 6.2 2.6 -6.2 2.6 -2.6 6.2 -2.6 -6.2 -6.2 -2.6 6.2 -2.6z"
+      ></path>
+    </g>
+  </svg>
+</div>
+
+<script is:inline src="/scripts/lumii-star.js"></script>
+
+<style>
+  .lumii-star {
+    inline-size: var(--lstar-size, 160px);
+    max-inline-size: 100%;
+    aspect-ratio: 1;
+    cursor: pointer;
+    user-select: none;
+  }
+  .lumii-star svg {
+    inline-size: 100%;
+    block-size: 100%;
+    overflow: visible;
+  }
+
+  .lstar-float {
+    transform-box: fill-box;
+    transform-origin: 110px 108px;
+    animation: lstar-bob 4.6s ease-in-out infinite;
+  }
+  @keyframes lstar-bob {
+    0%,
+    100% {
+      transform: translateY(0) rotate(-2.5deg);
+    }
+    50% {
+      transform: translateY(-12px) rotate(2.5deg);
+    }
+  }
+  .lstar-shimmy {
+    transform-box: fill-box;
+    transform-origin: 110px 128px;
+    animation: lstar-alive 5.6s ease-in-out infinite;
+  }
+  @keyframes lstar-alive {
+    0%,
+    72%,
+    100% {
+      transform: scale(1) rotate(0);
+    }
+    38% {
+      transform: scale(1.028) rotate(0);
+    }
+    82% {
+      transform: scale(1.01) rotate(5deg);
+    }
+    90% {
+      transform: scale(1.01) rotate(-5deg);
+    }
+  }
+  .lstar-eye {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: lstar-blink 4.7s infinite;
+  }
+  @keyframes lstar-blink {
+    0%,
+    91%,
+    100% {
+      transform: scaleY(1);
+    }
+    95% {
+      transform: scaleY(0.08);
+    }
+  }
+  .lstar-eyeL.is-winking {
+    animation: lstar-wink 0.5s ease;
+  }
+  @keyframes lstar-wink {
+    0%,
+    100% {
+      transform: scaleY(1);
+    }
+    45% {
+      transform: scaleY(0.08);
+    }
+  }
+  .lstar-sp {
+    transform-box: fill-box;
+    transform-origin: center;
+    opacity: 0;
+    animation: lstar-tw 3.8s ease-in-out infinite;
+  }
+  .lstar-sp.s1 {
+    animation-delay: 0.1s;
+  }
+  .lstar-sp.s2 {
+    animation-delay: 1s;
+  }
+  .lstar-sp.s3 {
+    animation-delay: 1.8s;
+  }
+  .lstar-sp.s4 {
+    animation-delay: 2.5s;
+  }
+  .lstar-sp.s5 {
+    animation-delay: 3.1s;
+  }
+  @keyframes lstar-tw {
+    0%,
+    100% {
+      opacity: 0;
+      transform: scale(0.4) rotate(0);
+    }
+    45% {
+      opacity: 0.95;
+      transform: scale(1) rotate(45deg);
+    }
+  }
+  .lumii-star:hover .lstar-shimmy {
+    animation: lstar-wiggle 0.6s ease-in-out infinite;
+  }
+  @keyframes lstar-wiggle {
+    0%,
+    100% {
+      transform: rotate(-8deg) scale(1.06);
+    }
+    50% {
+      transform: rotate(8deg) scale(1.06);
+    }
+  }
+  .lstar-float.is-hopping {
+    animation: lstar-hop 0.7s cubic-bezier(0.3, 1.35, 0.5, 1);
+  }
+  @keyframes lstar-hop {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0);
+    }
+    40% {
+      transform: translateY(-26px) scale(1.08, 0.94);
+    }
+    70% {
+      transform: translateY(3px) scale(0.96, 1.06);
+    }
+  }
+  /* Freeze the shimmy during the spin. A real click keeps the cursor on the
+     star, so :hover is live and the shimmy is wobbling ±8deg (lstar-wiggle);
+     that oscillation layered under the rotation is the main thing that read as
+     "jagged". Idle shimmy (lstar-alive) is stilled by the same rule. (The JS
+     cursor-lean / eye-track set the SVG `transform` attribute, which a stylesheet
+     rule can't override — but they're static during a click, so they simply spin
+     along with the float and don't add jitter.) */
+  .lumii-star.is-celebrating .lstar-shimmy {
+    animation: none !important;
+    transform: none !important;
+  }
+  .lumii-star.is-celebrating .lstar-float {
+    /* Spin about the star's true centre. The base rule's 110px/108px origin is
+       measured from the fill-box's top-left corner, which lands off-centre and
+       turns a spin into a wide orbit — `center` pivots in place. */
+    transform-origin: center;
+    /* Promote to a compositor layer for the spin so the body's drop-shadow
+       filter is rasterised once and rotated, not recomputed every frame. Set
+       only while celebrating, so no permanent layer is kept. */
+    will-change: transform;
+    /* Rotation and hop are SEPARATE animations on SEPARATE transform
+       properties. CSS applies a timing function PER keyframe segment, so any
+       intermediate rotation keyframe (e.g. 180deg at 50%) makes the spin ease
+       out approaching it and ease back in leaving it — a visible halt at the
+       half-turn. A single from→to `rotate` has no intermediate boundary, so the
+       turn is one continuous motion. The hop keeps its own midpoint, which only
+       moves translate/scale and never stalls the rotation. */
+    animation:
+      lstar-spin 0.95s ease-in-out,
+      lstar-lift 0.95s ease-in-out;
+  }
+  @keyframes lstar-spin {
+    from {
+      rotate: 0deg;
+    }
+    to {
+      rotate: 360deg;
+    }
+  }
+  @keyframes lstar-lift {
+    0%,
+    100% {
+      translate: 0 0;
+      scale: 1;
+    }
+    50% {
+      translate: 0 -22px;
+      scale: 1.08;
+    }
+  }
+  .lstar-burst {
+    transform-box: fill-box;
+    transform-origin: 110px 108px;
+  }
+  .lumii-star.is-celebrating .lstar-burst {
+    animation: lstar-burst 0.82s ease-out;
+  }
+  @keyframes lstar-burst {
+    0% {
+      opacity: 1;
+      transform: scale(0.3);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.55);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lstar-float,
+    .lstar-shimmy,
+    .lstar-eye,
+    .lstar-sp,
+    .lstar-float.is-hopping,
+    .lumii-star.is-celebrating .lstar-float,
+    .lumii-star.is-celebrating .lstar-burst {
+      animation: none !important;
+    }
+    .lstar-sp {
+      opacity: 0.8;
+    }
+  }
+</style>

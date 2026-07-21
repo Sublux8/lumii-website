@@ -1,0 +1,34 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Local Cloudflare Worker secrets — copy to `.dev.vars` (gitignored) for local dev.
+# Production values are set with `wrangler secret put <NAME>` or the Cloudflare
+# dashboard, NEVER committed. The service-role key is server-only and must never
+# reach the client bundle.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Supabase (Sydney, ap-southeast-2) — lead capture / access_requests table.
+# The publishable (anon) key is safe in the client ONLY for RLS-guarded inserts;
+# we still proxy through the Worker so it never ships in the static bundle.
+SUPABASE_URL="https://scqxaziehzyekohhiuip.supabase.co"
+SUPABASE_PUBLISHABLE_KEY="sb_publishable_REPLACE_ME"
+# Server-only. Bypasses RLS. NEVER expose to the browser / never inline.
+SUPABASE_SERVICE_ROLE_KEY="REPLACE_ME_SERVER_ONLY"
+
+# Sentry (error tracking) — DSN is public by design but kept out of git.
+PUBLIC_SENTRY_DSN=""
+SENTRY_ENVIRONMENT="development"
+
+# Cloudflare Web Analytics token (cookieless). Public by design.
+PUBLIC_CF_ANALYTICS_TOKEN=""
+
+# Cloudflare Turnstile (bot protection on the §12 access-request form).
+# Site key is PUBLIC (inlined into the form); the secret key is server-only and
+# used for the siteverify call. In production the site key is a Workers Build
+# variable; the secret key is set via `wrangler secret put TURNSTILE_SECRET_KEY`.
+PUBLIC_TURNSTILE_SITE_KEY="REPLACE_ME_PUBLIC"
+TURNSTILE_SECRET_KEY="REPLACE_ME_SERVER_ONLY"
+
+# Resend (transactional email — requester confirmation + team alert).
+# Production: `wrangler secret put RESEND_API_KEY`. The sender domain must be
+# verified in Resend; override the default "from" with RESEND_FROM if needed.
+RESEND_API_KEY="REPLACE_ME_SERVER_ONLY"
+TEAM_NOTIFY_EMAIL="support@lumii.com.au"

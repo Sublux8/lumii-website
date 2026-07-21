@@ -1,0 +1,175 @@
+---
+/**
+ * Knowledge hub index — the blog surface. Published articles from the `knowledge`
+ * collection, newest first: the latest is a large featured card, the rest tile in
+ * a linked grid (topic, date, reading time). Cards link to /knowledge/{id}; the
+ * grid cards reveal on scroll (data-reveal).
+ */
+import { getCollection } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Card from "@components/primitives/Card.astro";
+import Badge from "@components/primitives/Badge.astro";
+import {
+  useTranslations,
+  localeFromPath,
+  localizePath,
+  formatDate,
+  getLocale,
+  localeStaticPaths,
+} from "@i18n/index.ts";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+const localePath = localeFromPath(Astro.url.pathname);
+const locale = getLocale(localePath);
+const t = useTranslations(localePath);
+const lp = (p: string) => localizePath(p, localePath);
+
+const articles = (await getCollection("knowledge"))
+  .filter((a) => a.data.status === "published")
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+
+const [featured, ...rest] = articles;
+const topicLabel = (topic: string) => topic.replace(/-/g, " ");
+const dateOf = (d: Date) => formatDate(d, locale, { dateStyle: "medium" });
+---
+
+<BaseLayout title={t("knowledge.title")} description={t("knowledge.subtitle")}>
+  <section class="container-page section">
+    <header class="section__head">
+      <p class="section__eyebrow">Knowledge hub</p>
+      <h1>{t("knowledge.title")}</h1>
+      <p class="section__lead measure">{t("knowledge.subtitle")}</p>
+    </header>
+
+    {articles.length === 0 && <p class="empty">{t("knowledge.empty")}</p>}
+
+    {
+      featured && (
+        <Card
+          href={lp(`/knowledge/${featured.id}`)}
+          elevation="card"
+          as="a"
+          class="featured"
+        >
+          <div class="featured__meta">
+            <Badge tone="amber">Latest</Badge>
+            <Badge tone="blue">{topicLabel(featured.data.topic)}</Badge>
+          </div>
+          <h2 class="featured__title">{featured.data.title}</h2>
+          <p class="featured__summary measure">{featured.data.summary}</p>
+          <p class="meta">
+            {featured.data.author} · {dateOf(featured.data.publishDate)}
+            {featured.data.readingMinutes &&
+              ` · ${featured.data.readingMinutes} min read`}
+          </p>
+          <span class="featured__cta">{t("knowledge.readMore")} →</span>
+        </Card>
+      )
+    }
+
+    {
+      rest.length > 0 && (
+        <div class="grid">
+          {rest.map((a) => (
+            <Card
+              href={lp(`/knowledge/${a.id}`)}
+              elevation="card"
+              as="a"
+              class="post"
+              data-reveal
+            >
+              <div class="topic">
+                <Badge tone="blue">{topicLabel(a.data.topic)}</Badge>
+              </div>
+              <h3 class="post__title">{a.data.title}</h3>
+              <p class="post__summary">{a.data.summary}</p>
+              <p class="meta">
+                {dateOf(a.data.publishDate)}
+                {a.data.readingMinutes && ` · ${a.data.readingMinutes} min read`}
+              </p>
+            </Card>
+          ))}
+        </div>
+      )
+    }
+  </section>
+</BaseLayout>
+
+<style>
+  .section {
+    padding-block: var(--space-section);
+  }
+  .section__head {
+    margin-block-end: var(--space-2xl);
+  }
+  .section__eyebrow {
+    font-size: var(--text-label);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-block-end: var(--space-sm);
+  }
+  .section__lead {
+    margin-block-start: var(--space-md);
+    font-size: var(--text-lead);
+    color: var(--text-secondary);
+  }
+  .empty {
+    color: var(--text-secondary);
+  }
+
+  .featured {
+    display: block;
+    margin-block-end: var(--space-2xl);
+    background-image: var(--gradient-surface-sheen);
+  }
+  .featured__meta {
+    display: flex;
+    gap: var(--space-sm);
+    margin-block-end: var(--space-md);
+  }
+  .featured__title {
+    font-size: var(--text-h2);
+    margin-block-end: var(--space-md);
+    max-inline-size: 22ch;
+  }
+  .featured__summary {
+    font-size: var(--text-lead);
+    color: var(--text-secondary);
+  }
+  .featured__cta {
+    display: inline-block;
+    margin-block-start: var(--space-lg);
+    font-weight: var(--weight-semibold);
+    color: var(--accent);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: var(--space-xl);
+  }
+  .post {
+    display: block;
+  }
+  .topic {
+    margin-block-end: var(--space-md);
+  }
+  .post__title {
+    font-size: var(--text-h4);
+    margin-block-end: var(--space-sm);
+  }
+  .post__summary {
+    color: var(--text-secondary);
+    line-height: var(--leading-normal);
+  }
+  .meta {
+    margin-block-start: var(--space-md);
+    font-size: var(--text-caption);
+    color: var(--text-muted);
+  }
+</style>

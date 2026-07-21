@@ -1,0 +1,146 @@
+---
+/**
+ * About — the story + values page. Carries the brand voice most directly: warm,
+ * Australian, human ("on your side"). Values render as icon cards; the closing
+ * narrative sets the pre-launch, foundation-clinic posture.
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Hero from "@components/sections/Hero.astro";
+import FeatureBlock from "@components/sections/FeatureBlock.astro";
+import CTA from "@components/sections/CTA.astro";
+import {
+  useTranslations,
+  localeFromPath,
+  localizePath,
+  localeStaticPaths,
+} from "@i18n/index.ts";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+const locale = localeFromPath(Astro.url.pathname);
+const t = useTranslations(locale);
+const lp = (p: string) => localizePath(p, locale);
+
+const beliefs = [
+  {
+    title: "Calm beats clever",
+    body: "The best software disappears. Lumii is built to get out of the way — fewer clicks, fewer systems, fewer surprises — so your team can spend their attention on people, not screens.",
+    icon: "spark",
+  },
+  {
+    title: "Australian, properly",
+    body: "Tyro, Medicare, NDIS, DVA, and patient data kept in Sydney. Not a global product with a local plug-in — built from the ground up for how clinics here actually book, bill and get paid.",
+    icon: "au",
+  },
+  {
+    title: "One platform, every discipline",
+    body: "Allied health, general practice, aged care, NDIS. Lumii flexes to your funding mix and your workflow instead of forcing every clinic into the same mould.",
+    icon: "layers",
+  },
+  {
+    title: "Your data is yours",
+    body: "Stored in Australia, encrypted, with you in control. We hold it carefully because it's the most trust a clinic can give us — and we'd rather earn that than assume it.",
+    icon: "lock",
+  },
+  {
+    title: "Care has two sides",
+    body: "Lumii helps the clinic run the day; myLumii helps the person carry care between visits. We design both experiences as one conversation, with consent at the bridge between them.",
+    icon: "layers",
+  },
+];
+---
+
+<BaseLayout
+  title={t("nav.about")}
+  description="Lumii is an Australian-built practice-management platform for multi-disciplinary clinics — made to feel calm, warm, and genuinely on your side."
+>
+  <Hero
+    eyebrow="About Lumii"
+    title="The practice software we wished existed."
+    subtitle="Lumii is an Australian-built platform for multi-disciplinary clinics — made to take the friction out of the day, keep patient data on home soil, and feel genuinely warm to use."
+    primaryLabel={t("hero.ctaPrimary")}
+    primaryHref={lp("/request-access")}
+    secondaryLabel={t("nav.platform")}
+    secondaryHref={lp("/platform")}
+  />
+
+  <section class="container-page section">
+    <header class="section__head">
+      <p class="section__eyebrow">What we believe</p>
+      <h2>A few things we won't compromise on.</h2>
+    </header>
+    <div class="grid-2">
+      {beliefs.map((b) => <FeatureBlock title={b.title} body={b.body} icon={b.icon} />)}
+    </div>
+  </section>
+
+  <section class="container-page section section--tight">
+    <div class="story measure">
+      <p class="section__eyebrow">Where we're at</p>
+      <h2>Pre-launch, and hands-on about it.</h2>
+      <p>
+        Lumii isn't open to everyone yet — and that's deliberate. We're onboarding a small
+        group of foundation clinics, working alongside them to get every workflow right
+        before we open the doors wider.
+      </p>
+      <p>
+        It means the people building Lumii are close to the people using it. If you run a
+        clinic and the day feels heavier than it should, we'd genuinely love to hear how —
+        and to build the thing that makes it lighter.
+      </p>
+      <p>
+        It also means building for the person beyond the waiting room. myLumii is being
+        prepared alongside the clinic platform so appointments, shared records, forms,
+        messages and rehabilitation can feel like one continuous care story—not a trail of
+        portals and paperwork.
+      </p>
+    </div>
+  </section>
+
+  <CTA
+    title={t("cta.title")}
+    body={t("cta.body")}
+    buttonLabel={t("cta.button")}
+    buttonHref={lp("/request-access")}
+  />
+</BaseLayout>
+
+<style>
+  .section {
+    padding-block: var(--space-section);
+  }
+  .section--tight {
+    padding-block-start: 0;
+  }
+  .section__head {
+    margin-block-end: var(--space-2xl);
+    max-inline-size: 46ch;
+  }
+  .section__eyebrow {
+    font-size: var(--text-label);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-block-end: var(--space-sm);
+  }
+  .section__head h2 {
+    font-size: var(--text-h2);
+  }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: var(--space-xl);
+  }
+  .story h2 {
+    font-size: var(--text-h2);
+    margin-block: var(--space-sm) var(--space-lg);
+  }
+  .story p {
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-block-end: var(--space-lg);
+  }
+</style>

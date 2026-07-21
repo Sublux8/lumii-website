@@ -1,0 +1,257 @@
+---
+/**
+ * Site header. Sticky, token-themed, CSS-only mobile menu (<details> — no JS, so
+ * it survives the strict CSP). Carries the skip-to-content link, primary nav,
+ * the access-request CTA, a region switcher (active locales only), and a theme
+ * toggle wired by an external same-origin script.
+ *
+ * All labels come from the string catalogue — nothing hardcoded.
+ */
+import { useTranslations, localizePath } from "@i18n/index.ts";
+import { ACTIVE_LOCALES } from "@i18n/config.ts";
+import Button from "@components/primitives/Button.astro";
+
+interface Props {
+  locale: string;
+  currentPath: string;
+}
+const { locale, currentPath } = Astro.props;
+const t = useTranslations(locale);
+
+const links = [
+  { href: "/sectors", label: t("nav.sectors") },
+  { href: "/platform", label: t("nav.platform") },
+  { href: "/mylumii", label: t("nav.myLumii") },
+  { href: "/for-clinicians", label: t("nav.forClinicians") },
+  { href: "/knowledge", label: t("nav.knowledge") },
+  { href: "/pricing", label: t("nav.pricing") },
+  { href: "/about", label: t("nav.about") },
+];
+const lp = (p: string) => localizePath(p, locale);
+const isActive = (p: string) =>
+  p !== "/" && currentPath.startsWith(lp(p)) ? "page" : undefined;
+---
+
+<a class="skip-link" href="#main">{t("nav.skipToContent")}</a>
+
+<header class="nav">
+  <div class="container-page nav__inner">
+    <a class="nav__brand" href={lp("/")} aria-label={t("site.name")}>
+      <img
+        class="nav__brand-img"
+        src="/logo.svg"
+        alt={t("site.name")}
+        width="80"
+        height="29"
+      />
+    </a>
+
+    <details class="nav__menu">
+      <summary class="nav__toggle" aria-label={t("nav.openMenu")}>
+        <span class="nav__toggle-bar"></span>
+      </summary>
+
+      <nav class="nav__links" aria-label={t("nav.platform")}>
+        {
+          links.map((l) => (
+            <a class="nav__link" href={lp(l.href)} aria-current={isActive(l.href)}>
+              {l.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      <div class="nav__actions">
+        {
+          ACTIVE_LOCALES.length > 1 && (
+            <label class="nav__region">
+              <span class="sr-only">{t("nav.languageSwitcher")}</span>
+              {ACTIVE_LOCALES.map((l) => (
+                <a class="nav__region-link" href={localizePath("/", l.path)}>
+                  {l.region}
+                </a>
+              ))}
+            </label>
+          )
+        }
+        <button
+          class="nav__theme"
+          type="button"
+          data-theme-toggle
+          aria-label="Toggle colour theme"
+        >
+          <span aria-hidden="true">◐</span>
+        </button>
+        <Button href={lp("/request-access")} size="sm" id="nav-request-access">
+          {t("nav.requestAccess")}
+        </Button>
+      </div>
+    </details>
+  </div>
+</header>
+
+<script is:inline src="/scripts/theme-toggle.js"></script>
+
+<style>
+  .skip-link {
+    position: absolute;
+    inset-block-start: -100%;
+    inset-inline-start: var(--space-md);
+    z-index: var(--z-max);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--surface);
+    color: var(--text);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-card);
+  }
+  .skip-link:focus {
+    inset-block-start: var(--space-md);
+  }
+
+  .nav {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--z-nav);
+    background-color: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: saturate(1.25) blur(20px);
+    border-block-end: var(--border-hairline) solid
+      color-mix(in srgb, var(--border) 50%, transparent);
+  }
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    min-block-size: 4.6rem;
+    padding-block: 0.6rem;
+  }
+  .nav__brand {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+  }
+  .nav__brand-img {
+    block-size: 2.25rem;
+    inline-size: auto;
+    display: block;
+  }
+  /* The wordmark's "lum" is dark ink (light-mode artwork); lighten it on dark. */
+  :root[data-theme="dark"] .nav__brand-img {
+    filter: brightness(0) invert(1);
+  }
+
+  .nav__menu {
+    display: contents;
+  }
+  .nav__toggle {
+    display: none;
+  }
+
+  .nav__links {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.7rem, 1.35vw, 1.35rem);
+    margin-inline-start: auto;
+  }
+  .nav__link {
+    position: relative;
+    padding-block: 0.65rem;
+    font-size: var(--text-caption);
+    font-weight: var(--weight-medium);
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color var(--duration-quick) var(--ease-standard);
+  }
+  .nav__link:hover {
+    color: var(--text);
+  }
+  .nav__link::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0.25rem;
+    block-size: 1.5px;
+    border-radius: 99px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform var(--duration-standard) var(--ease-out);
+  }
+  .nav__link:hover::after,
+  .nav__link[aria-current="page"]::after {
+    transform: scaleX(1);
+  }
+
+  .nav__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+  .nav__region {
+    display: inline-flex;
+    gap: var(--space-xs);
+  }
+  .nav__region-link {
+    font-size: var(--text-caption);
+    font-weight: var(--weight-semibold);
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+  .nav__theme {
+    background: transparent;
+    border: var(--border-width) solid color-mix(in srgb, var(--border) 60%, transparent);
+    border-radius: var(--radius-pill);
+    inline-size: 2.15rem;
+    block-size: 2.15rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: var(--text-headline);
+    line-height: 1;
+  }
+
+  /* Mobile: collapse to a disclosure menu (no JS). */
+  @media (max-width: 52rem) {
+    .nav__toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      inline-size: 2.5rem;
+      block-size: 2.5rem;
+      list-style: none;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+    }
+    .nav__toggle::-webkit-details-marker {
+      display: none;
+    }
+    .nav__toggle-bar,
+    .nav__toggle-bar::before,
+    .nav__toggle-bar::after {
+      content: "";
+      display: block;
+      inline-size: 1.25rem;
+      block-size: 2px;
+      background: var(--text);
+      position: relative;
+    }
+    .nav__toggle-bar::before {
+      position: absolute;
+      inset-block-start: -6px;
+    }
+    .nav__toggle-bar::after {
+      position: absolute;
+      inset-block-start: 6px;
+    }
+    .nav__links,
+    .nav__actions {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-md);
+      margin-block-start: var(--space-md);
+    }
+    .nav__menu[open] .nav__links,
+    .nav__menu[open] .nav__actions {
+      padding-block-end: var(--space-md);
+    }
+  }
+</style>

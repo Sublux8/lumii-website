@@ -1,0 +1,127 @@
+---
+/**
+ * Sectors landing — data-driven from the `sectors` collection. Published sectors
+ * render as interactive cards linking to their page; reserved sectors render as
+ * "coming soon" tiles (no link) so the roadmap is visible without dead routes.
+ */
+import { getCollection } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Card from "@components/primitives/Card.astro";
+import Badge from "@components/primitives/Badge.astro";
+import Icon from "@components/primitives/Icon.astro";
+import {
+  useTranslations,
+  localeFromPath,
+  localizePath,
+  localeStaticPaths,
+} from "@i18n/index.ts";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+const locale = localeFromPath(Astro.url.pathname);
+const t = useTranslations(locale);
+const lp = (p: string) => localizePath(p, locale);
+
+const all = (await getCollection("sectors")).sort((a, b) => a.data.order - b.data.order);
+const published = all.filter((s) => s.data.status === "published");
+const reserved = all.filter((s) => s.data.status === "reserved");
+---
+
+<BaseLayout title={t("sectors.title")} description={t("sectors.subtitle")}>
+  <section class="container-page section">
+    <header class="section__head">
+      <p class="section__eyebrow">Who it's for</p>
+      <h1>{t("sectors.title")}</h1>
+      <p class="section__lead measure">{t("sectors.subtitle")}</p>
+    </header>
+
+    <div class="grid">
+      {
+        published.map((s) => (
+          <Card href={lp(`/sectors/${s.id}`)} elevation="card" class="sector">
+            <span class="sector__icon" aria-hidden="true">
+              <Icon name={s.id} size={22} />
+            </span>
+            <h2 class="sector__title">{s.data.audience}</h2>
+            <p class="sector__summary">{s.data.summary}</p>
+            <span class="sector__cta">{t("sectors.explore")} →</span>
+          </Card>
+        ))
+      }
+      {
+        reserved.map((s) => (
+          <Card elevation="flat" class="sector sector--reserved">
+            <div class="sector__badge">
+              <Badge tone="gray">{t("sectors.comingSoon")}</Badge>
+            </div>
+            <h2 class="sector__title">{s.data.audience}</h2>
+            <p class="sector__summary">{s.data.summary}</p>
+          </Card>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .section {
+    padding-block: var(--space-section);
+  }
+  .section__head {
+    margin-block-end: var(--space-2xl);
+  }
+  .section__eyebrow {
+    font-size: var(--text-label);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-block-end: var(--space-sm);
+  }
+  .section__lead {
+    margin-block-start: var(--space-md);
+    font-size: var(--text-lead);
+    color: var(--text-secondary);
+  }
+  .sector__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
+    border-radius: var(--radius-md);
+    background-image: var(--gradient-accent);
+    color: var(--on-accent);
+    margin-block-end: var(--space-md);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: var(--space-xl);
+  }
+  .sector {
+    position: relative;
+  }
+  .sector--reserved {
+    opacity: 0.72;
+  }
+  .sector__badge {
+    margin-block-end: var(--space-md);
+  }
+  .sector__title {
+    font-size: var(--text-h3);
+    margin-block-end: var(--space-sm);
+  }
+  .sector__summary {
+    color: var(--text-secondary);
+    line-height: var(--leading-normal);
+  }
+  .sector__cta {
+    display: inline-block;
+    margin-block-start: var(--space-lg);
+    font-weight: var(--weight-semibold);
+    color: var(--accent);
+  }
+</style>

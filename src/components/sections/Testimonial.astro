@@ -1,0 +1,60 @@
+---
+/**
+ * Testimonial / pull-quote. Author + role passed in. Pre-launch there are no
+ * real testimonials, so pages should only render this with genuine quotes — the
+ * component is here so the surface is ready, not to be filled with filler.
+ */
+interface Props {
+  quote: string;
+  author: string;
+  role?: string;
+}
+const { quote, author, role } = Astro.props;
+---
+
+<figure class="testimonial">
+  <blockquote class="testimonial__quote">{quote}</blockquote>
+  <figcaption class="testimonial__by">
+    <span class="testimonial__author">{author}</span>
+    {role && <span class="testimonial__role">{role}</span>}
+  </figcaption>
+</figure>
+
+<style>
+  .testimonial {
+    margin: 0;
+    max-inline-size: var(--measure);
+  }
+  .testimonial__quote {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
+    color: var(--text);
+    text-wrap: balance;
+  }
+  .testimonial__quote::before {
+    content: "\201C";
+    color: var(--accent);
+  }
+  .testimonial__quote::after {
+    content: "\201D";
+    color: var(--accent);
+  }
+  .testimonial__by {
+    margin-block-start: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+  .testimonial__author {
+    font-weight: var(--weight-semibold);
+    color: var(--text);
+  }
+  .testimonial__role {
+    font-size: var(--text-caption);
+    color: var(--text-muted);
+  }
+</style>

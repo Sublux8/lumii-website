@@ -1,0 +1,96 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PricingTable from "@components/sections/PricingTable.astro";
+import {
+  useTranslations,
+  localeFromPath,
+  localizePath,
+  localeStaticPaths,
+} from "@i18n/index.ts";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+const locale = localeFromPath(Astro.url.pathname);
+const t = useTranslations(locale);
+const lp = (p: string) => localizePath(p, locale);
+const href = lp("/request-access");
+---
+
+<BaseLayout title={t("nav.pricing")}>
+  <section class="container-page head">
+    <p class="eyebrow">Pricing</p>
+    <h1>Fair, and finalised with our first clinics.</h1>
+    <p class="lead measure">
+      We're setting pricing ahead of launch alongside our foundation clinics, so it
+      reflects the real value — not a number plucked from thin air. Join the early-access
+      list and we'll share foundation-clinic pricing with you directly.
+    </p>
+  </section>
+  <PricingTable
+    tiers={[
+      {
+        name: "Solo",
+        price: "—",
+        cadence: "pricing soon",
+        description:
+          "For a solo practitioner — up to two locations, with the full clinical core.",
+        features: [
+          "1 practitioner",
+          "2 locations",
+          "Unlimited patients",
+          "Online booking portal",
+          "SMS & email reminders",
+          "Clinical notes & treatment plans",
+          "GST invoicing",
+          "Tyro health-fund claiming",
+          "Data import & export",
+        ],
+        ctaLabel: t("cta.button"),
+        ctaHref: href,
+      },
+      {
+        name: "Clinic",
+        price: "—",
+        cadence: "pricing soon",
+        description:
+          "For multi-practitioner clinics and groups — scales by practitioner, no caps.",
+        features: [
+          "Everything in Solo, plus:",
+          "Unlimited practitioners",
+          "Unlimited locations",
+          "Multi-practitioner rosters",
+          "Treatment-plan tracking",
+          "DVA, Medicare, NDIS & WorkCover",
+          "Xero & Mailchimp integration",
+          "Advanced reports",
+          "Priority support",
+        ],
+        ctaLabel: t("cta.button"),
+        ctaHref: href,
+        featured: true,
+        badge: "Recommended",
+      },
+    ]}
+  />
+</BaseLayout>
+
+<style>
+  .head {
+    padding-block: var(--space-section) 0;
+  }
+  .eyebrow {
+    font-size: var(--text-label);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-block-end: var(--space-sm);
+  }
+  .lead {
+    margin-block-start: var(--space-md);
+    font-size: var(--text-lead);
+    color: var(--text-secondary);
+  }
+</style>

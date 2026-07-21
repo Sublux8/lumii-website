@@ -1,0 +1,103 @@
+---
+/**
+ * Labelled input — the web port of LumiiTextField. Label text is passed in
+ * (translatable); the label is always rendered and associated for a11y. Supports
+ * textarea via `multiline`. Used by the Phase-2 access-request form.
+ */
+interface Props {
+  id: string;
+  name: string;
+  label: string;
+  type?: "text" | "email" | "tel" | "url" | "number" | "password";
+  required?: boolean;
+  multiline?: boolean;
+  placeholder?: string;
+  autocomplete?: string;
+  class?: string;
+}
+const {
+  id,
+  name,
+  label,
+  type = "text",
+  required = false,
+  multiline = false,
+  placeholder,
+  autocomplete,
+  class: className,
+} = Astro.props;
+---
+
+<div class={["field", className].filter(Boolean).join(" ")}>
+  <label class="field__label" for={id}>
+    {label}{
+      required && (
+        <span aria-hidden="true" class="field__req">
+          *
+        </span>
+      )
+    }
+  </label>
+  {
+    multiline ? (
+      <textarea
+        id={id}
+        name={name}
+        class="field__control"
+        required={required}
+        placeholder={placeholder}
+        rows="4"
+      />
+    ) : (
+      <input
+        id={id}
+        name={name}
+        type={type}
+        class="field__control"
+        required={required}
+        placeholder={placeholder}
+        autocomplete={autocomplete}
+      />
+    )
+  }
+</div>
+
+<style>
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  .field__label {
+    font-size: var(--text-subhead);
+    font-weight: var(--weight-semibold);
+    color: var(--text-secondary);
+  }
+  .field__req {
+    color: var(--danger);
+    margin-inline-start: 0.15em;
+  }
+  .field__control {
+    padding-block: var(--space-md);
+    padding-inline: var(--space-md);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    color: var(--text);
+    /* White rounded field (login screen), not the tinted surface-2 box. */
+    background-color: color-mix(in srgb, var(--surface) 92%, white);
+    border: var(--border-width) solid color-mix(in srgb, var(--border) 75%, transparent);
+    border-radius: var(--radius-md);
+    transition:
+      border-color var(--duration-quick) var(--ease-standard),
+      box-shadow var(--duration-quick) var(--ease-standard);
+  }
+  .field__control::placeholder {
+    color: var(--text-muted);
+  }
+  /* Blue focus ring, matching the login screen's field focus. */
+  .field__control:focus-visible {
+    outline: none;
+    border-color: var(--accent-blue);
+    box-shadow: var(--focus-ring-blue);
+  }
+</style>

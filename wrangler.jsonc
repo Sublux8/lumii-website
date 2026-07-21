@@ -1,0 +1,30 @@
+{
+  // Cloudflare Workers config for the Git-connected "Workers Build".
+  // The site is SSG-first; the @astrojs/cloudflare adapter (via
+  // @cloudflare/vite-plugin) builds the Worker from Astro's SSR environment for
+  // the single on-demand route (§12 access-request) and serves every prerendered
+  // page from ./dist via the ASSETS binding. Static assets are matched FIRST;
+  // only unmatched paths (e.g. /api/*) reach the Worker, so the marketing pages
+  // keep their static-asset _headers posture.
+  //
+  // NOTE: deliberately NO `main`. The cf vite plugin derives the worker entry
+  // from the framework (SSR) build and writes its own deployable wrangler config
+  // into the build output. A `main` pointing at ./dist/_worker.js would be
+  // validated at config-resolution time — before any build exists — breaking
+  // both `astro check` and `astro build`.
+  "name": "lumii-website",
+  "compatibility_date": "2026-06-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist",
+  },
+  // Non-secret runtime config, readable via locals.runtime.env. Public values
+  // only — the SUPABASE_URL is already public (CSP connect-src) and the notify
+  // address is a published support mailbox. SECRETS (service-role key, Turnstile
+  // secret, Resend key) are set with `wrangler secret put` and never committed.
+  "vars": {
+    "SUPABASE_URL": "https://scqxaziehzyekohhiuip.supabase.co",
+    "TEAM_NOTIFY_EMAIL": "support@lumii.com.au",
+  },
+}

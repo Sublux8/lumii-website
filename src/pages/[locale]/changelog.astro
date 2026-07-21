@@ -1,0 +1,117 @@
+---
+/**
+ * Changelog (/[locale]/changelog) — release history from src/data/changelog.ts.
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { localeFromPath, localeStaticPaths, formatDate, getLocale } from "@i18n/index.ts";
+import { changelog } from "@/data/changelog.ts";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+const localePath = localeFromPath(Astro.url.pathname);
+const locale = getLocale(localePath);
+---
+
+<BaseLayout
+  title="Changelog"
+  description="What's new in Lumii — release history for the macOS app."
+>
+  <section class="container-page log">
+    <header class="log__head">
+      <h1>Changelog</h1>
+      <p class="log__lead measure">What's new in Lumii, newest first.</p>
+    </header>
+
+    <ol class="log__list">
+      {
+        changelog.map((entry) => (
+          <li class="entry">
+            <div class="entry__meta">
+              <span class="entry__version">{entry.version}</span>
+              <time class="entry__date" datetime={entry.dateISO}>
+                {formatDate(new Date(entry.dateISO), locale, { dateStyle: "long" })}
+              </time>
+            </div>
+            <div class="entry__body">
+              <p class="entry__summary">{entry.summary}</p>
+              <ul class="entry__items">
+                {entry.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+</BaseLayout>
+
+<style>
+  .log {
+    padding-block: var(--space-section);
+  }
+  .log__head {
+    margin-block-end: var(--space-2xl);
+  }
+  .log__lead {
+    margin-block-start: var(--space-md);
+    font-size: var(--text-lead);
+    color: var(--text-secondary);
+  }
+  .log__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+    max-inline-size: var(--measure);
+  }
+  .entry {
+    display: grid;
+    grid-template-columns: 12rem 1fr;
+    gap: var(--space-lg);
+    padding-block-end: var(--space-2xl);
+    border-block-end: var(--border-hairline) solid
+      color-mix(in srgb, var(--border) 45%, transparent);
+  }
+  .entry:last-child {
+    border-block-end: none;
+  }
+  .entry__meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  .entry__version {
+    font-family: var(--font-mono);
+    font-size: var(--text-headline);
+    font-weight: var(--weight-bold);
+    color: var(--accent);
+  }
+  .entry__date {
+    font-size: var(--text-caption);
+    color: var(--text-muted);
+  }
+  .entry__summary {
+    font-weight: var(--weight-semibold);
+    margin-block-end: var(--space-sm);
+  }
+  .entry__items {
+    margin: 0;
+    padding-inline-start: var(--space-lg);
+    color: var(--text-secondary);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  @media (max-width: 40rem) {
+    .entry {
+      grid-template-columns: 1fr;
+      gap: var(--space-sm);
+    }
+  }
+</style>
