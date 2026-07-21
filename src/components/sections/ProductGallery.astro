@@ -48,6 +48,7 @@ import ProductShot from "@components/ProductShot.astro";
       src="/product/lumii-care-plan.png"
       alt="Lumii care plans management showing active Medicare, DVA and Comcare plans with session usage and expiry dates"
       device="wide"
+      aspectRatio="1707 / 785"
       showChrome={false}
       variant="care"
       class="gallery__care"
@@ -97,9 +98,6 @@ import ProductShot from "@components/ProductShot.astro";
     grid-column: 1 / -1;
     inline-size: 100%;
     justify-self: center;
-  }
-  :global(.gallery__care .product-shot__frame) {
-    aspect-ratio: 1707 / 785;
   }
   @media (max-width: 44rem) {
     .gallery__row {

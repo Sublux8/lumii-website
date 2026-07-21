@@ -8,6 +8,7 @@ import Hero from "@components/sections/Hero.astro";
 import FeatureBlock from "@components/sections/FeatureBlock.astro";
 import FAQ from "@components/sections/FAQ.astro";
 import CTA from "@components/sections/CTA.astro";
+import ProductShot from "@components/ProductShot.astro";
 import {
   useTranslations,
   localeFromPath,
@@ -109,6 +110,31 @@ const faqs = [
     </div>
   </section>
 
+  <section class="record-story">
+    <div class="container-page record-story__inner">
+      <header class="record-story__copy" data-reveal>
+        <p class="section__eyebrow">One patient, one story</p>
+        <h2>The context follows the care.</h2>
+        <p>
+          Appointments, invoices, claims and funded care land in one timeline, so the
+          next clinician sees what happened without hunting across the practice.
+        </p>
+      </header>
+      <ProductShot
+        shotId="C04"
+        title="The whole patient story, without the tab hunt"
+        note="A shared timeline across appointments, billing, claiming and care plans."
+        src="/product/lumii-patient-record.png"
+        alt="Lumii patient timeline for Owen Reyes showing appointments, invoice, Comcare claim and active care plan"
+        device="wide"
+        aspectRatio="1752 / 736"
+        showChrome={false}
+        variant="care"
+        class="record-story__shot"
+      />
+    </div>
+  </section>
+
   <FAQ title="Common questions" items={faqs} />
 
   <CTA
@@ -147,5 +173,32 @@ const faqs = [
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
     gap: var(--space-xl);
+  }
+  .record-story {
+    padding-block: var(--space-section);
+    background:
+      radial-gradient(circle at 82% 12%, rgba(93, 205, 184, 0.2), transparent 31rem),
+      #edf8f4;
+  }
+  .record-story__inner {
+    max-inline-size: var(--content-wide);
+  }
+  .record-story__copy {
+    max-inline-size: 48rem;
+  }
+  .record-story__copy h2 {
+    max-inline-size: 15ch;
+    font-size: var(--text-h2);
+  }
+  .record-story__copy > p:not(.section__eyebrow) {
+    max-inline-size: 42rem;
+    margin-block-start: var(--space-md);
+    color: var(--text-secondary);
+    font-size: var(--text-lead);
+    line-height: var(--leading-normal);
+  }
+  :global(.record-story__shot) {
+    max-inline-size: 70rem;
+    margin: var(--space-2xl) auto 0;
   }
 </style>

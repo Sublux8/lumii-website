@@ -14,6 +14,7 @@ interface Props {
   device?: "desktop" | "phone" | "tablet" | "wide";
   variant?: "calendar" | "care" | "vitality" | "health" | "insights";
   showChrome?: boolean;
+  aspectRatio?: string;
   class?: string;
 }
 
@@ -26,6 +27,7 @@ const {
   device = "desktop",
   variant = "calendar",
   showChrome = true,
+  aspectRatio,
   class: className,
 } = Astro.props;
 
@@ -41,6 +43,7 @@ const useChrome = showChrome && device !== "phone";
     className,
   ]}
   data-shot-id={shotId}
+  style={aspectRatio ? `--product-shot-aspect: ${aspectRatio}` : undefined}
 >
   <div class="product-shot__frame">
     {
@@ -199,13 +202,13 @@ const useChrome = showChrome && device !== "phone";
     box-shadow: 0 1.7rem 4rem color-mix(in srgb, var(--text) 14%, transparent);
   }
   .product-shot--desktop .product-shot__frame {
-    aspect-ratio: 16 / 10;
+    aspect-ratio: var(--product-shot-aspect, 16 / 10);
   }
   .product-shot--tablet .product-shot__frame {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: var(--product-shot-aspect, 4 / 3);
   }
   .product-shot--wide .product-shot__frame {
-    aspect-ratio: 3440 / 1288;
+    aspect-ratio: var(--product-shot-aspect, 3440 / 1288);
   }
   .product-shot--phone {
     max-inline-size: 18rem;

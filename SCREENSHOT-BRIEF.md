@@ -30,6 +30,7 @@ The website is ready to accept these captures in `public/product/`. PNG or WebP 
 
 ### C04 — Connected patient record
 
+- Status: supplied and integrated
 - Suggested file: `lumii-patient-record.webp`
 - Format: desktop, 16:10
 - Show: a patient timeline with a shared form, rehabilitation assignment and recent correspondence
