@@ -30,7 +30,7 @@ const clinicDay = [
   {
     time: "8:04 am",
     label: "Before the first consult",
-    title: "The day has already organised itself.",
+    title: "The team starts with fewer loose ends.",
     body: "Reminders are confirmed, the waitlist has filled a late cancellation, and reception can see who needs a form before they arrive.",
     detail: "11 confirmations · 1 gap filled",
     icon: "frontdesk",
@@ -38,15 +38,15 @@ const clinicDay = [
   {
     time: "1:20 pm",
     label: "Between patients",
-    title: "The admin stays with the appointment.",
-    body: "Notes, funded sessions, consent and claiming all live in the same flow—so clinicians can finish the work while the context is still fresh.",
+    title: "The admin stays close to the care.",
+    body: "Notes, funded sessions, consent and claiming stay with the appointment, so clinicians can finish while the details are still fresh.",
     detail: "Care plan updated · Claim ready",
     icon: "careplan",
   },
   {
     time: "5:06 pm",
     label: "At the end of the day",
-    title: "Nothing is waiting in another system.",
+    title: "The day finishes without a second shift of admin.",
     body: "Payments reconcile, Xero stays in step, and practice owners get a clear view of the day without another spreadsheet or late-night export.",
     detail: "Payments matched · Books in sync",
     icon: "analytics",
@@ -56,7 +56,7 @@ const clinicDay = [
 const humanDetails = [
   {
     title: "Reception sees the whole story",
-    body: "Arrival, forms, funding and payment status at a glance—without turning the front desk into mission control.",
+    body: "Arrival, forms, funding and payment status at a glance, without reception having to open five screens or ask the patient twice.",
     icon: "frontdesk",
   },
   {
@@ -65,8 +65,8 @@ const humanDetails = [
     icon: "notes",
   },
   {
-    title: "Owners get clarity, not dashboards for show",
-    body: "The numbers that help run a healthier practice, grounded in the work your team is already doing.",
+    title: "Owners can see where the practice needs help",
+    body: "Useful numbers for staffing, revenue and follow-up, drawn from the work the team is already doing.",
     icon: "analytics",
   },
 ];
@@ -79,12 +79,12 @@ const learnSteps = [
   },
   {
     number: "02",
-    title: "Practise real workflows",
-    body: "Short, guided lessons built around the moments teams actually need: booking, claiming, care plans and the close of day.",
+    title: "Practise the work you actually do",
+    body: "Short, guided lessons for booking, claiming, care plans and the close of day.",
   },
   {
     number: "03",
-    title: "Go live with confidence",
+    title: "Open the doors with confidence",
     body: "Progress visibility, clinic checklists and human support make readiness something the whole team can see.",
   },
 ];
@@ -92,23 +92,23 @@ const learnSteps = [
 const faqs = [
   {
     q: "Is Lumii available yet?",
-    a: "Lumii is opening progressively to early-access practices. We work closely with each team through migration, setup and onboarding so the move feels supported from the beginning.",
+    a: "Lumii is welcoming practices gradually so each team receives proper help with moving data, setting up and learning the new system.",
   },
   {
     q: "How will onboarding and training work?",
-    a: "Early-access practices receive hands-on onboarding. Lumii Learn will add short role-based lessons, practice setup checklists and ongoing education, so owners, reception teams and practitioners can learn what matters to them.",
+    a: "Every practice receives hands-on help. Lumii Learn will add short lessons and setup checklists for owners, reception teams and practitioners, so nobody has to learn from one enormous manual.",
   },
   {
     q: "What is myLumii?",
-    a: "myLumii is the personal side of the Lumii experience. It brings appointments, clinic-shared records, forms, messages, rehabilitation, health data and personal insights into one private, consent-led place. Access will open progressively for individuals and participating Lumii practices.",
+    a: "myLumii is a private home for your appointments, records shared by your clinics, forms, messages, rehabilitation and health information. You choose what each clinic may see.",
   },
   {
     q: "Where is patient data stored?",
-    a: "In Australian-region infrastructure. Lumii is being built around strong privacy, security and Australian data-residency expectations.",
+    a: "In Australia. Lumii is designed around the privacy, security and record-keeping responsibilities Australian healthcare expects.",
   },
   {
     q: "Which disciplines does Lumii support?",
-    a: "Lumii is designed for multidisciplinary care, including allied health, general practice and medical specialists. Its workflows adapt to different teams, funding arrangements and ways of delivering care.",
+    a: "Lumii is designed for allied health, general practice, medical specialists and multidisciplinary teams. It adapts to different disciplines, funding arrangements and ways of delivering care.",
   },
 ];
 ---
@@ -260,10 +260,10 @@ const faqs = [
   <section class="sectors-section container-page">
     <header class="story-head" data-reveal>
       <p class="section-kicker">Made to fit your practice</p>
-      <h2>One platform. Many ways to care.</h2>
+      <h2>One clear home for many ways of caring.</h2>
       <p>
-        Funding, compliance and daily workflows change by discipline. Lumii starts from
-        that reality instead of asking every clinic to work the same way.
+        Funding, clinical responsibilities and the shape of the day change by discipline.
+        Lumii starts from that reality instead of asking every practice to work the same way.
       </p>
     </header>
     <div class="sector-grid">
@@ -292,7 +292,7 @@ const faqs = [
     eyebrow="For practices, practitioners and people"
     title="Better care can feel lighter on both sides."
     body="Tell us whether you're exploring Lumii for your practice, your work or your own health. A real person from our team will be in touch."
-    buttonLabel="Join early access"
+    buttonLabel="Register interest"
     buttonHref={lp("/request-access")}
   />
 </BaseLayout>

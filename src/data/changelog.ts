@@ -20,7 +20,7 @@ export const changelog: readonly ChangelogEntry[] = [
     dateISO: "2026-06-20",
     summary: "Reliability and polish across the appointment book and billing.",
     items: [
-      "Performance and stability improvements to the realtime appointment book.",
+      "A faster, more dependable appointment book.",
       "Refinements to the unified Tyro claims dashboard.",
       "General bug fixes.",
     ],
@@ -32,7 +32,7 @@ export const changelog: readonly ChangelogEntry[] = [
     items: [
       "Patient self-check-in kiosk with live Arrived status on the book.",
       "Send intake forms to patients by SMS.",
-      "Pre-consult and reception workflow improvements.",
+      "Smoother preparation before a consult and clearer reception follow-up.",
     ],
   },
   {

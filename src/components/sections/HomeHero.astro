@@ -1,12 +1,9 @@
 ---
-/**
- * Homepage-only launch hero. The product preview is intentionally HTML/CSS,
- * rather than a glossy stock render, so it feels specific to a real clinic day
- * and stays crisp, responsive and accessible.
- */
+/** Homepage hero built around a genuine Lumii clinic view. */
 import Button from "@components/primitives/Button.astro";
 import Icon from "@components/primitives/Icon.astro";
 import LumiiStar from "@components/LumiiStar.astro";
+import ProductShot from "@components/ProductShot.astro";
 
 interface Props {
   primaryHref: string;
@@ -14,33 +11,6 @@ interface Props {
 }
 
 const { primaryHref, secondaryHref } = Astro.props;
-
-const appointments = [
-  {
-    time: "8:30",
-    initials: "EW",
-    name: "Eleanor Webb",
-    detail: "Initial consult",
-    status: "Arrived",
-    tone: "mint",
-  },
-  {
-    time: "9:20",
-    initials: "TH",
-    name: "Tom Harding",
-    detail: "Care plan review",
-    status: "Confirmed",
-    tone: "gold",
-  },
-  {
-    time: "10:10",
-    initials: "PN",
-    name: "Priya Nair",
-    detail: "Telehealth · 60 min",
-    status: "Ready",
-    tone: "lilac",
-  },
-];
 ---
 
 <section class="launch-hero">
@@ -51,118 +21,75 @@ const appointments = [
     <div class="launch-hero__copy">
       <p class="launch-hero__eyebrow">
         <span class="launch-hero__live" aria-hidden="true"></span>
-        Australian-built · early access opening progressively
+        Made in Australia · for practices and people
       </p>
       <h1 class="launch-hero__title">
         Care, beautifully connected.<br />
         <em>From the clinic to everyday life.</em>
       </h1>
       <p class="launch-hero__subtitle">
-        Lumii gives Australian practices one calm place to run care. myLumii gives people
-        one private place to carry it forward between visits.
+        Lumii helps practices spend less time chasing admin and more time caring for
+        people. myLumii gives each person a simple, private home for appointments,
+        records and the health questions that happen between visits.
       </p>
 
       <div class="launch-hero__actions">
         <Button href={primaryHref} size="lg" id="hero-primary">
-          Join early access <span aria-hidden="true">↗</span>
+          Tell us what you need <span aria-hidden="true">↗</span>
         </Button>
         <Button href={secondaryHref} size="lg" variant="ghost" id="hero-secondary">
-          Explore the platform
+          See Lumii in action
         </Button>
       </div>
 
       <ul class="launch-hero__proof" aria-label="Lumii commitments">
-        <li><Icon name="au" size={17} /> Australian workflows</li>
-        <li><Icon name="shield" size={17} /> Data stored in Australia</li>
-        <li><Icon name="spark" size={17} /> Built for practices and people</li>
+        <li><Icon name="au" size={17} /> Made for Australian care</li>
+        <li><Icon name="shield" size={17} /> Health data kept in Australia</li>
+        <li><Icon name="spark" size={17} /> For clinics and individuals</li>
       </ul>
     </div>
 
-    <figure
+    <div
       class="clinic-scene"
       data-lumii-scene
-      aria-label="A Lumii clinic day using fictional details"
+      aria-label="A genuine Lumii appointment book using fictional patient details"
     >
       <div class="clinic-scene__note clinic-scene__note--confirm" aria-hidden="true">
         <span class="clinic-scene__note-icon"><Icon name="frontdesk" size={16} /></span>
-        <span><strong>11 confirmations</strong> handled before breakfast</span>
+        <span><strong>11 patients confirmed</strong> before reception opened</span>
       </div>
 
-      <div class="clinic-scene__window">
-        <div class="clinic-scene__bar">
-          <span class="clinic-scene__dots" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span>Lumii · Thursday, 25 June</span>
-          <span class="clinic-scene__sync"><i></i> Live</span>
-        </div>
-
-        <div class="clinic-scene__body">
-          <aside class="clinic-scene__rail" aria-label="Lumii areas">
-            <span class="clinic-scene__brandmark">L</span>
-            <span class="is-active"><Icon name="frontdesk" size={19} /></span>
-            <span><Icon name="notes" size={19} /></span>
-            <span><Icon name="claim" size={19} /></span>
-            <span><Icon name="analytics" size={19} /></span>
-          </aside>
-
-          <div class="clinic-scene__main">
-            <header class="clinic-scene__heading">
-              <div>
-                <span class="clinic-scene__kicker">Good morning, Maya</span>
-                <h2>Today at Harbour Health</h2>
-              </div>
-              <span class="clinic-scene__new">+ New booking</span>
-            </header>
-
-            <div class="clinic-scene__stats">
-              <div><strong>18</strong><span>appointments</span></div>
-              <div><strong>14</strong><span>confirmed</span></div>
-              <div><strong>2</strong><span>telehealth</span></div>
-            </div>
-
-            <div class="clinic-scene__schedule">
-              <div class="clinic-scene__schedule-head">
-                <strong>Next up</strong>
-                <span>Day view</span>
-              </div>
-              {
-                appointments.map((appointment) => (
-                  <div class="clinic-scene__appointment">
-                    <time>{appointment.time}</time>
-                    <span class={`clinic-scene__avatar is-${appointment.tone}`}>
-                      {appointment.initials}
-                    </span>
-                    <span class="clinic-scene__patient">
-                      <strong>{appointment.name}</strong>
-                      <small>{appointment.detail}</small>
-                    </span>
-                    <span class={`clinic-scene__status is-${appointment.tone}`}>
-                      {appointment.status}
-                    </span>
-                  </div>
-                ))
-              }
-            </div>
-          </div>
-        </div>
-      </div>
+      <ProductShot
+        shotId="C01"
+        instanceId="C01-home-hero"
+        title="A whole clinic day, clear at a glance"
+        note="Practitioners, appointments, arrivals and useful prompts stay together."
+        src="/product/lumii-clinic-day.webp"
+        alt="Lumii appointment book showing a populated day across four practitioners"
+        device="wide"
+        aspectRatio="2005 / 750"
+        showChrome={false}
+        variant="calendar"
+        class="clinic-scene__shot"
+      />
 
       <div class="clinic-scene__note clinic-scene__note--plan" aria-hidden="true">
         <span class="clinic-scene__plan-head">
           <span class="clinic-scene__note-icon"><Icon name="careplan" size={16} /></span>
-          Medicare care plan
+          Funded care
         </span>
-        <strong>Eleanor has 2 visits left</strong>
+        <strong>Eleanor has 2 funded visits left</strong>
         <span class="clinic-scene__progress"><i></i></span>
       </div>
 
       <div class="clinic-scene__mascot" aria-hidden="true">
         <LumiiStar size={118} label="" />
       </div>
-      <figcaption>A glimpse of a Lumii clinic day. Fictional details shown.</figcaption>
-    </figure>
+      <p class="clinic-scene__caption">A real Lumii view with fictional patient details.</p>
+    </div>
   </div>
 
-  <div class="launch-hero__marquee" aria-label="Lumii platform areas">
+  <div class="launch-hero__marquee" aria-label="What Lumii brings together">
     <div>
       <span>Booking</span><i></i><span>Billing</span><i></i><span>Medicare</span><i></i>
       <span>Tyro</span><i></i><span>Care plans</span><i></i><span>Telehealth</span><i></i>
@@ -310,6 +237,29 @@ const appointments = [
     padding-block: 3.4rem 4rem;
     perspective: 1200px;
     animation: hero-scene-in 0.9s 0.12s var(--ease-out) both;
+  }
+  :global(.clinic-scene__shot) {
+    position: relative;
+    z-index: 1;
+  }
+  :global(.clinic-scene__shot .product-shot__frame) {
+    border-color: color-mix(in srgb, var(--text) 12%, transparent);
+    border-radius: 1.35rem;
+    box-shadow:
+      0 2rem 5rem color-mix(in srgb, var(--text) 16%, transparent),
+      0 0 0 8px color-mix(in srgb, white 44%, transparent);
+    transform: rotateX(var(--scene-x)) rotateY(var(--scene-y));
+    transform-style: preserve-3d;
+    transition: transform 0.2s var(--ease-out);
+  }
+  :global(.clinic-scene__shot > figcaption) {
+    display: none;
+  }
+  .clinic-scene__caption {
+    margin: 0.9rem 0 0;
+    color: var(--text-muted);
+    font-size: var(--text-caption);
+    text-align: center;
   }
   .clinic-scene__window {
     position: relative;

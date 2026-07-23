@@ -31,7 +31,7 @@ const t = useTranslations(locale);
 const lp = (p: string) => localizePath(p, locale);
 
 const description =
-  "Booking, billing, Tyro claiming, care plans, telehealth and Xero — the whole practice in one Australian-built workspace.";
+  "Booking, billing, Tyro claiming, care plans, telehealth and Xero — kept together for Australian practices.";
 
 const modules = [
   {
@@ -41,12 +41,12 @@ const modules = [
   },
   {
     title: "Billing & claiming",
-    body: "Tyro EFTPOS and HealthPoint, Medicare, DVA, NDIS and Comcare — claimed from the very screen where you finish the appointment. No re-keying, no second system.",
+    body: "Tyro EFTPOS and HealthPoint, Medicare, DVA, NDIS and Comcare — claimed where you finish the appointment. Less retyping, fewer missed steps.",
     icon: "claim",
   },
   {
     title: "Care plans",
-    body: "Funded plans that track their own sessions across Medicare CDM, DVA, WorkCover and Private-Health Extras — so you always know what's left before the patient asks.",
+    body: "Medicare CDM, DVA, WorkCover and Private Health plans count completed visits, so you know what is left before an awkward conversation at reception.",
     icon: "careplan",
   },
   {
@@ -66,15 +66,15 @@ const modules = [
   },
   {
     title: "Connected patient care",
-    body: "Appointments, clinic-shared records, assigned forms, messages and prescribed rehabilitation can continue in myLumii, with each person controlling what is shared back.",
+    body: "Patients can find appointments, records shared by their clinic, forms, messages and rehabilitation in myLumii, while choosing what they share back.",
     icon: "layers",
   },
 ];
 
 const pillars = [
   {
-    title: "One workspace, not twelve tabs",
-    body: "One login and one connected view. The appointment, invoice and claim stay together, so work is less likely to fall between systems.",
+    title: "One place to finish the job",
+    body: "The appointment, invoice and claim stay together, so the team spends less time moving information around and fewer tasks fall between systems.",
   },
   {
     title: "Australian to the core",
@@ -82,14 +82,14 @@ const pillars = [
   },
   {
     title: "Calm by design",
-    body: "Live sync across Mac, iPad and the front-desk kiosk means the day just flows. The software gets out of the way, so your team can stay with the person in front of them.",
+    body: "Changes appear across the appointment book and front desk, so the team can see the same current information and stay with the person in front of them.",
   },
 ];
 
 const faqs = [
   {
     q: "What devices does Lumii run on?",
-    a: "The clinic experience is native on macOS, with iPad and iPhone support included in Lumii's rollout. The appointment book and reception kiosk are designed to stay in step across devices.",
+    a: "Lumii is available for Mac. iPad and iPhone support is being prepared, including a reception kiosk that stays in step with the appointment book.",
   },
   {
     q: "Which funders can I claim from?",
@@ -97,7 +97,7 @@ const faqs = [
   },
   {
     q: "Where is our data stored?",
-    a: "In Australian-region infrastructure, in Sydney. See the Security & Compliance page for the full posture, from encryption to multi-factor auth.",
+    a: "In Australia, in the Sydney region. See Security & Compliance for plain-English detail about encryption, staff sign-in protection and access controls.",
   },
   {
     q: "Can we migrate our existing data?",
@@ -108,9 +108,9 @@ const faqs = [
 
 <BaseLayout title={t("nav.platform")} description={description}>
   <Hero
-    eyebrow="The platform"
-    title="Everything your practice runs on, in one calm window."
-    subtitle="Booking, billing, claiming, care plans, telehealth and reporting — Lumii brings the whole day into one Australian-built workspace, so nothing important slips between systems."
+    eyebrow="Lumii for practices"
+    title="The whole practice, with fewer loose ends."
+    subtitle="Booking, billing, claiming, care plans, telehealth and reporting stay together, so your team can finish the work once and keep the day moving."
     primaryLabel={t("hero.ctaPrimary")}
     primaryHref={lp("/request-access")}
     secondaryLabel={t("nav.forClinicians")}
@@ -120,10 +120,10 @@ const faqs = [
   <section class="container-page section">
     <header class="section__head">
       <p class="section__eyebrow">What's inside</p>
-      <h2>Seven connected areas. One clear practice.</h2>
+      <h2>Everything your team reaches for in a busy day.</h2>
       <p class="section__lead measure">
-        Each one earns its place on its own — together they remove the double-entry, the
-        reconciliation, and the end-of-day guesswork.
+        Useful on their own, stronger together: less retyping, less checking and a much
+        clearer end to the day.
       </p>
     </header>
     <div class="grid-3">
@@ -157,9 +157,9 @@ const faqs = [
         <p class="section__eyebrow">Beyond the appointment</p>
         <h2>The clinic view is only half of connected care.</h2>
         <p>
-          Lumii holds the operational story for the team. myLumii carries the right parts
-          forward for the person—appointments, shared records, forms, messages and rehab—
-          with consent kept clear and specific to each clinic.
+          Lumii keeps the practice side organised. myLumii gives the person the parts they
+          need next—appointments, shared records, forms, messages and rehabilitation—
+          while keeping their sharing choices clear.
         </p>
         <a href={lp("/mylumii")}
           >Explore the myLumii experience <span aria-hidden="true">→</span></a
@@ -204,7 +204,7 @@ const faqs = [
     ]}
   />
 
-  <FAQ title="Platform questions, answered" items={faqs} />
+  <FAQ title="Questions practices ask" items={faqs} />
 
   <CTA
     eyebrow="For Australian practices"

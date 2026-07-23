@@ -21,13 +21,13 @@ const pillars = [
   },
   {
     icon: "shield",
-    title: "Sharing starts with your yes",
-    body: "Clinic links are separate and revocable. Health data is shared by clinic, by category and only after explicit consent.",
+    title: "You decide what each clinic may see",
+    body: "Each clinic is separate. You can choose which kinds of health information to share and change your mind later.",
   },
   {
     icon: "spark",
     title: "Patterns, not pronouncements",
-    body: "myLumii brings sleep, movement, food, mood and care together privately, helping you notice patterns and bring better questions to a practitioner.",
+    body: "myLumii brings sleep, movement, food, mood and care together privately, helping you notice patterns and arrive with better questions.",
   },
 ];
 
@@ -50,14 +50,14 @@ const productAreas = [
     number: "03",
     name: "Health",
     summary:
-      "Bring in Apple Health or Health Connect data, add readings manually, choose preferred sources and control clinic sharing.",
+      "Bring in Apple Health or Health Connect data, add your own readings and choose what, if anything, each clinic may see.",
     proof: "Heart · Sleep · Activity · Metabolic · Body · Fitness",
   },
   {
     number: "04",
     name: "You",
     summary:
-      "A private space for journal check-ins, nutrition, exercise, recovery, medications and supplements—kept personal by design.",
+      "A private space for journal check-ins, food, exercise, recovery, medicines and supplements. These areas stay personal.",
     proof: "Journal · Nourish · Exercise · Reset · Supplements",
   },
   {
@@ -83,28 +83,29 @@ const lifeModes = [
 
 <BaseLayout
   title="myLumii"
-  description="myLumii is the patient companion for the Lumii practice ecosystem — appointments, records, forms, messages, health data and personal insights in one consent-led experience."
+  description="myLumii brings appointments, records, forms, messages and personal health into one private place, with clear sharing choices."
 >
   <section class="myl-hero">
     <div class="myl-hero__glow" aria-hidden="true"></div>
     <div class="container-page myl-hero__inner">
       <div class="myl-hero__copy">
-        <p class="myl-kicker">For people · early access opening progressively</p>
+        <p class="myl-kicker">For you and the people you care for</p>
         <h1>Your health,<br /><em>held gently.</em></h1>
         <p class="myl-hero__lead">
-          Bring your connected clinics, health information and care conversations into one
-          warm place—while staying in control of what you share and with whom.
+          Stop piecing together portals, PDFs and half-remembered instructions. Keep your
+          appointments, shared records and everyday health in one private place, with you
+          deciding what each clinic may see.
         </p>
         <div class="myl-hero__actions">
           <Button href={lp("/request-access")} size="lg"
-            >Join myLumii early access <span aria-hidden="true">↗</span></Button
+            >Register your interest <span aria-hidden="true">↗</span></Button
           >
           <Button href="#inside" size="lg" variant="ghost">See what’s inside</Button>
         </div>
         <ul class="myl-hero__proof">
           <li><Icon name="shield" size={17} /> Your sharing, your choice</li>
           <li><Icon name="au" size={17} /> Designed in Australia</li>
-          <li><Icon name="spark" size={17} /> Private insights on your device</li>
+          <li><Icon name="spark" size={17} /> Private, personal insights</li>
         </ul>
       </div>
 
@@ -150,11 +151,11 @@ const lifeModes = [
     <div class="container-page myl-care__inner">
       <div class="myl-copy" data-reveal>
         <p class="myl-kicker">Care that travels with you</p>
-        <h2>The space between visits finally belongs to the same story.</h2>
+        <h2>Leave each appointment knowing what happens next.</h2>
         <p>
-          Link the clinics you choose, book the right service, receive records, complete
-          forms and keep care conversations together. When rehabilitation is assigned, you
-          can follow the plan and share progress back with the prescribing team.
+          Book the right service, receive records, complete forms and keep care
+          conversations together. If your practitioner assigns rehabilitation, you can
+          follow the plan and share progress back without chasing another link.
         </p>
         <ul class="myl-checks">
           <li><span>✓</span> Book and cancel eligible appointments</li>
@@ -214,9 +215,8 @@ const lifeModes = [
         <p class="myl-kicker">Health, with boundaries</p>
         <h2>See the whole picture without giving the whole picture away.</h2>
         <p>
-          Connect supported data from Apple Health or Health Connect without double-counting
-          overlapping sources. You decide which health categories, if any, each clinic can
-          receive.
+          Bring in supported data from Apple Health or Health Connect and add readings of
+          your own. You decide which kinds of information, if any, each clinic may receive.
         </p>
         <div class="myl-privacy-note">
           <Icon name="lock" size={21} />
@@ -289,14 +289,13 @@ const lifeModes = [
   <section class="myl-honesty container-page">
     <div class="myl-honesty__panel" data-reveal>
       <div>
-        <p class="myl-kicker">Early access</p>
-        <h2>We’ll open the doors thoughtfully.</h2>
+        <p class="myl-kicker">Opening thoughtfully</p>
+        <h2>Good care deserves a careful beginning.</h2>
       </div>
       <p>
-        myLumii will open progressively with participating Lumii practices and invited
-        individuals, so privacy, consent and support are clear from the very first day.
-        Join early access and tell us whether you're interested for yourself, your family
-        or the people your practice cares for.
+        myLumii will begin with participating practices and invited individuals, so
+        privacy, sharing choices and support are clear from the first day. Tell us whether
+        you are interested for yourself, your family or the people your practice cares for.
       </p>
     </div>
   </section>
@@ -304,8 +303,8 @@ const lifeModes = [
   <CTA
     eyebrow="For individuals, families and care teams"
     title="Your health should feel connected—not scattered."
-    body="Join myLumii early access for yourself, or talk to us about bringing a more connected experience to your patients."
-    buttonLabel="Join early access"
+    body="Register your interest for yourself, or talk to us about giving your patients a clearer, more connected experience."
+    buttonLabel="Register interest"
     buttonHref={lp("/request-access")}
     note="Tell us which side of Lumii you're interested in."
   />

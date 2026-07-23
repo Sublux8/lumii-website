@@ -27,7 +27,7 @@ const lp = (p: string) => localizePath(p, locale);
 const pillars = [
   {
     title: "Australian data residency",
-    body: "Patient and clinic data lives in Australian-region infrastructure (Sydney). Enquiry details submitted through this site are stored in Australia too—no offshore round-trips.",
+    body: "Patient and clinic data is kept in Australia, in the Sydney region. Details submitted through this website are stored in Australia too.",
     icon: "au",
   },
   {
@@ -37,7 +37,7 @@ const pillars = [
   },
   {
     title: "Mandatory staff MFA",
-    body: "TOTP multi-factor authentication is required for every staff role, with a trusted-device window and step-up re-auth for privileged actions. Patient MFA is available and can be made mandatory per clinic.",
+    body: "Every staff member uses an authenticator code as well as a password. Extra identity checks protect sensitive account and security changes. Clinics can require the same added protection for patients.",
     icon: "mfa",
   },
   {
@@ -47,17 +47,17 @@ const pillars = [
   },
   {
     title: "Daily backups",
-    body: "Automated daily database exports to a dedicated per-project bucket, so a clinic's data is recoverable independent of day-to-day operations.",
+    body: "Clinic data is backed up every day and kept separately from day-to-day use, so it can be recovered if something goes wrong.",
     icon: "backup",
   },
   {
     title: "Defence in depth",
-    body: "Public forms are protected against automated abuse, browser security protections are applied across the site, and a responsible-disclosure channel gives security researchers a clear way to contact us.",
+    body: "Public forms are protected from automated abuse, the website uses modern browser safeguards, and security researchers have a clear way to contact us.",
     icon: "layers",
   },
   {
-    title: "Consent-led patient sharing",
-    body: "In myLumii, clinic connections are separate and revocable. Supported health categories are shared clinic by clinic only after explicit consent, while journal, food and personal exercise spaces remain private by design.",
+    title: "Patients stay in control of sharing",
+    body: "In myLumii, each clinic is separate. People choose which kinds of health information to share and can change their mind later. Journal, food and personal exercise areas remain private.",
     icon: "shield",
   },
 ];
@@ -65,11 +65,11 @@ const pillars = [
 const faqs = [
   {
     q: "Where is our data stored?",
-    a: "In Australia—both production patient data and enquiry details submitted through this website. Lumii runs in the Sydney region across compute, database and storage.",
+    a: "In Australia, in the Sydney region. That includes patient and clinic information as well as details submitted through this website.",
   },
   {
     q: "Is Lumii ISO 27001 certified?",
-    a: "Lumii is not currently ISO 27001 certified. We are building our security management practices towards that standard, with access control, encryption, logging, backups and incident response already forming part of the platform's security approach.",
+    a: "Lumii is not currently ISO 27001 certified. We are building our security management practices towards that standard, with access control, encryption, logging, backups and incident response already part of how Lumii is designed and operated.",
   },
   {
     q: "How do you handle the Australian Privacy Principles?",
@@ -93,7 +93,7 @@ const faqs = [
   <Hero
     eyebrow="Security & compliance"
     title="Security that earns a clinic's trust."
-    subtitle="Lumii is built for Australian healthcare data — Australian residency, encryption everywhere, mandatory staff MFA, and least-privilege access by design."
+    subtitle="Health information stays in Australia, is encrypted when stored and sent, and is available only to people whose role requires it."
     primaryLabel={t("hero.ctaPrimary")}
     primaryHref={lp("/request-access")}
   />
@@ -102,8 +102,8 @@ const faqs = [
     <div class="badges">
       <Badge tone="green">Australian data residency</Badge>
       <Badge tone="blue">Encrypted in transit &amp; at rest</Badge>
-      <Badge tone="amber">Mandatory staff MFA</Badge>
-      <Badge tone="purple">ISO 27001 / iRAP-readiness</Badge>
+      <Badge tone="amber">Stronger staff sign-in</Badge>
+      <Badge tone="purple">Working towards recognised standards</Badge>
     </div>
     <header class="section__head">
       <p class="section__eyebrow">How we protect it</p>
