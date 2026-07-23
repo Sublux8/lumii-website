@@ -8,6 +8,7 @@ const sitesEntry = resolve(root, "dist/server/index.js");
 const hostingConfig = resolve(root, ".openai/hosting.json");
 const packagedHostingConfig = resolve(root, "dist/.openai/hosting.json");
 
+// Sites loads the built worker from this conventional entrypoint.
 await mkdir(dirname(packagedHostingConfig), { recursive: true });
 await copyFile(serverEntry, sitesEntry);
 await copyFile(hostingConfig, packagedHostingConfig);
