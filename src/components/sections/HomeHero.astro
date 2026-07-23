@@ -73,19 +73,22 @@ const { primaryHref, secondaryHref } = Astro.props;
         class="clinic-scene__shot"
       />
 
-      <div class="clinic-scene__note clinic-scene__note--plan" aria-hidden="true">
-        <span class="clinic-scene__plan-head">
-          <span class="clinic-scene__note-icon"><Icon name="careplan" size={16} /></span>
-          Funded care
-        </span>
-        <strong>Eleanor has 2 funded visits left</strong>
-        <span class="clinic-scene__progress"><i></i></span>
-      </div>
+      <p class="clinic-scene__caption">Fictional patient details shown.</p>
 
-      <div class="clinic-scene__mascot" aria-hidden="true">
-        <LumiiStar size={118} label="" />
+      <div class="clinic-scene__footer">
+        <div class="clinic-scene__note clinic-scene__note--plan" aria-hidden="true">
+          <span class="clinic-scene__plan-head">
+            <span class="clinic-scene__note-icon"><Icon name="careplan" size={16} /></span>
+            Funded care
+          </span>
+          <strong>Eleanor has 2 funded visits left</strong>
+          <span class="clinic-scene__progress"><i></i></span>
+        </div>
+
+        <div class="clinic-scene__mascot" aria-hidden="true">
+          <LumiiStar size={118} label="" />
+        </div>
       </div>
-      <p class="clinic-scene__caption">A real Lumii view with fictional patient details.</p>
     </div>
   </div>
 
@@ -234,7 +237,7 @@ const { primaryHref, secondaryHref } = Astro.props;
     --scene-y: 0deg;
     position: relative;
     margin: 0;
-    padding-block: 3.4rem 7.5rem;
+    padding-block: 3.4rem 1rem;
     perspective: 1200px;
     animation: hero-scene-in 0.9s 0.12s var(--ease-out) both;
   }
@@ -256,10 +259,20 @@ const { primaryHref, secondaryHref } = Astro.props;
     display: none;
   }
   .clinic-scene__caption {
-    margin: 0.9rem 0 0;
+    margin: 0.3rem 0 0;
     color: var(--text-muted);
-    font-size: var(--text-caption);
-    text-align: center;
+    font-size: 0.64rem;
+    letter-spacing: 0.015em;
+    line-height: 1.4;
+  }
+  .clinic-scene__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    min-block-size: 6.5rem;
+    margin-block-start: 0.65rem;
+    padding-inline-start: 0.15rem;
   }
   .clinic-scene__window {
     position: relative;
@@ -531,8 +544,8 @@ const { primaryHref, secondaryHref } = Astro.props;
     border-radius: 0.9rem;
   }
   .clinic-scene__note--plan {
-    inset-block-end: 0.6rem;
-    inset-inline-start: -1.75rem;
+    position: relative;
+    inset: auto;
     flex-direction: column;
     inline-size: 14.5rem;
     padding: 0.85rem;
@@ -566,10 +579,12 @@ const { primaryHref, secondaryHref } = Astro.props;
     background: var(--accent);
   }
   .clinic-scene__mascot {
-    position: absolute;
+    position: relative;
     z-index: 4;
-    inset-inline-end: -2rem;
-    inset-block-end: -0.3rem;
+    flex: 0 0 7.4rem;
+    inline-size: 7.4rem;
+    block-size: 7.4rem;
+    margin-inline-end: -1.4rem;
     filter: drop-shadow(
       0 0.8rem 1rem color-mix(in srgb, var(--brand-warmth) 24%, transparent)
     );
@@ -683,7 +698,7 @@ const { primaryHref, secondaryHref } = Astro.props;
       gap: var(--space-sm);
     }
     .clinic-scene {
-      padding-block: 2.6rem 8.25rem;
+      padding-block: 2.6rem 0.5rem;
     }
     .clinic-scene__body {
       grid-template-columns: 2.75rem minmax(0, 1fr);
@@ -712,14 +727,22 @@ const { primaryHref, secondaryHref } = Astro.props;
     .clinic-scene__note--confirm {
       inset-inline-end: 0;
     }
+    .clinic-scene__footer {
+      gap: var(--space-sm);
+      min-block-size: 6rem;
+      margin-block-start: 0.5rem;
+      padding-inline-start: 0;
+    }
     .clinic-scene__note--plan {
-      inset-inline-start: 0;
+      inline-size: min(14.5rem, calc(100% - 5.5rem));
     }
     .clinic-scene__mascot {
-      inset-inline-end: -0.5rem;
-      inset-block-end: 0;
-      transform: scale(0.8);
-      transform-origin: bottom right;
+      flex-basis: 5.5rem;
+      inline-size: 5.5rem;
+      block-size: 5.5rem;
+      margin-inline-end: -0.5rem;
+      transform: scale(0.74);
+      transform-origin: center;
     }
     .clinic-scene figcaption {
       inset-inline-start: 0;
