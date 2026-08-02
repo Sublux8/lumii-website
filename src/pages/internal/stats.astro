@@ -33,9 +33,9 @@ const release: Slot = {
   value: `v${macRelease.version}`,
   caption: `Build ${macRelease.build} · ${formatBytes(macRelease.bytes)} · ${macRelease.releasedISO}`,
   source: "release.ts (build-time)",
-  // Internal page is outside the [locale] tree, so the localised download path
-  // is spelled out (active locale = en-au).
-  href: "/en-au/download",
+  // Internal page is outside the [...locale] tree. The default locale (en-au) is
+  // unprefixed, so its public paths are the bare ones.
+  href: "/download",
 };
 
 // Slots awaiting a data source. Each names where it will read from so the wiring
@@ -79,7 +79,7 @@ const links: { label: string; href: string }[] = [
     href: "https://dash.cloudflare.com",
   },
   { label: "Repository", href: "https://github.com/Sublux8/lumii-website" },
-  { label: "Public download page", href: "/en-au/download" },
+  { label: "Public download page", href: "/download" },
 ];
 ---
 

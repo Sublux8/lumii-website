@@ -25,28 +25,28 @@ const lp = (p: string) => localizePath(p, locale);
 
 const beliefs = [
   {
-    title: "Calm beats clever",
-    body: "The best software disappears. Lumii is built to get out of the way — fewer clicks, fewer systems, fewer surprises — so your team can spend their attention on people, not screens.",
+    title: "Good software should feel straightforward",
+    body: "Lumii reduces unnecessary clicks, repeated work and surprises, so your team can spend more attention on people and less on screens.",
     icon: "spark",
   },
   {
-    title: "Australian, properly",
-    body: "Tyro, Medicare, NDIS, DVA, and patient data kept in Sydney. Not a global product with a local plug-in — built from the ground up for how clinics here actually book, bill and get paid.",
+    title: "Made for Australian healthcare",
+    body: "Lumii works with Tyro, Medicare, NDIS and DVA, with patient data kept in Sydney. It is built around how clinics here book, bill and get paid.",
     icon: "au",
   },
   {
-    title: "Made for different kinds of care",
+    title: "Flexible enough for different kinds of care",
     body: "Allied health, general practice, medical specialists, aged care and NDIS. Lumii adapts to your team and funding mix instead of forcing every clinic into the same mould.",
     icon: "layers",
   },
   {
-    title: "Your data is yours",
-    body: "Stored in Australia, encrypted, with you in control. We hold it carefully because it's the most trust a clinic can give us — and we'd rather earn that than assume it.",
+    title: "We protect the data entrusted to us",
+    body: "Clinic and patient data is stored in Australia, encrypted and protected by clear access controls. We treat that responsibility as something to earn every day.",
     icon: "lock",
   },
   {
-    title: "Care has two sides",
-    body: "Lumii helps the clinic run the day; myLumii helps the person carry care between visits. We design both experiences as one conversation, with consent at the bridge between them.",
+    title: "Care continues beyond the clinic",
+    body: "Lumii helps the clinic run the day. myLumii helps each person keep track of care between visits, with clear choices about what is shared.",
     icon: "layers",
   },
 ];
@@ -54,12 +54,12 @@ const beliefs = [
 
 <BaseLayout
   title={t("nav.about")}
-  description="Lumii is Australian-built care technology for practices and people—bringing the clinical day, connected care and personal health into a calmer experience."
+  description="Lumii is Australian-built care technology that helps practices run the day and people keep track of care between visits."
 >
   <Hero
     eyebrow="About Lumii"
     title="Care technology that feels like it is on your side."
-    subtitle="Lumii is made in Australia for practices and people: less friction in the clinical day, health information kept close to home and an experience that feels genuinely good to use."
+    subtitle="Lumii is made in Australia to give practice teams a calmer working day and help people keep their care and health information close."
     primaryLabel={t("hero.ctaPrimary")}
     primaryHref={lp("/request-access")}
     secondaryLabel={t("nav.platform")}
@@ -82,8 +82,8 @@ const beliefs = [
       <h2>Built closely with the people who will use it.</h2>
       <p>
         Lumii is welcoming a small number of practices at a time. That gives every team
-        real help with moving data, setting up and finding their feet, while giving us time
-        to listen carefully and respond well.
+        real help with moving data, setting up and finding their feet, while giving us
+        time to listen carefully and respond well.
       </p>
       <p>
         The people shaping Lumii stay close to the people using it. If you run a practice,
@@ -92,9 +92,9 @@ const beliefs = [
       </p>
       <p>
         It also means building for the person beyond the waiting room. myLumii is being
-        prepared alongside Lumii so appointments, shared records, forms,
-        messages and rehabilitation can feel like one continuous care story—not a trail of
-        portals and paperwork.
+        prepared alongside Lumii so appointments, shared records, forms, messages and
+        rehabilitation can feel like one continuous care story—not a trail of portals and
+        paperwork.
       </p>
     </div>
   </section>
@@ -102,7 +102,7 @@ const beliefs = [
   <CTA
     eyebrow="Start a conversation"
     title="Help us make care technology feel more human."
-    body="Tell us whether Lumii has caught your eye for your practice, your work or your own health. We'd love to hear your perspective."
+    body="Tell us what you need from Lumii for your practice, your work or your own health. We'd genuinely like to hear your perspective."
     buttonLabel={t("cta.button")}
     buttonHref={lp("/request-access")}
   />

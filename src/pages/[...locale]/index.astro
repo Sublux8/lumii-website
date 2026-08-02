@@ -30,7 +30,7 @@ const clinicDay = [
   {
     time: "8:04 am",
     label: "Before the first consult",
-    title: "The team starts with fewer loose ends.",
+    title: "The team starts ready.",
     body: "Reminders are confirmed, the waitlist has filled a late cancellation, and reception can see who needs a form before they arrive.",
     detail: "11 confirmations · 1 gap filled",
     icon: "frontdesk",
@@ -38,7 +38,7 @@ const clinicDay = [
   {
     time: "1:20 pm",
     label: "Between patients",
-    title: "The admin stays close to the care.",
+    title: "The work is finished before the next patient.",
     body: "Notes, funded sessions, consent and claiming stay with the appointment, so clinicians can finish while the details are still fresh.",
     detail: "Care plan updated · Claim ready",
     icon: "careplan",
@@ -46,7 +46,7 @@ const clinicDay = [
   {
     time: "5:06 pm",
     label: "At the end of the day",
-    title: "The day finishes without a second shift of admin.",
+    title: "The team can finish on time.",
     body: "Payments reconcile, Xero stays in step, and practice owners get a clear view of the day without another spreadsheet or late-night export.",
     detail: "Payments matched · Books in sync",
     icon: "analytics",
@@ -55,18 +55,18 @@ const clinicDay = [
 
 const humanDetails = [
   {
-    title: "Reception sees the whole story",
-    body: "Arrival, forms, funding and payment status at a glance, without reception having to open five screens or ask the patient twice.",
+    title: "Reception has the information it needs",
+    body: "Arrival, forms, funding and payment status are easy to find, without opening five screens or asking the patient twice.",
     icon: "frontdesk",
   },
   {
-    title: "Clinicians keep their rhythm",
-    body: "The next useful action is close at hand, while the interface stays quiet enough to focus on the person in the room.",
+    title: "Clinicians stay focused",
+    body: "The next task is easy to find, while the screen stays quiet enough to focus on the person in the room.",
     icon: "notes",
   },
   {
-    title: "Owners can see where the practice needs help",
-    body: "Useful numbers for staffing, revenue and follow-up, drawn from the work the team is already doing.",
+    title: "Owners can act sooner",
+    body: "Staffing, revenue and follow-up are easier to understand using information the team already records.",
     icon: "analytics",
   },
 ];
@@ -120,10 +120,10 @@ const faqs = [
     <div class="container-page day-section__layout">
       <header class="story-head" data-reveal>
         <p class="section-kicker">A day with Lumii</p>
-        <h2>Software should lower the volume.</h2>
+        <h2>Less chasing. More time for care.</h2>
         <p>
-          The real win is not another feature. It is a clinic day with fewer loose ends,
-          fewer interruptions and more room for people.
+          What matters is a calmer working day: fewer missed tasks, fewer interruptions
+          and more time with patients.
         </p>
       </header>
 
@@ -161,14 +161,14 @@ const faqs = [
   <section class="people-section">
     <div class="container-page people-section__inner">
       <div class="people-section__statement" data-reveal>
-        <p class="section-kicker">Designed for the room</p>
-        <h2>Technology that remembers there are people on both sides of the desk.</h2>
+        <p class="section-kicker">Made for real clinic days</p>
+        <h2>Technology that supports everyone on both sides of the desk.</h2>
         <p>
-          Lumii is shaped around the pace, pressure and small human moments of a working
-          clinic—not a generic software checklist.
+          Lumii follows the way a clinic actually works, from reception to the consulting
+          room and the end of day, so staff spend less time working around their software.
         </p>
         <Button href={lp("/for-clinicians")} variant="ghost"
-          >See the clinician experience</Button
+          >See Lumii for clinicians</Button
         >
       </div>
 
@@ -210,7 +210,7 @@ const faqs = [
         <p class="section-kicker section-kicker--light">
           <span>Guided onboarding</span> Lumii Learn
         </p>
-        <h2>Your whole team should feel ready before the first busy morning.</h2>
+        <h2>Your whole team can feel ready before the first busy morning.</h2>
         <p>
           Lumii Learn will give owners, reception teams and practitioners a clear path
           through setup and training—so everyone knows what to learn, what is ready and
@@ -221,7 +221,7 @@ const faqs = [
         >
       </div>
 
-      <ol class="learn-path" aria-label="Lumii Learn onboarding journey">
+      <ol class="learn-path" aria-label="Lumii Learn onboarding plan">
         {
           learnSteps.map((step) => (
             <li class="learn-step" data-reveal>
@@ -259,11 +259,12 @@ const faqs = [
 
   <section class="sectors-section container-page">
     <header class="story-head" data-reveal>
-      <p class="section-kicker">Made to fit your practice</p>
-      <h2>One clear home for many ways of caring.</h2>
+      <p class="section-kicker">Built around your practice</p>
+      <h2>Different kinds of care need different ways of working.</h2>
       <p>
         Funding, clinical responsibilities and the shape of the day change by discipline.
-        Lumii starts from that reality instead of asking every practice to work the same way.
+        Lumii starts from that reality instead of asking every practice to work the same
+        way.
       </p>
     </header>
     <div class="sector-grid">
@@ -286,12 +287,12 @@ const faqs = [
     </div>
   </section>
 
-  <FAQ title="A few honest answers" items={faqs} />
+  <FAQ title="Questions we hear often" items={faqs} />
 
   <CTA
     eyebrow="For practices, practitioners and people"
-    title="Better care can feel lighter on both sides."
-    body="Tell us whether you're exploring Lumii for your practice, your work or your own health. A real person from our team will be in touch."
+    title="Better care, with less admin on both sides."
+    body="Tell us whether you're exploring Lumii for your practice, your work or your own health. Someone from our team will be in touch."
     buttonLabel="Register interest"
     buttonHref={lp("/request-access")}
   />

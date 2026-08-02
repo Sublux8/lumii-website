@@ -21,7 +21,7 @@ export const changelog: readonly ChangelogEntry[] = [
     summary: "Reliability and polish across the appointment book and billing.",
     items: [
       "A faster, more dependable appointment book.",
-      "Refinements to the unified Tyro claims dashboard.",
+      "A clearer Tyro claims dashboard.",
       "General bug fixes.",
     ],
   },
@@ -30,7 +30,7 @@ export const changelog: readonly ChangelogEntry[] = [
     dateISO: "2026-05-25",
     summary: "iPad Patient Kiosk and forms-by-SMS.",
     items: [
-      "Patient self-check-in kiosk with live Arrived status on the book.",
+      "Patient self-check-in kiosk with current arrival status on the appointment book.",
       "Send intake forms to patients by SMS.",
       "Smoother preparation before a consult and clearer reception follow-up.",
     ],

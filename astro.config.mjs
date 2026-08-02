@@ -4,8 +4,6 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import cloudflare from "@astrojs/cloudflare";
 
-import { DEFAULT_LOCALE } from "./src/i18n/config.ts";
-
 // Canonical apex chosen as `lumii.com.au` (www → apex 301 at the edge; see _headers).
 const SITE = "https://lumii.com.au";
 
@@ -31,15 +29,20 @@ export default defineConfig({
   // `Astro.locals.runtime.env`).
   adapter: cloudflare(),
 
-  // §4 i18n is implemented with EXPLICIT `[locale]` routing (src/pages/[locale]/…)
-  // rather than Astro's built-in i18n auto-router — the built-in router does not
-  // move physical file routes under a locale prefix, which collided with our
-  // pages. Owning the routing gives deterministic /en-au/… URLs, region≠language
-  // modelling, and reserved-locale fallback (see src/i18n/). The bare root 301s
-  // to the default locale (also enforced at the edge via public/_redirects).
-  redirects: {
-    "/": `/${DEFAULT_LOCALE}/`,
-  },
+  // §4 i18n is implemented with EXPLICIT `[...locale]` routing
+  // (src/pages/[...locale]/…) rather than Astro's built-in i18n auto-router — the
+  // built-in router does not move physical file routes under a locale prefix,
+  // which collided with our pages. Owning the routing gives deterministic URLs,
+  // region≠language modelling, and reserved-locale fallback (see src/i18n/).
+  //
+  // The DEFAULT locale is UNPREFIXED: `localeParam()` returns `undefined` for
+  // en-au, so the rest param collapses and en-AU owns the root (`/`, `/pricing`).
+  // Reserved locales keep their segment (`/en-us/pricing`). There is deliberately
+  // NO `redirects: { "/": … }` here: under the Cloudflare adapter Astro does not
+  // emit an HTML page for a configured redirect, it writes a `_redirects` rule —
+  // and the Sites host serving this project ignores `_redirects` entirely, so the
+  // root 404'd in production. A real prerendered dist/client/index.html is the
+  // only root that survives a host with no redirect support.
 
   integrations: [mdx(), sitemap()],
 

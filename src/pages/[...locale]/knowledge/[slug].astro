@@ -12,6 +12,7 @@ import CTA from "@components/sections/CTA.astro";
 import {
   useTranslations,
   localeFromPath,
+  localeParam,
   localizePath,
   formatDate,
   getLocale,
@@ -22,7 +23,7 @@ export async function getStaticPaths() {
   const articles = await getCollection("knowledge", (a) => a.data.status !== "reserved");
   return LOCALES.flatMap((l) =>
     articles.map((article) => ({
-      params: { locale: l.path, slug: article.id },
+      params: { locale: localeParam(l.path), slug: article.id },
       props: { article },
     })),
   );

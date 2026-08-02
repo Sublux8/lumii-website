@@ -36,7 +36,7 @@ const description =
 const modules = [
   {
     title: "Booking & front desk",
-    body: "Online booking, SMS reminders your patients confirm with one tap, smart waitlist offers, and an iPad kiosk that checks people in while reception takes a breath.",
+    body: "Online booking, one-tap SMS confirmations, waitlist offers and an iPad kiosk help patients check in while reception stays available for the people who need help.",
     icon: "frontdesk",
   },
   {
@@ -73,16 +73,16 @@ const modules = [
 
 const pillars = [
   {
-    title: "One place to finish the job",
-    body: "The appointment, invoice and claim stay together, so the team spends less time moving information around and fewer tasks fall between systems.",
+    title: "Finish each task once",
+    body: "The appointment, invoice and claim stay together, so staff spend less time retyping information and fewer tasks are missed.",
   },
   {
-    title: "Australian to the core",
+    title: "Made for Australian healthcare",
     body: "Tyro, Medicare, NDIS, DVA and Xero, with patient data kept in Sydney. Built around how clinics here actually book, bill and get paid — not retrofitted from overseas.",
   },
   {
-    title: "Calm by design",
-    body: "Changes appear across the appointment book and front desk, so the team can see the same current information and stay with the person in front of them.",
+    title: "The same information for the whole team",
+    body: "Changes appear across the appointment book and front desk, so everyone can see what is current without interrupting one another.",
   },
 ];
 
@@ -93,7 +93,7 @@ const faqs = [
   },
   {
     q: "Which funders can I claim from?",
-    a: "Tyro HealthPoint (PHI), Medicare (bulk-bill and patient-claim), DVA, Comcare and icare, plus the dedicated NDIS module — all from one unified claims view.",
+    a: "Tyro HealthPoint (PHI), Medicare (bulk-bill and patient-claim), DVA, Comcare and icare, plus the dedicated NDIS module — all from one claims list.",
   },
   {
     q: "Where is our data stored?",
@@ -109,8 +109,8 @@ const faqs = [
 <BaseLayout title={t("nav.platform")} description={description}>
   <Hero
     eyebrow="Lumii for practices"
-    title="The whole practice, with fewer loose ends."
-    subtitle="Booking, billing, claiming, care plans, telehealth and reporting stay together, so your team can finish the work once and keep the day moving."
+    title="Your practice work, connected from booking to payment."
+    subtitle="Booking, clinical records, billing, claiming, care plans and follow-up stay together, so your team can finish the work once and keep the day moving."
     primaryLabel={t("hero.ctaPrimary")}
     primaryHref={lp("/request-access")}
     secondaryLabel={t("nav.forClinicians")}
@@ -120,10 +120,9 @@ const faqs = [
   <section class="container-page section">
     <header class="section__head">
       <p class="section__eyebrow">What's inside</p>
-      <h2>Everything your team reaches for in a busy day.</h2>
+      <h2>The tools your team uses every day, working together.</h2>
       <p class="section__lead measure">
-        Useful on their own, stronger together: less retyping, less checking and a much
-        clearer end to the day.
+        Less retyping, less double-checking and fewer jobs left for the end of the day.
       </p>
     </header>
     <div class="grid-3">
@@ -134,7 +133,7 @@ const faqs = [
   <section class="container-page section pillars-section">
     <header class="section__head">
       <p class="section__eyebrow">Why it feels different</p>
-      <h2>Built to disappear into the day.</h2>
+      <h2>Designed around a real clinic day.</h2>
     </header>
     <div class="pillars">
       {
@@ -155,15 +154,13 @@ const faqs = [
     <div class="container-page connected-care__inner">
       <div class="connected-care__copy" data-reveal>
         <p class="section__eyebrow">Beyond the appointment</p>
-        <h2>The clinic view is only half of connected care.</h2>
+        <h2>Care continues after the appointment.</h2>
         <p>
-          Lumii keeps the practice side organised. myLumii gives the person the parts they
-          need next—appointments, shared records, forms, messages and rehabilitation—
-          while keeping their sharing choices clear.
+          Lumii helps the practice stay organised. myLumii gives each person access to
+          appointments, shared records, forms, messages and rehabilitation, with clear
+          choices about what they share with each clinic.
         </p>
-        <a href={lp("/mylumii")}
-          >Explore the myLumii experience <span aria-hidden="true">→</span></a
-        >
+        <a href={lp("/mylumii")}>Explore myLumii <span aria-hidden="true">→</span></a>
       </div>
       <div class="connected-care__shots" data-reveal>
         <ProductShot
@@ -208,8 +205,8 @@ const faqs = [
 
   <CTA
     eyebrow="For Australian practices"
-    title="See how much lighter the day could feel."
-    body="Tell us about your practice, your team and the systems you use now. We'll help you explore whether Lumii is the right fit."
+    title="See whether Lumii fits the way your practice works."
+    body="Tell us about your team, your daily work and the systems you use now. We'll show you where Lumii could save time and what a move would involve."
     buttonLabel={t("cta.button")}
     buttonHref={lp("/request-access")}
   />

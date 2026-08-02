@@ -14,7 +14,7 @@ in Phases 1–3.
 ```bash
 nvm use            # Node 22.12+ (see .nvmrc)
 npm ci
-npm run dev        # http://localhost:4321  (redirects / → /en-au/)
+npm run dev        # http://localhost:4321  (/ is the en-AU homepage)
 ```
 
 ## Scripts
@@ -37,9 +37,13 @@ See `ARCHITECTURE.md`. Highlights:
 
 - **Design tokens** in `src/styles/tokens.css` (light + dark), traced to the app
   in `DESIGN-TOKENS.md`. Every page is assembled from `src/components/`
-  primitives + sections — see the live gallery at `/en-au/components` (noindex).
-- **i18n**: explicit `[locale]` routing, `en-au` default, `en-us`/`en-gb`
-  reserved. Strings externalised in `src/i18n/locales/`. RTL-ready (logical CSS).
+  primitives + sections — see the live gallery at `/components` (noindex).
+- **i18n**: explicit `[...locale]` routing. The default locale (`en-au`) is
+  UNPREFIXED and owns the root — `/`, `/pricing` — while `en-us`/`en-gb` are
+  reserved and keep their segment (`/en-us/pricing`). `localeParam()` in
+  `src/i18n/index.ts` is the single place that rule lives; every getStaticPaths
+  goes through it. Strings externalised in `src/i18n/locales/`. RTL-ready
+  (logical CSS).
 - **Content**: `sectors` + `knowledge` collections drive nav and pages.
 - **Security**: cookieless, no third-party scripts, strict CSP (`_headers` for
   static, nonce CSP in `middleware.ts` for on-demand). `security.txt` present.

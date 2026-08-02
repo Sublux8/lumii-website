@@ -37,7 +37,7 @@ src/
   layouts/       BaseLayout.astro (head/SEO/chrome)
   lib/           seo.ts (hreflang/canonical) · analytics.ts · errors.ts
   pages/
-    [locale]/    every page, locale-prefixed via getStaticPaths
+    [...locale]/ every page; default locale unprefixed via getStaticPaths
     404.astro    (root)
   middleware.ts  nonce CSP + security headers for on-demand routes / dev
 public/
@@ -53,8 +53,17 @@ scripts/         link-check.mjs · axe-check.mjs
 
 We **own** locale routing rather than using Astro's built-in i18n router (which
 does not move physical file routes under a prefix and collided with our pages).
-Every page lives under `src/pages/[locale]/` and calls `getStaticPaths()` →
+Every page lives under `src/pages/[...locale]/` and calls `getStaticPaths()` →
 `localeStaticPaths()`, generating one build per locale.
+
+The default locale is **unprefixed**: `localeParam()` returns `undefined` for
+`en-au`, collapsing the rest param so en-AU owns the site root (`/`, `/pricing`)
+while reserved locales keep their segment (`/en-us/pricing`). That also makes the
+homepage a real prerendered `dist/client/index.html` — load-bearing, because the
+host serving lumii.com.au ignores `_redirects`, so a root that exists only as a
+redirect rule returns a hard 404 in production. `npm run build` asserts the root
+page exists. Routes that build their own getStaticPaths cross-product (knowledge,
+sectors) must spell the param through `localeParam()`, never `l.path`.
 
 - **Registry:** `src/i18n/config.ts`. A `Locale` separates `language` ("en")
   from `region` ("AU") — **region ≠ language**. `active: false` locales (en-US,

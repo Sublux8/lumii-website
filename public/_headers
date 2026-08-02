@@ -8,11 +8,26 @@
 # So a strict CSP on `/*` plus a relaxed CSP on `/admin/*` produced TWO CSP
 # headers on /admin — browsers enforce the intersection, which re-blocked the
 # CMS. The only reliable fix is to ensure each path matches exactly ONE CSP rule:
-#   - the strict marketing CSP is scoped to the HTML routes (`/`, `/en-*/*`)
+#   - the strict marketing CSP is enumerated per top-level HTML route
 #   - `/admin/*` carries its own relaxed CSP (CMS loads from a CDN + talks to
 #     GitHub and the OAuth relay)
 # Non-CSP security headers stay on `/*` (identical everywhere, no conflict).
 # Marketing CSP posture is still zero-third-party, `script-src 'self'`.
+#
+# WHY THE MARKETING LIST IS ENUMERATED AND DUPLICATED:
+# the default locale (en-au) is UNPREFIXED, so marketing pages live at top-level
+# paths (`/pricing`, `/knowledge/…`) rather than under one `/en-au/*` that a
+# single rule could cover. `_headers` has no way to say "everything except
+# /admin", so each marketing route gets its own rule carrying a BYTE-IDENTICAL
+# CSP. Adding a page under src/pages/[...locale]/ means adding a line here —
+# and `npm run build` enforces exactly that: scripts/prepare-sites-output.mjs
+# fails the build if a built HTML route matches zero or two CSP rules, or if the
+# marketing CSP values have drifted apart. Don't hand-tune one line in isolation.
+#
+# NOTE: this file is currently INERT on the Sites host serving lumii.com.au —
+# production responses carry none of these headers today. See public/_redirects
+# for the same caveat and the evidence. The posture below is correct and ready
+# for the day the project moves to a host that honours `_headers`.
 # ─────────────────────────────────────────────────────────────────────────────
 
 /*
@@ -27,10 +42,40 @@
   Cross-Origin-Opener-Policy: same-origin-allow-popups
   Cross-Origin-Resource-Policy: same-origin
 
-# Strict marketing CSP — scoped to the HTML routes so /admin never inherits it.
+# Strict marketing CSP — one rule per HTML route so /admin never inherits it.
 /
   Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://challenges.cloudflare.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
-/en-au/*
+/about/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://challenges.cloudflare.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
+/accessibility/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://challenges.cloudflare.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
+/changelog/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://challenges.cloudflare.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
+/components/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://challenges.cloudflare.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
+/download/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://challenges.cloudflare.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
+/for-clinicians/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://challenges.cloudflare.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
+/internal/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://challenges.cloudflare.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
+/knowledge/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://challenges.cloudflare.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
+/mylumii/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://challenges.cloudflare.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
+/platform/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://challenges.cloudflare.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
+/pricing/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://challenges.cloudflare.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
+/privacy/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://challenges.cloudflare.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
+/request-access/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://challenges.cloudflare.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
+/sectors/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://challenges.cloudflare.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
+/security/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://challenges.cloudflare.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
+/terms/*
   Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://challenges.cloudflare.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests
 /en-us/*
   Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://scqxaziehzyekohhiuip.supabase.co https://challenges.cloudflare.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests

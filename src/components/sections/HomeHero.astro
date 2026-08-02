@@ -28,9 +28,9 @@ const { primaryHref, secondaryHref } = Astro.props;
         <em>From the clinic to everyday life.</em>
       </h1>
       <p class="launch-hero__subtitle">
-        Lumii helps practices spend less time chasing admin and more time caring for
-        people. myLumii gives each person a simple, private home for appointments,
-        records and the health questions that happen between visits.
+        Lumii brings booking, clinical records, billing and follow-up together, giving
+        practice teams more time for patients. myLumii helps people keep appointments,
+        shared records and health information close between visits.
       </p>
 
       <div class="launch-hero__actions">
@@ -51,7 +51,6 @@ const { primaryHref, secondaryHref } = Astro.props;
 
     <div
       class="clinic-scene"
-      data-lumii-scene
       aria-label="A genuine Lumii appointment book using fictional patient details"
     >
       <div class="clinic-scene__note clinic-scene__note--confirm" aria-hidden="true">
@@ -62,7 +61,7 @@ const { primaryHref, secondaryHref } = Astro.props;
       <ProductShot
         shotId="C01"
         instanceId="C01-home-hero"
-        title="A whole clinic day, clear at a glance"
+        title="A whole clinic day, clearly laid out"
         note="Practitioners, appointments, arrivals and useful prompts stay together."
         src="/product/lumii-clinic-day.webp"
         alt="Lumii appointment book showing a populated day across four practitioners"
@@ -70,6 +69,7 @@ const { primaryHref, secondaryHref } = Astro.props;
         aspectRatio="2005 / 750"
         showChrome={false}
         variant="calendar"
+        priority
         class="clinic-scene__shot"
       />
 
@@ -78,7 +78,8 @@ const { primaryHref, secondaryHref } = Astro.props;
       <div class="clinic-scene__footer">
         <div class="clinic-scene__note clinic-scene__note--plan" aria-hidden="true">
           <span class="clinic-scene__plan-head">
-            <span class="clinic-scene__note-icon"><Icon name="careplan" size={16} /></span>
+            <span class="clinic-scene__note-icon"><Icon name="careplan" size={16} /></span
+            >
             Funded care
           </span>
           <strong>Eleanor has 2 funded visits left</strong>
@@ -233,8 +234,6 @@ const { primaryHref, secondaryHref } = Astro.props;
   }
 
   .clinic-scene {
-    --scene-x: 0deg;
-    --scene-y: 0deg;
     position: relative;
     margin: 0;
     padding-block: 3.4rem 1rem;
@@ -251,9 +250,6 @@ const { primaryHref, secondaryHref } = Astro.props;
     box-shadow:
       0 2rem 5rem color-mix(in srgb, var(--text) 16%, transparent),
       0 0 0 8px color-mix(in srgb, white 44%, transparent);
-    transform: rotateX(var(--scene-x)) rotateY(var(--scene-y));
-    transform-style: preserve-3d;
-    transition: transform 0.2s var(--ease-out);
   }
   :global(.clinic-scene__shot > figcaption) {
     display: none;

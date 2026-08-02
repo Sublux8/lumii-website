@@ -5,12 +5,19 @@
  * privacy lawyer reviews (§18). Replace the body with the reviewed policy.
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { useTranslations, localeFromPath, localeStaticPaths } from "@i18n/index.ts";
+import {
+  useTranslations,
+  localeFromPath,
+  localeStaticPaths,
+  localizePath,
+} from "@i18n/index.ts";
 
 export function getStaticPaths() {
   return localeStaticPaths();
 }
-const t = useTranslations(localeFromPath(Astro.url.pathname));
+const locale = localeFromPath(Astro.url.pathname);
+const lp = (p: string) => localizePath(p, locale);
+const t = useTranslations(locale);
 ---
 
 <BaseLayout title={t("footer.privacy")} noindex={true}>
@@ -27,9 +34,9 @@ const t = useTranslations(localeFromPath(Astro.url.pathname));
     <h2>What we collect</h2>
     <p>
       <strong>From this website:</strong> if you request access, we collect the details you
-      submit (name, email address, the type of Lumii experience you're interested in, and
-      any optional practice, discipline or message details). This site is cookieless and
-      we don't run third-party tracking scripts.
+      submit (name, email address, the type of Lumii service you're interested in, and any optional
+      practice, discipline or message details). This site is cookieless and we don't run third-party
+      tracking scripts.
     </p>
     <p>
       <strong>In the Lumii app (for clinics):</strong> clinics use Lumii to manage their own
@@ -73,7 +80,7 @@ const t = useTranslations(localeFromPath(Astro.url.pathname));
     <h2>Security</h2>
     <p>
       We protect personal information with encryption in transit and at rest,
-      least-privilege access, and audit logging. See our <a href="/en-au/security"
+      least-privilege access, and audit logging. See our <a href={lp("/security")}
         >security page</a
       >.
     </p>

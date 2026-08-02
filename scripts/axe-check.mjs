@@ -10,12 +10,13 @@
 import { spawn } from "node:child_process";
 import { setTimeout as sleep } from "node:timers/promises";
 
+// Default-locale (en-AU) routes are unprefixed — see localeParam in src/i18n.
 const ROUTES = [
-  "http://localhost:4321/en-au/",
-  "http://localhost:4321/en-au/sectors/",
-  "http://localhost:4321/en-au/sectors/allied-health/",
-  "http://localhost:4321/en-au/pricing/",
-  "http://localhost:4321/en-au/request-access/",
+  "http://localhost:4321/",
+  "http://localhost:4321/sectors/",
+  "http://localhost:4321/sectors/allied-health/",
+  "http://localhost:4321/pricing/",
+  "http://localhost:4321/request-access/",
 ];
 
 const server = spawn("npm", ["run", "preview"], { stdio: "inherit" });

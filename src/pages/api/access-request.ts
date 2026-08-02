@@ -103,10 +103,10 @@ async function sendEmails(lead: Lead): Promise<void> {
     from,
     to: [lead.email],
     reply_to: REPLY_TO,
-    subject: "We've got your Lumii access request",
+    subject: "Thanks for your interest in Lumii",
     text: `Hi ${lead.name},
 
-Thanks for joining Lumii early access. We've received your details and will be in touch as access opens for the experience you're interested in.
+Thanks for telling us what you're interested in. We've received your details and someone from the Lumii team will be in touch.
 
 If you need to add anything, just reply to this email.
 

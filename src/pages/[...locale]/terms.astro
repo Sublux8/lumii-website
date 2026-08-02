@@ -4,12 +4,19 @@
  * until reviewed (§18). Replace with the reviewed terms before launch.
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { useTranslations, localeFromPath, localeStaticPaths } from "@i18n/index.ts";
+import {
+  useTranslations,
+  localeFromPath,
+  localeStaticPaths,
+  localizePath,
+} from "@i18n/index.ts";
 
 export function getStaticPaths() {
   return localeStaticPaths();
 }
-const t = useTranslations(localeFromPath(Astro.url.pathname));
+const locale = localeFromPath(Astro.url.pathname);
+const lp = (p: string) => localizePath(p, locale);
+const t = useTranslations(locale);
 ---
 
 <BaseLayout title={t("footer.terms")} noindex={true}>
@@ -52,7 +59,7 @@ const t = useTranslations(localeFromPath(Astro.url.pathname));
     <h2>Privacy</h2>
     <p>
       Our handling of personal information is described in our
-      <a href="/en-au/privacy">privacy policy</a>.
+      <a href={lp("/privacy")}>privacy policy</a>.
     </p>
 
     <h2>Contact</h2>

@@ -16,17 +16,17 @@ const lp = (path: string) => localizePath(path, locale);
 const pillars = [
   {
     icon: "layers",
-    title: "Every clinic, one warm home",
-    body: "Appointments, shared records, forms, messages and rehabilitation from every linked Lumii clinic—without building a second health identity.",
+    title: "Your care from every Lumii clinic",
+    body: "Keep appointments, shared records, forms, messages and rehabilitation from participating clinics together in myLumii.",
   },
   {
     icon: "shield",
-    title: "You decide what each clinic may see",
+    title: "Your information is yours to share",
     body: "Each clinic is separate. You can choose which kinds of health information to share and change your mind later.",
   },
   {
     icon: "spark",
-    title: "Patterns, not pronouncements",
+    title: "Notice patterns in your own health",
     body: "myLumii brings sleep, movement, food, mood and care together privately, helping you notice patterns and arrive with better questions.",
   },
 ];
@@ -90,11 +90,10 @@ const lifeModes = [
     <div class="container-page myl-hero__inner">
       <div class="myl-hero__copy">
         <p class="myl-kicker">For you and the people you care for</p>
-        <h1>Your health,<br /><em>held gently.</em></h1>
+        <h1>Your health,<br /><em>easier to follow.</em></h1>
         <p class="myl-hero__lead">
-          Stop piecing together portals, PDFs and half-remembered instructions. Keep your
-          appointments, shared records and everyday health in one private place, with you
-          deciding what each clinic may see.
+          Keep appointments, records, forms and the health information you choose in one
+          private place. You decide what each clinic can see.
         </p>
         <div class="myl-hero__actions">
           <Button href={lp("/request-access")} size="lg"
@@ -105,7 +104,7 @@ const lifeModes = [
         <ul class="myl-hero__proof">
           <li><Icon name="shield" size={17} /> Your sharing, your choice</li>
           <li><Icon name="au" size={17} /> Designed in Australia</li>
-          <li><Icon name="spark" size={17} /> Private, personal insights</li>
+          <li><Icon name="spark" size={17} /> Private health notes and insights</li>
         </ul>
       </div>
 
@@ -118,6 +117,7 @@ const lifeModes = [
           alt="myLumii Today screen showing Alex's Vitality, next appointment, steps, sleep and clinic connections"
           device="phone"
           variant="vitality"
+          priority
         />
         <ProductShot
           shotId="M05"
@@ -212,11 +212,12 @@ const lifeModes = [
         />
       </div>
       <div class="myl-copy" data-reveal>
-        <p class="myl-kicker">Health, with boundaries</p>
-        <h2>See the whole picture without giving the whole picture away.</h2>
+        <p class="myl-kicker">Your health data, on your terms</p>
+        <h2>See the bigger picture. Share only what you choose.</h2>
         <p>
           Bring in supported data from Apple Health or Health Connect and add readings of
-          your own. You decide which kinds of information, if any, each clinic may receive.
+          your own. You decide which kinds of information, if any, each clinic may
+          receive.
         </p>
         <div class="myl-privacy-note">
           <Icon name="lock" size={21} />
@@ -232,11 +233,10 @@ const lifeModes = [
   <section class="myl-atlas container-page" id="inside">
     <header class="myl-atlas__head" data-reveal>
       <p class="myl-kicker">Everything has its place</p>
-      <h2>Five simple places. A surprisingly complete picture.</h2>
+      <h2>Five simple areas, each with a clear purpose.</h2>
       <p>
-        Move naturally between today's priorities, connected care, health information,
-        private wellbeing spaces and personal insights—without turning your life into a
-        dashboard.
+        Find today's priorities, care from your clinics, health information, private
+        wellbeing notes and personal insights without searching through separate apps.
       </p>
     </header>
     <div class="myl-atlas__list">
@@ -257,11 +257,11 @@ const lifeModes = [
     <div class="container-page myl-life__inner">
       <div class="myl-copy" data-reveal>
         <p class="myl-kicker">Made for a whole life</p>
-        <h2>More thoughtful than “track everything”.</h2>
+        <h2>Made for real life, not perfect streaks.</h2>
         <p>
-          myLumii includes thoughtful spaces for the moments and routines that shape how
-          you feel. Sensitive experiences use gentle language, clear choices and no
-          pressure to chase streaks or perfect scores.
+          Keep track of the routines and changes that matter to you. Sensitive areas use
+          gentle language and clear choices, without pressure to log every day or chase a
+          perfect score.
         </p>
       </div>
       <div class="myl-life__visual" data-reveal>
@@ -289,13 +289,14 @@ const lifeModes = [
   <section class="myl-honesty container-page">
     <div class="myl-honesty__panel" data-reveal>
       <div>
-        <p class="myl-kicker">Opening thoughtfully</p>
-        <h2>Good care deserves a careful beginning.</h2>
+        <p class="myl-kicker">Starting with care</p>
+        <h2>A supported start for every person.</h2>
       </div>
       <p>
         myLumii will begin with participating practices and invited individuals, so
         privacy, sharing choices and support are clear from the first day. Tell us whether
-        you are interested for yourself, your family or the people your practice cares for.
+        you are interested for yourself, your family or the people your practice cares
+        for.
       </p>
     </div>
   </section>
@@ -303,7 +304,7 @@ const lifeModes = [
   <CTA
     eyebrow="For individuals, families and care teams"
     title="Your health should feel connected—not scattered."
-    body="Register your interest for yourself, or talk to us about giving your patients a clearer, more connected experience."
+    body="Register your interest for yourself, or talk to us about helping your patients keep their care and health information together."
     buttonLabel="Register interest"
     buttonHref={lp("/request-access")}
     note="Tell us which side of Lumii you're interested in."

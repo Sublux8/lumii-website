@@ -16,6 +16,7 @@ interface Props {
   showChrome?: boolean;
   aspectRatio?: string;
   instanceId?: string;
+  priority?: boolean;
   class?: string;
 }
 
@@ -30,6 +31,7 @@ const {
   showChrome = true,
   aspectRatio,
   instanceId,
+  priority = false,
   class: className,
 } = Astro.props;
 
@@ -76,8 +78,16 @@ const dialogId = `product-shot-dialog-${instanceId ?? shotId}`;
             aria-haspopup="dialog"
             data-product-shot-open
           >
-            <img src={src} alt={alt} loading="lazy" decoding="async" />
-            <span class="product-shot__zoom" aria-hidden="true">View larger <b>↗</b></span>
+            <img
+              src={src}
+              alt={alt}
+              loading={priority ? "eager" : "lazy"}
+              fetchpriority={priority ? "high" : "auto"}
+              decoding="async"
+            />
+            <span class="product-shot__zoom" aria-hidden="true">
+              View larger <b>↗</b>
+            </span>
           </button>
           <dialog
             id={dialogId}
@@ -91,7 +101,9 @@ const dialogId = `product-shot-dialog-${instanceId ?? shotId}`;
                 {note && <span>{note}</span>}
               </div>
               <div class="product-shot__dialog-actions">
-                <a href={src} target="_blank" rel="noreferrer">Open full size</a>
+                <a href={src} target="_blank" rel="noreferrer">
+                  Open full size
+                </a>
                 <button
                   type="button"
                   aria-label={`Close enlarged ${title}`}
@@ -350,6 +362,7 @@ const dialogId = `product-shot-dialog-${instanceId ?? shotId}`;
     block-size: 100%;
     object-fit: cover;
     object-position: top center;
+    image-rendering: -webkit-optimize-contrast;
   }
   .product-shot__open:focus-visible {
     outline: 3px solid color-mix(in srgb, var(--accent) 74%, white);
@@ -487,6 +500,7 @@ const dialogId = `product-shot-dialog-${instanceId ?? shotId}`;
     display: block;
     inline-size: 100%;
     block-size: auto;
+    image-rendering: auto;
   }
   :global(html.has-product-shot-dialog) {
     overflow: hidden;

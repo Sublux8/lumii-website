@@ -10,7 +10,7 @@ export const strings = {
   "site.name": "Lumii",
   "site.tagline": "Care, beautifully connected.",
   "site.description":
-    "Lumii brings Australian practice management and personal health together — helping care teams work with less friction and people stay connected between visits.",
+    "Lumii brings practice management and personal health together, helping Australian care teams save time and people stay informed between visits.",
 
   // Navigation
   "nav.sectors": "Who it's for",
@@ -40,7 +40,7 @@ export const strings = {
   // Generic CTA section
   "cta.title": "See what Lumii could change for you.",
   "cta.body":
-    "Whether you run a practice, work in care or want a clearer view of your own health, tell us what would make the greatest difference.",
+    "Whether you run a practice, work in care or want to keep your own health information together, tell us what would help most.",
   "cta.button": "Register interest",
 
   // Footer
@@ -66,20 +66,19 @@ export const strings = {
   "download.released": "Released {{date}}",
   "download.autoUpdateTitle": "Updates itself",
   "download.autoUpdate":
-    "Lumii checks for updates automatically and installs them securely — you'll always be on the latest release without lifting a finger.",
+    "Lumii checks for updates automatically and installs them securely, helping your practice stay current.",
   "download.securityTitle": "Checked before every update",
   "download.security":
     "Every update is checked before it installs, helping protect your clinic from tampered software.",
   "download.residencyTitle": "Australian by design",
-  "download.residency":
-    "Your clinic and patient data stays in Australia.",
+  "download.residency": "Your clinic and patient data stays in Australia.",
   "download.otherPlatforms":
-    "Interested in myLumii for iPhone or Android? Register your interest and we’ll keep you close as the personal experience opens.",
+    "Interested in myLumii for iPhone or Android? Register your interest and we’ll let you know when it becomes available.",
 
   // Sectors index
   "sectors.title": "Built for the way you care",
   "sectors.subtitle":
-    "From solo practitioners and specialist rooms to multidisciplinary clinics and people managing their own health, Lumii meets each experience where it is.",
+    "Lumii supports solo practitioners, specialist rooms, multidisciplinary clinics and people managing their own health.",
   "sectors.explore": "Explore",
   "sectors.comingSoon": "Coming soon",
 
@@ -92,7 +91,7 @@ export const strings = {
   // Access request form
   "access.title": "Tell us what you need from Lumii",
   "access.subtitle":
-    "Whether you are looking for a better way to run a practice or a clearer home for your own care, tell us what matters. A real person from Lumii will be in touch.",
+    "Whether you want a better way to run a practice or one place for your own care, tell us what matters. Someone from the Lumii team will be in touch.",
   "access.field.name": "Your name",
   "access.field.email": "Email address",
   "access.field.clinic": "Practice or clinic name (if applicable)",
@@ -106,7 +105,7 @@ export const strings = {
   "access.submitting": "Sending…",
   "access.successTitle": "Thanks — we’d love to keep talking.",
   "access.success":
-    "We’ve received your details. A real person from Lumii will be in touch about the experience you’re interested in.",
+    "We’ve received your details. Someone from Lumii will be in touch about what you’re interested in.",
   "access.error":
     "Something went wrong. Please try again, or email support@lumii.com.au.",
   "access.challenge": "Please complete the verification challenge and try again.",
