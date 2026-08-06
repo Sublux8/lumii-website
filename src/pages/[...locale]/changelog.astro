@@ -1,49 +1,78 @@
 ---
-/**
- * Changelog (/[locale]/changelog) — release history from src/data/changelog.ts.
- */
+/** Changelog — live customer-facing release history with a local fallback. */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { localeFromPath, localeStaticPaths, formatDate, getLocale } from "@i18n/index.ts";
-import { changelog } from "@/data/changelog.ts";
+import { localeFromPath, formatDate, getLocale } from "@i18n/index.ts";
+import { getChangelog } from "@lib/changelog-feed.ts";
 
-export function getStaticPaths() {
-  return localeStaticPaths();
-}
+export const prerender = false;
 
 const localePath = localeFromPath(Astro.url.pathname);
 const locale = getLocale(localePath);
+const { entries } = await getChangelog();
+const PREVIEW_ITEMS = 5;
+
+Astro.response.headers.set(
+  "Cache-Control",
+  "public, max-age=300, stale-while-revalidate=3600",
+);
 ---
 
 <BaseLayout
   title="Changelog"
-  description="What's new in Lumii — release history for the macOS app."
+  description="See what is new in Lumii, with clear notes about the improvements arriving for practices and their patients."
 >
   <section class="container-page log">
     <header class="log__head">
       <h1>Changelog</h1>
-      <p class="log__lead measure">What's new in Lumii, newest first.</p>
+      <p class="log__lead measure">
+        A clear record of what is changing in Lumii, why it matters, and what should feel
+        easier in your practice.
+      </p>
+      <p class="log__status">
+        <span class="log__status-dot" aria-hidden="true"></span>
+        Updated automatically with each Lumii release
+      </p>
     </header>
 
     <ol class="log__list">
       {
-        changelog.map((entry) => (
-          <li class="entry">
-            <div class="entry__meta">
-              <span class="entry__version">{entry.version}</span>
-              <time class="entry__date" datetime={entry.dateISO}>
-                {formatDate(new Date(entry.dateISO), locale, { dateStyle: "long" })}
-              </time>
-            </div>
-            <div class="entry__body">
-              <p class="entry__summary">{entry.summary}</p>
-              <ul class="entry__items">
-                {entry.items.map((item) => (
-                  <li>{item}</li>
-                ))}
-              </ul>
-            </div>
-          </li>
-        ))
+        entries.map((entry) => {
+          const visibleItems = entry.items.slice(0, PREVIEW_ITEMS);
+          const moreItems = entry.items.slice(PREVIEW_ITEMS);
+
+          return (
+            <li class="entry">
+              <div class="entry__meta">
+                <span class="entry__version">{entry.version}</span>
+                <time class="entry__date" datetime={entry.dateISO}>
+                  {formatDate(new Date(`${entry.dateISO}T12:00:00+10:00`), locale, {
+                    dateStyle: "long",
+                  })}
+                </time>
+              </div>
+              <div class="entry__body">
+                <p class="entry__summary">{entry.summary}</p>
+                <ul class="entry__items">
+                  {visibleItems.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+                {moreItems.length > 0 && (
+                  <details class="entry__more">
+                    <summary>
+                      See all changes in this release ({moreItems.length} more)
+                    </summary>
+                    <ul class="entry__items entry__items--more">
+                      {moreItems.map((item) => (
+                        <li>{item}</li>
+                      ))}
+                    </ul>
+                  </details>
+                )}
+              </div>
+            </li>
+          );
+        })
       }
     </ol>
   </section>
@@ -60,6 +89,27 @@ const locale = getLocale(localePath);
     margin-block-start: var(--space-md);
     font-size: var(--text-lead);
     color: var(--text-secondary);
+  }
+  .log__status {
+    inline-size: fit-content;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-block-start: var(--space-lg);
+    padding: var(--space-xs) var(--space-sm);
+    border: var(--border-hairline) solid
+      color-mix(in srgb, var(--accent) 24%, var(--border));
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+    color: var(--text-secondary);
+    font-size: var(--text-caption);
+  }
+  .log__status-dot {
+    inline-size: 0.5rem;
+    block-size: 0.5rem;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--accent) 14%, transparent);
   }
   .log__list {
     list-style: none;
@@ -107,6 +157,25 @@ const locale = getLocale(localePath);
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
+  }
+  .entry__more {
+    margin-block-start: var(--space-md);
+  }
+  .entry__more summary {
+    inline-size: fit-content;
+    cursor: pointer;
+    color: var(--accent-strong, var(--accent));
+    font-weight: var(--weight-semibold);
+  }
+  .entry__more summary:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  .entry__more[open] summary {
+    margin-block-end: var(--space-md);
+  }
+  .entry__items--more {
+    padding-inline-start: var(--space-lg);
   }
   @media (max-width: 40rem) {
     .entry {

@@ -20,7 +20,12 @@ now serve from Cloudflare R2.
   cache rules): `appcast.xml` is `no-cache` (new releases show immediately),
   release archives are `immutable` for a year (filenames are version-stamped).
 - **Latest release:** kept in `src/data/release.ts` in this repo (drives the
-  `/download` page) and the appcast (drives auto-update). Keep them in lockstep.
+  server-rendered fallback on `/download`) and the appcast (drives auto-update
+  and refreshes the live download details). The appcast is the source of truth.
+- **Public changelog:** the Mac release process turns its customer-facing
+  `CHANGELOG.md` into `macos/changelog.json`. The website reads that history at
+  request time and checks the newest appcast item as a safety net, so releases
+  appear on `/changelog` without a website rebuild.
 - **Signing:** `SUPublicEDKey` is baked into the app; the private key signs each
   release via Sparkle's `generate_appcast`. **The EdDSA private key must never
   leave Garth's machine / a secret store — it is the root of update trust.**
@@ -49,9 +54,10 @@ From the **Mac app repo** (`~/Desktop/Lumii`):
    curl -sI https://download.lumii.com.au/macos/appcast.xml | grep -iE '^HTTP|content-type|cf-ray'
    curl -sI https://download.lumii.com.au/macos/releases/Lumii-X.Y.Z.zip | grep -iE '^HTTP|content-length'
    ```
-5. **Bump `src/data/release.ts`** in *this* website repo (version / build / url /
-   bytes / releasedISO) and open a PR → the `/download` page updates on merge.
-   `bytes` = the zip's live `content-length`.
+5. **No website update is required.** The release command publishes the public
+   changelog and appcast together; `/download` and `/changelog` refresh from
+   those feeds automatically. `src/data/release.ts` and `src/data/changelog.ts`
+   remain safe fallbacks and can be refreshed during normal website work.
 
 ## Old-build safety net (Firebase redirect)
 

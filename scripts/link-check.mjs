@@ -24,6 +24,11 @@ async function exists(path) {
 const CLIENT = resolve("dist", "client");
 const DIST = (await exists(CLIENT)) ? CLIENT : resolve("dist");
 
+// Server-rendered pages do not emit an index.html into dist/client, but they are
+// still real internal destinations handled by the Worker. Keep this list narrow
+// so a misspelled route cannot accidentally pass the link check.
+const ON_DEMAND_PAGES = new Set(["/changelog", "/en-us/changelog", "/en-gb/changelog"]);
+
 async function walk(dir) {
   const out = [];
   for (const entry of await readdir(dir, { withFileTypes: true })) {
@@ -37,6 +42,8 @@ async function walk(dir) {
 /** Resolve an internal URL path to a file in dist (dir → index.html, etc.). */
 async function resolvesInDist(urlPath) {
   const clean = urlPath.split(/[?#]/)[0];
+  const normalised = clean.length > 1 ? clean.replace(/\/$/, "") : clean;
+  if (ON_DEMAND_PAGES.has(normalised)) return true;
   const candidates = [];
   if (clean.endsWith("/")) {
     candidates.push(join(DIST, clean, "index.html"));
