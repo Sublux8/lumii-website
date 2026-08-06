@@ -43,13 +43,13 @@ const classes = ["btn", `btn--${variant}`, `btn--${size}`, className]
     align-items: center;
     justify-content: center;
     gap: var(--space-sm);
-    font-family: var(--font-display);
+    font-family: var(--font-sans);
     font-weight: var(--weight-semibold);
     letter-spacing: var(--tracking-tight);
     text-decoration: none;
     cursor: pointer;
     border: var(--border-width) solid transparent;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-pill);
     transition:
       transform var(--duration-quick) var(--ease-spring),
       box-shadow var(--duration-standard) var(--ease-standard),
@@ -63,8 +63,8 @@ const classes = ["btn", `btn--${variant}`, `btn--${size}`, className]
 
   /* Sizes (LumiiButton padding/radius/font) */
   .btn--sm {
-    padding-block: var(--space-xs);
-    padding-inline: var(--space-md);
+    padding-block: 0.48rem;
+    padding-inline: var(--space-lg);
     font-size: var(--text-caption);
   }
   .btn--md {
@@ -73,10 +73,10 @@ const classes = ["btn", `btn--${variant}`, `btn--${size}`, className]
     font-size: var(--text-subhead);
   }
   .btn--lg {
-    padding-block: var(--space-md);
-    padding-inline: var(--space-xl);
-    border-radius: var(--radius-md);
-    font-size: var(--text-headline);
+    padding-block: 0.85rem;
+    padding-inline: 1.45rem;
+    border-radius: var(--radius-pill);
+    font-size: var(--text-subhead);
   }
 
   /* Primary — signature gradient + accent glow */
@@ -84,22 +84,26 @@ const classes = ["btn", `btn--${variant}`, `btn--${size}`, className]
     color: var(--_fg);
     background-image: var(--gradient-accent);
     border-color: color-mix(in srgb, var(--accent) 18%, transparent);
-    box-shadow: var(--shadow-subtle);
+    background-image: none;
+    background-color: var(--accent);
+    box-shadow: 0 0.55rem 1.4rem color-mix(in srgb, var(--accent) 18%, transparent);
   }
   .btn--primary:hover {
-    box-shadow: var(--shadow-accent);
-    transform: translateY(-1px);
+    background-color: color-mix(in srgb, var(--accent) 88%, black);
+    box-shadow: 0 0.85rem 2rem color-mix(in srgb, var(--accent) 25%, transparent);
+    transform: translateY(-2px);
   }
 
   /* Ghost — hairline border that strengthens on hover */
   .btn--ghost {
     color: var(--text);
-    background-color: transparent;
-    border-color: color-mix(in srgb, var(--border) 72%, transparent);
+    background-color: color-mix(in srgb, var(--surface) 82%, transparent);
+    border-color: color-mix(in srgb, var(--text) 18%, transparent);
   }
   .btn--ghost:hover {
-    border-color: var(--border);
-    background-color: color-mix(in srgb, var(--surface-2) 40%, transparent);
+    border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+    background-color: var(--surface);
+    transform: translateY(-2px);
   }
 
   /* Danger — tinted fill */

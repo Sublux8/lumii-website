@@ -21,7 +21,7 @@ const t = useTranslations(locale);
 const links = [
   { href: "/sectors", label: t("nav.sectors") },
   { href: "/platform", label: t("nav.platform") },
-  { href: "/download", label: t("nav.download") },
+  { href: "/mylumii", label: t("nav.myLumii") },
   { href: "/for-clinicians", label: t("nav.forClinicians") },
   { href: "/knowledge", label: t("nav.knowledge") },
   { href: "/pricing", label: t("nav.pricing") },
@@ -112,8 +112,8 @@ const isActive = (p: string) =>
     position: sticky;
     inset-block-start: 0;
     z-index: var(--z-nav);
-    background-color: color-mix(in srgb, var(--bg) 82%, transparent);
-    backdrop-filter: saturate(1.4) blur(14px);
+    background-color: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: saturate(1.25) blur(20px);
     border-block-end: var(--border-hairline) solid
       color-mix(in srgb, var(--border) 50%, transparent);
   }
@@ -122,7 +122,8 @@ const isActive = (p: string) =>
     align-items: center;
     justify-content: space-between;
     gap: var(--space-lg);
-    padding-block: var(--space-md);
+    min-block-size: 4.6rem;
+    padding-block: 0.6rem;
   }
   .nav__brand {
     display: inline-flex;
@@ -149,11 +150,13 @@ const isActive = (p: string) =>
   .nav__links {
     display: flex;
     align-items: center;
-    gap: var(--space-xl);
+    gap: clamp(0.7rem, 1.35vw, 1.35rem);
     margin-inline-start: auto;
   }
   .nav__link {
-    font-size: var(--text-subhead);
+    position: relative;
+    padding-block: 0.65rem;
+    font-size: var(--text-caption);
     font-weight: var(--weight-medium);
     color: var(--text-secondary);
     text-decoration: none;
@@ -161,6 +164,22 @@ const isActive = (p: string) =>
   }
   .nav__link:hover {
     color: var(--text);
+  }
+  .nav__link::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0.25rem;
+    block-size: 1.5px;
+    border-radius: 99px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform var(--duration-standard) var(--ease-out);
+  }
+  .nav__link:hover::after,
+  .nav__link[aria-current="page"]::after {
+    transform: scaleX(1);
   }
 
   .nav__actions {
@@ -182,8 +201,8 @@ const isActive = (p: string) =>
     background: transparent;
     border: var(--border-width) solid color-mix(in srgb, var(--border) 60%, transparent);
     border-radius: var(--radius-pill);
-    inline-size: 2rem;
-    block-size: 2rem;
+    inline-size: 2.15rem;
+    block-size: 2.15rem;
     color: var(--text-secondary);
     cursor: pointer;
     font-size: var(--text-headline);

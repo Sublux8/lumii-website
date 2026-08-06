@@ -21,8 +21,9 @@ export function canonicalUrl(pathname: string): string {
 }
 
 /**
- * hreflang alternates for a page. `pathname` is the full localized request path
- * (e.g. /en-au/pricing); we strip the locale and re-localize per active locale.
+ * hreflang alternates for a page. `pathname` is the localized request path —
+ * bare for the default locale (`/pricing`), prefixed otherwise (`/en-us/pricing`);
+ * we strip any locale segment and re-localize per active locale.
  */
 export function hreflangAlternates(pathname: string): Alternate[] {
   const bare = stripLocale(pathname);

@@ -19,6 +19,7 @@ const columns = [
     links: [
       { href: "/sectors", label: t("nav.sectors") },
       { href: "/platform", label: t("nav.platform") },
+      { href: "/mylumii", label: t("nav.myLumii") },
       { href: "/download", label: t("nav.download") },
       { href: "/for-clinicians", label: t("nav.forClinicians") },
       { href: "/pricing", label: t("nav.pricing") },
@@ -63,6 +64,7 @@ const columns = [
         />
       </a>
       <p class="footer__residency">{t("footer.residency")}</p>
+      <p class="footer__signoff">Built with care in Australia.</p>
     </div>
 
     <nav class="footer__cols" aria-label={t("footer.company")}>
@@ -98,7 +100,7 @@ const columns = [
   .footer {
     margin-block-start: var(--space-section);
     padding-block: var(--space-4xl) var(--space-xl);
-    background-color: var(--surface);
+    background-color: color-mix(in srgb, var(--surface-2) 34%, var(--surface));
     border-block-start: var(--border-hairline) solid
       color-mix(in srgb, var(--border) 50%, transparent);
   }
@@ -125,6 +127,13 @@ const columns = [
     max-inline-size: 28ch;
     font-size: var(--text-caption);
     color: var(--text-muted);
+  }
+  .footer__signoff {
+    margin-block-start: var(--space-xl);
+    color: var(--accent);
+    font-family: var(--font-display);
+    font-size: var(--text-h4);
+    font-style: italic;
   }
   .footer__cols {
     display: grid;

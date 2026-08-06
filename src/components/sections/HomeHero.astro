@@ -1,0 +1,755 @@
+---
+/** Homepage hero built around a genuine Lumii clinic view. */
+import Button from "@components/primitives/Button.astro";
+import Icon from "@components/primitives/Icon.astro";
+import LumiiStar from "@components/LumiiStar.astro";
+import ProductShot from "@components/ProductShot.astro";
+
+interface Props {
+  primaryHref: string;
+  secondaryHref: string;
+}
+
+const { primaryHref, secondaryHref } = Astro.props;
+---
+
+<section class="launch-hero">
+  <div class="launch-hero__glow launch-hero__glow--warm" aria-hidden="true"></div>
+  <div class="launch-hero__glow launch-hero__glow--teal" aria-hidden="true"></div>
+
+  <div class="container-page launch-hero__inner">
+    <div class="launch-hero__copy">
+      <p class="launch-hero__eyebrow">
+        <span class="launch-hero__live" aria-hidden="true"></span>
+        Made in Australia · for practices and people
+      </p>
+      <h1 class="launch-hero__title">
+        Care, beautifully connected.<br />
+        <em>From the clinic to everyday life.</em>
+      </h1>
+      <p class="launch-hero__subtitle">
+        Lumii brings booking, clinical records, billing and follow-up together, giving
+        practice teams more time for patients. myLumii helps people keep appointments,
+        shared records and health information close between visits.
+      </p>
+
+      <div class="launch-hero__actions">
+        <Button href={primaryHref} size="lg" id="hero-primary">
+          Tell us what you need <span aria-hidden="true">↗</span>
+        </Button>
+        <Button href={secondaryHref} size="lg" variant="ghost" id="hero-secondary">
+          See Lumii in action
+        </Button>
+      </div>
+
+      <ul class="launch-hero__proof" aria-label="Lumii commitments">
+        <li><Icon name="au" size={17} /> Made for Australian care</li>
+        <li><Icon name="shield" size={17} /> Health data kept in Australia</li>
+        <li><Icon name="spark" size={17} /> For clinics and individuals</li>
+      </ul>
+    </div>
+
+    <div
+      class="clinic-scene"
+      aria-label="A genuine Lumii appointment book using fictional patient details"
+    >
+      <div class="clinic-scene__note clinic-scene__note--confirm" aria-hidden="true">
+        <span class="clinic-scene__note-icon"><Icon name="frontdesk" size={16} /></span>
+        <span><strong>11 patients confirmed</strong> before reception opened</span>
+      </div>
+
+      <ProductShot
+        shotId="C01"
+        instanceId="C01-home-hero"
+        title="A whole clinic day, clearly laid out"
+        note="Practitioners, appointments, arrivals and useful prompts stay together."
+        src="/product/lumii-clinic-day.webp"
+        alt="Lumii appointment book showing a populated day across four practitioners"
+        device="wide"
+        aspectRatio="2005 / 750"
+        showChrome={false}
+        variant="calendar"
+        priority
+        class="clinic-scene__shot"
+      />
+
+      <p class="clinic-scene__caption">Fictional patient details shown.</p>
+
+      <div class="clinic-scene__footer">
+        <div class="clinic-scene__note clinic-scene__note--plan" aria-hidden="true">
+          <span class="clinic-scene__plan-head">
+            <span class="clinic-scene__note-icon"><Icon name="careplan" size={16} /></span
+            >
+            Funded care
+          </span>
+          <strong>Eleanor has 2 funded visits left</strong>
+          <span class="clinic-scene__progress"><i></i></span>
+        </div>
+
+        <div class="clinic-scene__mascot" aria-hidden="true">
+          <LumiiStar size={118} label="" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="launch-hero__marquee" aria-label="What Lumii brings together">
+    <div>
+      <span>Booking</span><i></i><span>Billing</span><i></i><span>Medicare</span><i></i>
+      <span>Tyro</span><i></i><span>Care plans</span><i></i><span>Telehealth</span><i></i>
+      <span>Xero</span><i></i><span>myLumii</span><i></i><span>Connected care</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .launch-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-block: clamp(4rem, 7vw, 7.75rem) var(--space-2xl);
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--brand-warmth) 12%, transparent),
+        transparent 38%
+      ),
+      var(--bg);
+  }
+  .launch-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    opacity: 0.34;
+    background-image: radial-gradient(
+      color-mix(in srgb, var(--text) 14%, transparent) 0.7px,
+      transparent 0.7px
+    );
+    background-size: 7px 7px;
+    mask-image: linear-gradient(to bottom, black, transparent 68%);
+  }
+  .launch-hero__glow {
+    position: absolute;
+    z-index: -1;
+    border-radius: 50%;
+    filter: blur(18px);
+    pointer-events: none;
+  }
+  .launch-hero__glow--warm {
+    inline-size: 34rem;
+    block-size: 34rem;
+    inset-block-start: -19rem;
+    inset-inline-start: -8rem;
+    background: color-mix(in srgb, var(--brand-warmth) 34%, transparent);
+  }
+  .launch-hero__glow--teal {
+    inline-size: 42rem;
+    block-size: 42rem;
+    inset-block-start: 7rem;
+    inset-inline-end: -26rem;
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+  }
+  .launch-hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.88fr) minmax(34rem, 1.12fr);
+    align-items: center;
+    gap: clamp(3rem, 6vw, 7rem);
+    max-inline-size: var(--content-wide);
+  }
+  .launch-hero__copy {
+    position: relative;
+    z-index: 2;
+    animation: hero-copy-in 0.75s var(--ease-out) both;
+  }
+  .launch-hero__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-block-end: var(--space-xl);
+    color: var(--text-secondary);
+    font-size: var(--text-label);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+  }
+  .launch-hero__live {
+    position: relative;
+    inline-size: 0.56rem;
+    block-size: 0.56rem;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 13%, transparent);
+  }
+  .launch-hero__live::after {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    animation: live-ring 2.4s var(--ease-out) infinite;
+  }
+  .launch-hero__title {
+    max-inline-size: 13ch;
+    font-size: clamp(3.3rem, 4.95vw, 5.65rem);
+    font-weight: var(--weight-regular);
+    line-height: 0.96;
+    letter-spacing: -0.052em;
+  }
+  .launch-hero__title em {
+    color: var(--accent);
+    font-weight: var(--weight-regular);
+  }
+  .launch-hero__subtitle {
+    max-inline-size: 41rem;
+    margin-block-start: var(--space-xl);
+    color: var(--text-secondary);
+    font-size: var(--text-lead);
+    line-height: 1.55;
+  }
+  .launch-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-block-start: var(--space-2xl);
+  }
+  .launch-hero__proof {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md) var(--space-xl);
+    margin: var(--space-xl) 0 0;
+    padding: 0;
+    list-style: none;
+    color: var(--text-muted);
+    font-size: var(--text-caption);
+    font-weight: var(--weight-medium);
+  }
+  .launch-hero__proof li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .launch-hero__proof :global(svg) {
+    color: var(--accent);
+  }
+
+  .clinic-scene {
+    position: relative;
+    margin: 0;
+    padding-block: 3.4rem 1rem;
+    perspective: 1200px;
+    animation: hero-scene-in 0.9s 0.12s var(--ease-out) both;
+  }
+  :global(.clinic-scene__shot) {
+    position: relative;
+    z-index: 1;
+  }
+  :global(.clinic-scene__shot .product-shot__frame) {
+    border-color: color-mix(in srgb, var(--text) 12%, transparent);
+    border-radius: 1.35rem;
+    box-shadow:
+      0 2rem 5rem color-mix(in srgb, var(--text) 16%, transparent),
+      0 0 0 8px color-mix(in srgb, white 44%, transparent);
+  }
+  :global(.clinic-scene__shot > figcaption) {
+    display: none;
+  }
+  .clinic-scene__caption {
+    margin: 0.3rem 0 0;
+    color: var(--text-muted);
+    font-size: 0.64rem;
+    letter-spacing: 0.015em;
+    line-height: 1.4;
+  }
+  .clinic-scene__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    min-block-size: 6.5rem;
+    margin-block-start: 0.65rem;
+    padding-inline-start: 0.15rem;
+  }
+  .clinic-scene__window {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+    border-radius: 1.35rem;
+    background: #fffdf8;
+    box-shadow:
+      0 2rem 5rem color-mix(in srgb, var(--text) 16%, transparent),
+      0 0 0 8px color-mix(in srgb, white 44%, transparent);
+    transform: rotateX(var(--scene-x)) rotateY(var(--scene-y));
+    transform-style: preserve-3d;
+    transition: transform 0.2s var(--ease-out);
+  }
+  .clinic-scene__bar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    min-block-size: 2.7rem;
+    padding-inline: var(--space-md);
+    border-block-end: 1px solid #e9e1d5;
+    background: #fbf7f0;
+    color: #65716f;
+    font-size: 0.68rem;
+    font-weight: 600;
+  }
+  .clinic-scene__dots {
+    display: flex;
+    gap: 0.32rem;
+  }
+  .clinic-scene__dots i {
+    inline-size: 0.58rem;
+    block-size: 0.58rem;
+    border-radius: 50%;
+    background: #efae9d;
+  }
+  .clinic-scene__dots i:nth-child(2) {
+    background: #edc96d;
+  }
+  .clinic-scene__dots i:nth-child(3) {
+    background: #75c9b7;
+  }
+  .clinic-scene__sync {
+    display: inline-flex;
+    justify-self: end;
+    align-items: center;
+    gap: 0.35rem;
+    color: #287468;
+  }
+  .clinic-scene__sync i {
+    inline-size: 0.42rem;
+    block-size: 0.42rem;
+    border-radius: 50%;
+    background: #2cae88;
+    box-shadow: 0 0 0 4px rgba(44, 174, 136, 0.1);
+  }
+  .clinic-scene__body {
+    display: grid;
+    grid-template-columns: 3.6rem minmax(0, 1fr);
+    min-block-size: 30rem;
+    color: #1b2d2b;
+  }
+  .clinic-scene__rail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding-block: 1rem;
+    border-inline-end: 1px solid #eee6db;
+    background: #f8f4ed;
+  }
+  .clinic-scene__rail > span {
+    display: grid;
+    place-items: center;
+    inline-size: 2.25rem;
+    block-size: 2.25rem;
+    border-radius: 0.7rem;
+    color: #7a8987;
+  }
+  .clinic-scene__rail > .clinic-scene__brandmark {
+    margin-block-end: 0.5rem;
+    border-radius: 0.75rem;
+    background: #137f72;
+    color: white;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+  }
+  .clinic-scene__rail > .is-active {
+    background: #dff3ec;
+    color: #147a6f;
+  }
+  .clinic-scene__main {
+    padding: 1.45rem;
+    background: #fffdf8;
+  }
+  .clinic-scene__heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--space-lg);
+  }
+  .clinic-scene__kicker {
+    display: block;
+    margin-block-end: 0.22rem;
+    color: #758481;
+    font-size: 0.69rem;
+    font-weight: 650;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .clinic-scene__heading h2 {
+    color: #1b2d2b;
+    font-family: var(--font-sans);
+    font-size: 1.15rem;
+    letter-spacing: -0.025em;
+  }
+  .clinic-scene__new {
+    padding: 0.48rem 0.75rem;
+    border-radius: 0.65rem;
+    background: #137f72;
+    color: white;
+    font-size: 0.68rem;
+    font-weight: 700;
+  }
+  .clinic-scene__stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.65rem;
+    margin-block: 1.25rem;
+  }
+  .clinic-scene__stats div {
+    padding: 0.82rem;
+    border: 1px solid #eee6db;
+    border-radius: 0.85rem;
+    background: #fdfaf5;
+  }
+  .clinic-scene__stats strong,
+  .clinic-scene__stats span {
+    display: block;
+  }
+  .clinic-scene__stats strong {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 500;
+    line-height: 1;
+  }
+  .clinic-scene__stats span {
+    margin-block-start: 0.28rem;
+    color: #73827f;
+    font-size: 0.63rem;
+  }
+  .clinic-scene__schedule {
+    overflow: hidden;
+    border: 1px solid #e9e1d5;
+    border-radius: 0.95rem;
+  }
+  .clinic-scene__schedule-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.78rem 0.95rem;
+    background: #f8f4ed;
+    color: #2c3d3b;
+    font-size: 0.7rem;
+  }
+  .clinic-scene__schedule-head span {
+    color: #758481;
+  }
+  .clinic-scene__appointment {
+    display: grid;
+    grid-template-columns: 2.5rem 2rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.62rem;
+    min-block-size: 4rem;
+    padding-inline: 0.85rem;
+    border-block-start: 1px solid #eee6db;
+  }
+  .clinic-scene__appointment time {
+    color: #6d7e7b;
+    font-size: 0.68rem;
+    font-weight: 700;
+  }
+  .clinic-scene__avatar {
+    display: grid;
+    place-items: center;
+    inline-size: 1.9rem;
+    block-size: 1.9rem;
+    border-radius: 50%;
+    font-size: 0.58rem;
+    font-weight: 800;
+  }
+  .clinic-scene__avatar.is-mint {
+    background: #dff3ec;
+    color: #217567;
+  }
+  .clinic-scene__avatar.is-gold {
+    background: #fbefd1;
+    color: #8d6818;
+  }
+  .clinic-scene__avatar.is-lilac {
+    background: #ebe8ff;
+    color: #5f5598;
+  }
+  .clinic-scene__patient strong,
+  .clinic-scene__patient small {
+    display: block;
+  }
+  .clinic-scene__patient strong {
+    font-size: 0.7rem;
+  }
+  .clinic-scene__patient small {
+    margin-block-start: 0.14rem;
+    color: #71807d;
+    font-size: 0.61rem;
+  }
+  .clinic-scene__status {
+    padding: 0.25rem 0.46rem;
+    border-radius: 99px;
+    font-size: 0.56rem;
+    font-weight: 750;
+  }
+  .clinic-scene__status.is-mint {
+    background: #dff3ec;
+    color: #217567;
+  }
+  .clinic-scene__status.is-gold {
+    background: #fbefd1;
+    color: #8d6818;
+  }
+  .clinic-scene__status.is-lilac {
+    background: #ebe8ff;
+    color: #5f5598;
+  }
+
+  .clinic-scene__note {
+    position: absolute;
+    z-index: 3;
+    display: flex;
+    border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+    background: color-mix(in srgb, var(--surface) 96%, transparent);
+    box-shadow: 0 1rem 2.5rem color-mix(in srgb, var(--text) 13%, transparent);
+    color: var(--text-secondary);
+    font-size: 0.72rem;
+    line-height: 1.35;
+    backdrop-filter: blur(16px);
+    animation: note-float 5s var(--ease-in-out) infinite;
+  }
+  .clinic-scene__note strong {
+    color: var(--text);
+  }
+  .clinic-scene__note-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    inline-size: 1.9rem;
+    block-size: 1.9rem;
+    border-radius: 0.62rem;
+    background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+    color: var(--accent);
+  }
+  .clinic-scene__note--confirm {
+    inset-block-start: 0.3rem;
+    inset-inline-end: -1.25rem;
+    align-items: center;
+    gap: 0.65rem;
+    max-inline-size: 13rem;
+    padding: 0.72rem 0.8rem;
+    border-radius: 0.9rem;
+  }
+  .clinic-scene__note--plan {
+    position: relative;
+    inset: auto;
+    flex-direction: column;
+    inline-size: 14.5rem;
+    padding: 0.85rem;
+    border-radius: 1rem;
+    animation-delay: -2.1s;
+  }
+  .clinic-scene__plan-head {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-block-end: 0.55rem;
+    color: var(--text-muted);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .clinic-scene__progress {
+    display: block;
+    overflow: hidden;
+    block-size: 0.38rem;
+    margin-block-start: 0.7rem;
+    border-radius: 99px;
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+  }
+  .clinic-scene__progress i {
+    display: block;
+    inline-size: 60%;
+    block-size: 100%;
+    border-radius: inherit;
+    background: var(--accent);
+  }
+  .clinic-scene__mascot {
+    position: relative;
+    z-index: 4;
+    flex: 0 0 7.4rem;
+    inline-size: 7.4rem;
+    block-size: 7.4rem;
+    margin-inline-end: -1.4rem;
+    filter: drop-shadow(
+      0 0.8rem 1rem color-mix(in srgb, var(--brand-warmth) 24%, transparent)
+    );
+  }
+  .clinic-scene figcaption {
+    position: absolute;
+    inset-block-end: 0.15rem;
+    inset-inline-end: 7rem;
+    color: var(--text-muted);
+    font-size: var(--text-micro);
+  }
+
+  .launch-hero__marquee {
+    overflow: hidden;
+    margin-block-start: clamp(2.5rem, 5vw, 5.25rem);
+    border-block: 1px solid color-mix(in srgb, var(--text) 9%, transparent);
+    color: var(--text-muted);
+  }
+  .launch-hero__marquee > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(1rem, 2.8vw, 2.7rem);
+    min-inline-size: max-content;
+    padding-block: 0.9rem;
+    padding-inline: var(--space-gutter);
+    margin-inline: auto;
+    font-size: var(--text-label);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+  }
+  .launch-hero__marquee i {
+    inline-size: 0.28rem;
+    block-size: 0.28rem;
+    border-radius: 50%;
+    background: var(--brand-gold);
+  }
+
+  @keyframes hero-copy-in {
+    from {
+      opacity: 0;
+      transform: translateY(1rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes hero-scene-in {
+    from {
+      opacity: 0;
+      transform: translateY(1.5rem) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes live-ring {
+    0% {
+      opacity: 0.7;
+      transform: scale(0.6);
+    }
+    75%,
+    100% {
+      opacity: 0;
+      transform: scale(1.6);
+    }
+  }
+  @keyframes note-float {
+    0%,
+    100% {
+      transform: translateY(0) rotate(-0.4deg);
+    }
+    50% {
+      transform: translateY(-0.45rem) rotate(0.7deg);
+    }
+  }
+
+  @media (max-width: 68rem) {
+    .launch-hero__inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-3xl);
+    }
+    .launch-hero__copy {
+      max-inline-size: 48rem;
+    }
+    .launch-hero__title {
+      max-inline-size: 14ch;
+    }
+    .clinic-scene {
+      max-inline-size: 42rem;
+      margin-inline: auto;
+      inline-size: 100%;
+    }
+  }
+  @media (max-width: 40rem) {
+    .launch-hero {
+      padding-block-start: 3rem;
+    }
+    .launch-hero__title {
+      font-size: clamp(2.8rem, 14vw, 4rem);
+    }
+    .launch-hero__actions {
+      align-items: stretch;
+      flex-direction: column;
+    }
+    .launch-hero__proof {
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .clinic-scene {
+      padding-block: 2.6rem 0.5rem;
+    }
+    .clinic-scene__body {
+      grid-template-columns: 2.75rem minmax(0, 1fr);
+      min-block-size: 27rem;
+    }
+    .clinic-scene__rail {
+      gap: 0.55rem;
+    }
+    .clinic-scene__rail > span {
+      inline-size: 2rem;
+      block-size: 2rem;
+    }
+    .clinic-scene__main {
+      padding: 0.9rem;
+    }
+    .clinic-scene__stats div {
+      padding: 0.65rem 0.5rem;
+    }
+    .clinic-scene__appointment {
+      grid-template-columns: 2.3rem 1.8rem minmax(0, 1fr);
+      padding-inline: 0.55rem;
+    }
+    .clinic-scene__status {
+      display: none;
+    }
+    .clinic-scene__note--confirm {
+      inset-inline-end: 0;
+    }
+    .clinic-scene__footer {
+      gap: var(--space-sm);
+      min-block-size: 6rem;
+      margin-block-start: 0.5rem;
+      padding-inline-start: 0;
+    }
+    .clinic-scene__note--plan {
+      inline-size: min(14.5rem, calc(100% - 5.5rem));
+    }
+    .clinic-scene__mascot {
+      flex-basis: 5.5rem;
+      inline-size: 5.5rem;
+      block-size: 5.5rem;
+      margin-inline-end: -0.5rem;
+      transform: scale(0.74);
+      transform-origin: center;
+    }
+    .clinic-scene figcaption {
+      inset-inline-start: 0;
+      inset-inline-end: auto;
+    }
+    .launch-hero__marquee {
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .launch-hero__marquee > div {
+      justify-content: flex-start;
+    }
+  }
+</style>

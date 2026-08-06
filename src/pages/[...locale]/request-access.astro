@@ -65,7 +65,26 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || TURNSTILE_
         required
         autocomplete="email"
       />
-      <Input id="ar-clinic" name="clinic" label={t("access.field.clinic")} required />
+
+      <fieldset class="interest">
+        <legend>{t("access.interest.legend")}</legend>
+        <div class="interest__options">
+          <label>
+            <input type="radio" name="interest" value="practice" required />
+            <span>{t("access.interest.practice")}</span>
+          </label>
+          <label>
+            <input type="radio" name="interest" value="practitioner" required />
+            <span>{t("access.interest.practitioner")}</span>
+          </label>
+          <label>
+            <input type="radio" name="interest" value="personal" required />
+            <span>{t("access.interest.personal")}</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <Input id="ar-clinic" name="clinic" label={t("access.field.clinic")} />
       <Input id="ar-discipline" name="discipline" label={t("access.field.discipline")} />
       <Input id="ar-message" name="message" label={t("access.field.message")} multiline />
 
@@ -120,6 +139,61 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || TURNSTILE_
     display: grid;
     gap: var(--space-lg);
   }
+  .interest {
+    display: grid;
+    gap: var(--space-sm);
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  .interest legend {
+    margin-block-end: var(--space-sm);
+    color: var(--text);
+    font-size: var(--text-subhead);
+    font-weight: var(--weight-semibold);
+  }
+  .interest__options {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-sm);
+  }
+  .interest__options label {
+    position: relative;
+    display: flex;
+    min-block-size: 4.75rem;
+    cursor: pointer;
+  }
+  .interest__options input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .interest__options span {
+    display: flex;
+    align-items: center;
+    inline-size: 100%;
+    padding: var(--space-md);
+    border: var(--border-width) solid color-mix(in srgb, var(--border) 70%, transparent);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    color: var(--text-secondary);
+    font-size: var(--text-caption);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-tight);
+    transition:
+      border-color var(--duration-quick) var(--ease-standard),
+      background-color var(--duration-quick) var(--ease-standard),
+      color var(--duration-quick) var(--ease-standard);
+  }
+  .interest__options input:checked + span {
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 9%, var(--surface));
+    color: var(--text);
+  }
+  .interest__options input:focus-visible + span {
+    outline: 3px solid color-mix(in srgb, var(--accent) 30%, transparent);
+    outline-offset: 2px;
+  }
   .form__turnstile {
     min-block-size: 65px;
   }
@@ -141,6 +215,14 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || TURNSTILE_
   }
   .form__privacy a {
     color: var(--text-secondary);
+  }
+  @media (max-width: 36rem) {
+    .interest__options {
+      grid-template-columns: 1fr;
+    }
+    .interest__options label {
+      min-block-size: auto;
+    }
   }
 
   /* Honeypot: removed from layout and the accessibility tree, but still in the

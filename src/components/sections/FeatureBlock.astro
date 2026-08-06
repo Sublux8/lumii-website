@@ -37,14 +37,15 @@ const { title, body, icon } = Astro.props;
     justify-content: center;
     inline-size: 2.5rem;
     block-size: 2.5rem;
-    border-radius: var(--radius-md);
-    background-image: var(--gradient-accent);
-    color: var(--on-accent);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+    color: var(--accent);
     font-size: var(--text-headline);
     margin-block-end: var(--space-md);
   }
   .feature__title {
     font-size: var(--text-h4);
+    font-weight: var(--weight-regular);
     margin-block-end: var(--space-sm);
   }
   .feature__body {

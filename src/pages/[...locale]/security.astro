@@ -27,52 +27,61 @@ const lp = (p: string) => localizePath(p, locale);
 const pillars = [
   {
     title: "Australian data residency",
-    body: "Patient and clinic data lives in Australian-region infrastructure (Sydney). Lead data captured on this site is stored in Australia too — no offshore round-trips.",
+    body: "Patient and clinic data is kept in Australia, in the Sydney region. Details submitted through this website are stored in Australia too.",
     icon: "au",
   },
   {
-    title: "Encrypted end to end",
-    body: "TLS in transit and encryption at rest across database, storage, and backups. Third-party credentials are encrypted with a per-environment key in a managed secret store — never in the client or git.",
+    title: "Encrypted in transit and at rest",
+    body: "Information is encrypted while it is sent and while it is stored in databases, files and backups. Sensitive system credentials are kept separately from the applications people use.",
     icon: "lock",
   },
   {
     title: "Mandatory staff MFA",
-    body: "TOTP multi-factor authentication is required for every staff role, with a trusted-device window and step-up re-auth for privileged actions. Patient MFA is available and can be made mandatory per clinic.",
+    body: "Every staff member uses an authenticator code as well as a password. Extra identity checks protect sensitive account and security changes. Clinics can require the same added protection for patients.",
     icon: "mfa",
   },
   {
-    title: "Least-privilege access",
-    body: "Role-based permissions gate every surface, and database security rules enforce clinic-of-self isolation — one clinic can never read another's records, and cross-patient reads route through audited server functions.",
+    title: "Access limited by role",
+    body: "Role-based permissions limit each person to the information their work requires. Practice data is separated, and sensitive access is protected and auditable.",
     icon: "shield",
   },
   {
     title: "Daily backups",
-    body: "Automated daily database exports to a dedicated per-project bucket, so a clinic's data is recoverable independent of day-to-day operations.",
+    body: "Clinic data is backed up every day and kept separately from day-to-day use, so it can be recovered if something goes wrong.",
     icon: "backup",
   },
   {
-    title: "Defence in depth",
-    body: "Bot protection on public endpoints, sign-up abuse + disposable-email blocking, strict CSP and HSTS-preload security headers, and a vulnerability-disclosure channel.",
+    title: "Several layers of protection",
+    body: "Public forms are protected from automated abuse, the website uses modern browser safeguards, and security researchers have a clear way to contact us.",
     icon: "layers",
+  },
+  {
+    title: "Patients stay in control of sharing",
+    body: "In myLumii, each clinic is separate. People choose which kinds of health information to share and can change their mind later. Journal, food and personal exercise areas remain private.",
+    icon: "shield",
   },
 ];
 
 const faqs = [
   {
     q: "Where is our data stored?",
-    a: "In Australia — both production patient data and any leads captured on this website. Lumii runs in the Sydney region across compute, database, and storage.",
+    a: "In Australia, in the Sydney region. That includes patient and clinic information as well as details submitted through this website.",
   },
   {
     q: "Is Lumii ISO 27001 certified?",
-    a: "Lumii is built to ISO 27001 / iRAP-readiness standards as part of our compliance-hardening program ahead of NDIA B2B integration. Formal certification is on the roadmap; the controls (access management, encryption, logging, backups, incident response) are in place now.",
+    a: "Lumii is not currently ISO 27001 certified. We are building our security management practices towards that standard, with access control, encryption, logging, backups and incident response already part of how Lumii is designed and operated.",
   },
   {
     q: "How do you handle the Australian Privacy Principles?",
-    a: "Australian data residency, least-privilege access, audit logging, and a documented incident-response runbook underpin our APP alignment. Our privacy policy details collection, use, and disclosure.",
+    a: "Australian data residency, role-based access, audit logs and a documented incident-response plan support our alignment with the Australian Privacy Principles. Our privacy policy explains what we collect, how we use it and when it may be disclosed.",
   },
   {
     q: "How do I report a vulnerability?",
     a: "Email security@lumii.com.au or see our security.txt. We welcome responsible disclosure.",
+  },
+  {
+    q: "Can every connected clinic see everything in myLumii?",
+    a: "No. Each clinic connection is kept separate, and supported health information is shared by category only when the individual chooses. Personal journal, food and exercise spaces do not include clinic sharing by design.",
   },
 ];
 ---
@@ -84,7 +93,7 @@ const faqs = [
   <Hero
     eyebrow="Security & compliance"
     title="Security that earns a clinic's trust."
-    subtitle="Lumii is built for Australian healthcare data — Australian residency, encryption everywhere, mandatory staff MFA, and least-privilege access by design."
+    subtitle="Health information stays in Australia, is encrypted when stored and sent, and is available only to people whose role requires it."
     primaryLabel={t("hero.ctaPrimary")}
     primaryHref={lp("/request-access")}
   />
@@ -93,15 +102,15 @@ const faqs = [
     <div class="badges">
       <Badge tone="green">Australian data residency</Badge>
       <Badge tone="blue">Encrypted in transit &amp; at rest</Badge>
-      <Badge tone="amber">Mandatory staff MFA</Badge>
-      <Badge tone="purple">ISO 27001 / iRAP-readiness</Badge>
+      <Badge tone="amber">Stronger staff sign-in</Badge>
+      <Badge tone="purple">Working towards recognised standards</Badge>
     </div>
     <header class="section__head">
       <p class="section__eyebrow">How we protect it</p>
-      <h2>Built for healthcare data from day one.</h2>
+      <h2>The protections healthcare should expect.</h2>
       <p class="section__lead measure">
-        The controls a clinic should expect — residency, encryption, access and recovery —
-        in place now, not on a someday roadmap.
+        Australian residency, encryption, controlled access and recoverability are treated
+        as foundations—not extras.
       </p>
     </header>
     <div class="grid-3">
@@ -121,8 +130,9 @@ const faqs = [
   </section>
 
   <CTA
-    title={t("cta.title")}
-    body={t("cta.body")}
+    eyebrow="Security questions welcome"
+    title="Trust should start before you sign up."
+    body="Talk to us about your practice's privacy, security and governance requirements. We'll answer plainly and share the detail your team needs."
     buttonLabel={t("cta.button")}
     buttonHref={lp("/request-access")}
   />

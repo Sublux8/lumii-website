@@ -8,13 +8,14 @@
  */
 export const strings = {
   "site.name": "Lumii",
-  "site.tagline": "Practice management, illuminated.",
+  "site.tagline": "Care, beautifully connected.",
   "site.description":
-    "Lumii is the multi-disciplinary practice management platform for Australian allied-health and general-practice clinics — booking, billing, claiming, and care plans in one calm workspace.",
+    "Lumii brings practice management and personal health together, helping Australian care teams save time and people stay informed between visits.",
 
   // Navigation
   "nav.sectors": "Who it's for",
-  "nav.platform": "Platform",
+  "nav.platform": "For practices",
+  "nav.myLumii": "myLumii",
   "nav.forClinicians": "For clinicians",
   "nav.security": "Security",
   "nav.knowledge": "Knowledge hub",
@@ -22,25 +23,25 @@ export const strings = {
   "nav.pricing": "Pricing",
   "nav.about": "About",
   "nav.download": "Download",
-  "nav.requestAccess": "Request access",
+  "nav.requestAccess": "Register interest",
   "nav.skipToContent": "Skip to content",
   "nav.openMenu": "Open menu",
   "nav.closeMenu": "Close menu",
   "nav.languageSwitcher": "Choose region",
 
   // Hero
-  "hero.eyebrow": "Australian-built · pre-launch",
-  "hero.title": "The practice platform that earns its keep.",
+  "hero.eyebrow": "Made for Australian care",
+  "hero.title": "A calmer way to run care.",
   "hero.subtitle":
-    "Booking, billing, Tyro claiming, telehealth, and funded care plans — one workspace, built for the way Australian clinics actually run.",
-  "hero.ctaPrimary": "Request early access",
-  "hero.ctaSecondary": "See the platform",
+    "Booking, billing, claiming, telehealth and funded care plans — kept together so your team can focus on people.",
+  "hero.ctaPrimary": "Tell us what you need",
+  "hero.ctaSecondary": "See Lumii in action",
 
   // Generic CTA section
-  "cta.title": "Bring the calm to your clinic.",
+  "cta.title": "See what Lumii could change for you.",
   "cta.body":
-    "Join the early-access list and we'll be in touch as we onboard foundation clinics.",
-  "cta.button": "Request access",
+    "Whether you run a practice, work in care or want to keep your own health information together, tell us what would help most.",
+  "cta.button": "Register interest",
 
   // Footer
   "footer.product": "Product",
@@ -53,32 +54,31 @@ export const strings = {
   "footer.accessibility": "Accessibility",
   "footer.contact": "Contact",
   "footer.rights": "All rights reserved.",
-  "footer.residency": "Patient and lead data stored in Australia.",
+  "footer.residency": "Clinic, patient and enquiry data stored in Australia.",
 
   // Download
   "download.title": "Download Lumii for macOS",
   "download.subtitle":
-    "The native Lumii desktop app for your clinic. Installs in seconds and keeps itself up to date.",
+    "Lumii for your clinic’s Mac. It is quick to install and keeps itself up to date.",
   "download.cta": "Download for macOS",
   "download.version": "Version {{version}}",
   "download.requirements": "Requires macOS {{minMacOS}} or later · {{size}}",
   "download.released": "Released {{date}}",
   "download.autoUpdateTitle": "Updates itself",
   "download.autoUpdate":
-    "Lumii checks for updates automatically and installs them securely — you'll always be on the latest release without lifting a finger.",
-  "download.securityTitle": "Signed & verified",
+    "Lumii checks for updates automatically and installs them securely, helping your practice stay current.",
+  "download.securityTitle": "Checked before every update",
   "download.security":
-    "Every release is cryptographically signed; the app verifies each update before installing.",
+    "Every update is checked before it installs, helping protect your clinic from tampered software.",
   "download.residencyTitle": "Australian by design",
-  "download.residency":
-    "Your clinic and patient data stays in Australian-region infrastructure.",
+  "download.residency": "Your clinic and patient data stays in Australia.",
   "download.otherPlatforms":
-    "iPad, iPhone and Apple Vision builds are on the way — join the early-access list to be notified.",
+    "Interested in myLumii for iPhone or Android? Register your interest and we’ll let you know when it becomes available.",
 
   // Sectors index
-  "sectors.title": "Built for your discipline",
+  "sectors.title": "Built for the way you care",
   "sectors.subtitle":
-    "Lumii adapts to how each kind of practice works — the funding bodies you claim from, the compliance you carry, the workflows your day runs on.",
+    "Lumii supports solo practitioners, specialist rooms, multidisciplinary clinics and people managing their own health.",
   "sectors.explore": "Explore",
   "sectors.comingSoon": "Coming soon",
 
@@ -89,23 +89,28 @@ export const strings = {
   "knowledge.empty": "Articles are on the way.",
 
   // Access request form
-  "access.title": "Request early access",
-  "access.subtitle": "Tell us about your practice and we'll reach out.",
+  "access.title": "Tell us what you need from Lumii",
+  "access.subtitle":
+    "Whether you want a better way to run a practice or one place for your own care, tell us what matters. Someone from the Lumii team will be in touch.",
   "access.field.name": "Your name",
-  "access.field.email": "Work email",
-  "access.field.clinic": "Clinic name",
-  "access.field.discipline": "Primary discipline",
-  "access.field.message": "Anything we should know?",
-  "access.submit": "Request access",
+  "access.field.email": "Email address",
+  "access.field.clinic": "Practice or clinic name (if applicable)",
+  "access.field.discipline": "Your role, specialty or area of interest (optional)",
+  "access.field.message": "What would you like Lumii to help with? (optional)",
+  "access.interest.legend": "I'm interested in Lumii…",
+  "access.interest.practice": "For a clinic or practice",
+  "access.interest.practitioner": "As a practitioner",
+  "access.interest.personal": "For myself or my family",
+  "access.submit": "Register my interest",
   "access.submitting": "Sending…",
-  "access.successTitle": "You're on the list.",
+  "access.successTitle": "Thanks — we’d love to keep talking.",
   "access.success":
-    "Thanks — we've got your details and we'll be in touch as we onboard foundation clinics.",
+    "We’ve received your details. Someone from Lumii will be in touch about what you’re interested in.",
   "access.error":
     "Something went wrong. Please try again, or email support@lumii.com.au.",
   "access.challenge": "Please complete the verification challenge and try again.",
   "access.privacyNote":
-    "Your details are stored securely in Australia and used only to contact you about Lumii early access.",
+    "Your details are stored securely in Australia and used only to respond to your Lumii enquiry.",
   "access.hpLabel": "Leave this field blank",
 
   // Misc / a11y

@@ -1,0 +1,344 @@
+---
+/**
+ * Platform overview — the "See the platform" destination. The reference page for
+ * the site's platinum bar: warm, specific, Australian-built voice; real per-module
+ * icons; a differentiator ("why it feels different") section between the module
+ * grid and the integrations wall. Module + pillar + FAQ copy lives inline as
+ * structured content (single-locale, pre-launch); reusable chrome uses the i18n
+ * catalogue.
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Hero from "@components/sections/Hero.astro";
+import FeatureBlock from "@components/sections/FeatureBlock.astro";
+import LogoWall from "@components/sections/LogoWall.astro";
+import FAQ from "@components/sections/FAQ.astro";
+import CTA from "@components/sections/CTA.astro";
+import ProductGallery from "@components/sections/ProductGallery.astro";
+import ProductShot from "@components/ProductShot.astro";
+import {
+  useTranslations,
+  localeFromPath,
+  localizePath,
+  localeStaticPaths,
+} from "@i18n/index.ts";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+const locale = localeFromPath(Astro.url.pathname);
+const t = useTranslations(locale);
+const lp = (p: string) => localizePath(p, locale);
+
+const description =
+  "Booking, billing, Tyro claiming, care plans, telehealth and Xero — kept together for Australian practices.";
+
+const modules = [
+  {
+    title: "Booking & front desk",
+    body: "Online booking, one-tap SMS confirmations, waitlist offers and an iPad kiosk help patients check in while reception stays available for the people who need help.",
+    icon: "frontdesk",
+  },
+  {
+    title: "Billing & claiming",
+    body: "Tyro EFTPOS and HealthPoint, Medicare, DVA, NDIS and Comcare — claimed where you finish the appointment. Less retyping, fewer missed steps.",
+    icon: "claim",
+  },
+  {
+    title: "Care plans",
+    body: "Medicare CDM, DVA, WorkCover and Private Health plans count completed visits, so you know what is left before an awkward conversation at reception.",
+    icon: "careplan",
+  },
+  {
+    title: "Telehealth",
+    body: "Branded video consults with consent capture, pre-visit forms, recording and post-call summaries — the same standard of care, wherever your patient is sitting.",
+    icon: "telehealth",
+  },
+  {
+    title: "Accounting",
+    body: "Two-way Xero sync keeps contacts, invoices, payments and quotes aligned. Your bookkeeper gets a clear view without waiting for another export.",
+    icon: "xero",
+  },
+  {
+    title: "Analytics",
+    body: "Understand revenue, practitioner activity and patient outcomes without building another spreadsheet. The information practice leaders need is ready when they need it.",
+    icon: "analytics",
+  },
+  {
+    title: "Connected patient care",
+    body: "Patients can find appointments, records shared by their clinic, forms, messages and rehabilitation in myLumii, while choosing what they share back.",
+    icon: "layers",
+  },
+];
+
+const pillars = [
+  {
+    title: "Finish each task once",
+    body: "The appointment, invoice and claim stay together, so staff spend less time retyping information and fewer tasks are missed.",
+  },
+  {
+    title: "Made for Australian healthcare",
+    body: "Tyro, Medicare, NDIS, DVA and Xero, with patient data kept in Sydney. Built around how clinics here actually book, bill and get paid — not retrofitted from overseas.",
+  },
+  {
+    title: "The same information for the whole team",
+    body: "Changes appear across the appointment book and front desk, so everyone can see what is current without interrupting one another.",
+  },
+];
+
+const faqs = [
+  {
+    q: "What devices does Lumii run on?",
+    a: "Lumii is available for Mac. iPad and iPhone support is being prepared, including a reception kiosk that stays in step with the appointment book.",
+  },
+  {
+    q: "Which funders can I claim from?",
+    a: "Tyro HealthPoint (PHI), Medicare (bulk-bill and patient-claim), DVA, Comcare and icare, plus the dedicated NDIS module — all from one claims list.",
+  },
+  {
+    q: "Where is our data stored?",
+    a: "In Australia, in the Sydney region. See Security & Compliance for plain-English detail about encryption, staff sign-in protection and access controls.",
+  },
+  {
+    q: "Can we migrate our existing data?",
+    a: "Yes. Lumii supports patient data import, and our team works with early-access practices to plan a careful move from their current system. Tell us what you use today and we'll talk through the right path.",
+  },
+];
+---
+
+<BaseLayout title={t("nav.platform")} description={description}>
+  <Hero
+    eyebrow="Lumii for practices"
+    title="Your practice work, connected from booking to payment."
+    subtitle="Booking, clinical records, billing, claiming, care plans and follow-up stay together, so your team can finish the work once and keep the day moving."
+    primaryLabel={t("hero.ctaPrimary")}
+    primaryHref={lp("/request-access")}
+    secondaryLabel={t("nav.forClinicians")}
+    secondaryHref={lp("/for-clinicians")}
+  />
+
+  <section class="container-page section">
+    <header class="section__head">
+      <p class="section__eyebrow">What's inside</p>
+      <h2>The tools your team uses every day, working together.</h2>
+      <p class="section__lead measure">
+        Less retyping, less double-checking and fewer jobs left for the end of the day.
+      </p>
+    </header>
+    <div class="grid-3">
+      {modules.map((m) => <FeatureBlock title={m.title} body={m.body} icon={m.icon} />)}
+    </div>
+  </section>
+
+  <section class="container-page section pillars-section">
+    <header class="section__head">
+      <p class="section__eyebrow">Why it feels different</p>
+      <h2>Designed around a real clinic day.</h2>
+    </header>
+    <div class="pillars">
+      {
+        pillars.map((p, i) => (
+          <article class="pillar" data-reveal>
+            <span class="pillar__index" aria-hidden="true">
+              0{i + 1}
+            </span>
+            <h3 class="pillar__title">{p.title}</h3>
+            <p class="pillar__body">{p.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="connected-care">
+    <div class="container-page connected-care__inner">
+      <div class="connected-care__copy" data-reveal>
+        <p class="section__eyebrow">Beyond the appointment</p>
+        <h2>Care continues after the appointment.</h2>
+        <p>
+          Lumii helps the practice stay organised. myLumii gives each person access to
+          appointments, shared records, forms, messages and rehabilitation, with clear
+          choices about what they share with each clinic.
+        </p>
+        <a href={lp("/mylumii")}>Explore myLumii <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="connected-care__shots" data-reveal>
+        <ProductShot
+          shotId="C04"
+          title="The patient story, kept together"
+          note="Appointments, invoices, claims and care-plan milestones in one clear timeline."
+          src="/product/lumii-patient-record.webp"
+          alt="Lumii patient timeline for Owen Reyes showing appointments, invoice, Comcare claim and active care plan"
+          device="wide"
+          aspectRatio="1752 / 736"
+          showChrome={false}
+          variant="care"
+        />
+        <ProductShot
+          shotId="M02"
+          title="Care continues in myLumii"
+          note="Records, rehabilitation and correspondence stay accessible between visits."
+          src="/product/mylumii-care.webp"
+          alt="myLumii Care records screen showing rehab programs, pathology results, a care plan, referral and clinic notes"
+          device="phone"
+          variant="care"
+        />
+      </div>
+    </div>
+  </section>
+
+  <ProductGallery />
+
+  <LogoWall
+    caption="Built on the integrations Australian clinics already trust"
+    logos={[
+      { name: "Tyro" },
+      { name: "Medicare" },
+      { name: "NDIS" },
+      { name: "DVA" },
+      { name: "Xero" },
+      { name: "Twilio" },
+    ]}
+  />
+
+  <FAQ title="Questions practices ask" items={faqs} />
+
+  <CTA
+    eyebrow="For Australian practices"
+    title="See whether Lumii fits the way your practice works."
+    body="Tell us about your team, your daily work and the systems you use now. We'll show you where Lumii could save time and what a move would involve."
+    buttonLabel={t("cta.button")}
+    buttonHref={lp("/request-access")}
+  />
+</BaseLayout>
+
+<style>
+  .section {
+    padding-block: var(--space-section);
+  }
+  .section__head {
+    margin-block-end: var(--space-2xl);
+    max-inline-size: 44ch;
+  }
+  .section__eyebrow {
+    font-size: var(--text-label);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-block-end: var(--space-sm);
+  }
+  .section__head h2 {
+    font-size: var(--text-h2);
+  }
+  .section__lead {
+    margin-block-start: var(--space-md);
+    font-size: var(--text-lead);
+    color: var(--text-secondary);
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: var(--space-xl);
+  }
+
+  .connected-care {
+    padding-block: var(--space-section);
+    background: #15322f;
+    color: #f2fbf8;
+  }
+  .connected-care__inner {
+    display: grid;
+    grid-template-columns: minmax(18rem, 0.78fr) minmax(28rem, 1.22fr);
+    align-items: center;
+    gap: clamp(3rem, 7vw, 7rem);
+    max-inline-size: var(--content-wide);
+  }
+  .connected-care .section__eyebrow {
+    color: #9ad8cd;
+  }
+  .connected-care h2 {
+    max-inline-size: 15ch;
+    color: #f4fbf8;
+    font-size: clamp(2.6rem, 4.6vw, 4.7rem);
+    font-weight: var(--weight-regular);
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+  }
+  .connected-care__copy > p:not(.section__eyebrow) {
+    max-inline-size: 40rem;
+    margin-block-start: var(--space-xl);
+    color: #bad2cc;
+    font-size: var(--text-lead);
+    line-height: 1.58;
+  }
+  .connected-care__copy > a {
+    display: inline-flex;
+    gap: var(--space-sm);
+    margin-block-start: var(--space-xl);
+    color: #f2d778;
+    font-weight: var(--weight-bold);
+    text-decoration: none;
+  }
+  .connected-care__shots {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(10rem, 0.38fr);
+    align-items: center;
+    gap: var(--space-xl);
+  }
+  .connected-care__shots :global(figcaption strong) {
+    color: #f4fbf8;
+  }
+  .connected-care__shots :global(figcaption span) {
+    color: #94b2ac;
+  }
+
+  /* "Why it feels different" — text-forward pillars with a gradient index, a
+     calmer counterpoint to the icon-chip module grid above. */
+  .pillars-section {
+    padding-block-start: 0;
+  }
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: var(--space-2xl);
+  }
+  .pillar {
+    border-block-start: 2px solid color-mix(in srgb, var(--accent) 28%, transparent);
+    padding-block-start: var(--space-lg);
+  }
+  .pillar__index {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: var(--weight-bold);
+    line-height: 1;
+    background-image: var(--gradient-accent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-block-end: var(--space-md);
+  }
+  .pillar__title {
+    font-size: var(--text-h4);
+    margin-block-end: var(--space-sm);
+  }
+  .pillar__body {
+    color: var(--text-secondary);
+    line-height: var(--leading-normal);
+  }
+  @media (max-width: 58rem) {
+    .connected-care__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 38rem) {
+    .connected-care__shots {
+      grid-template-columns: 1fr;
+    }
+    .connected-care__shots :global(.product-shot--phone) {
+      max-inline-size: 15rem;
+      margin-inline: auto;
+    }
+  }
+</style>

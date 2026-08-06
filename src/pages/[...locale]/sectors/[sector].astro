@@ -10,7 +10,7 @@ import Hero from "@components/sections/Hero.astro";
 import FeatureBlock from "@components/sections/FeatureBlock.astro";
 import Badge from "@components/primitives/Badge.astro";
 import CTA from "@components/sections/CTA.astro";
-import { useTranslations, localeFromPath, localizePath } from "@i18n/index.ts";
+import { localeFromPath, localeParam, localizePath } from "@i18n/index.ts";
 import { LOCALES } from "@i18n/config.ts";
 
 export async function getStaticPaths() {
@@ -18,7 +18,7 @@ export async function getStaticPaths() {
   // One page per (locale, sector) — reserved sectors excluded, all locales built.
   return LOCALES.flatMap((l) =>
     sectors.map((sector) => ({
-      params: { locale: l.path, sector: sector.id },
+      params: { locale: localeParam(l.path), sector: sector.id },
       props: { sector },
     })),
   );
@@ -29,7 +29,6 @@ const { data } = sector;
 const { Content } = await render(sector);
 
 const locale = localeFromPath(Astro.url.pathname);
-const t = useTranslations(locale);
 const lp = (p: string) => localizePath(p, locale);
 ---
 
@@ -80,8 +79,9 @@ const lp = (p: string) => localizePath(p, locale);
   </section>
 
   <CTA
-    title={t("cta.title")}
-    body={t("cta.body")}
+    eyebrow="For your practice"
+    title="See whether Lumii fits the way your team works."
+    body="Tell us which systems you use and what takes too much time. We'll show you where Lumii could help."
     buttonLabel={data.cta.label}
     buttonHref={data.cta.href ?? lp("/request-access")}
   />

@@ -1,0 +1,309 @@
+---
+import ProductShot from "@components/ProductShot.astro";
+import Icon from "@components/primitives/Icon.astro";
+
+interface Props {
+  platformHref: string;
+  myLumiiHref: string;
+}
+
+const { platformHref, myLumiiHref } = Astro.props;
+---
+
+<section class="ecosystem">
+  <div class="container-page ecosystem__inner">
+    <header class="ecosystem__head" data-reveal>
+      <p class="ecosystem__kicker">For practices and people</p>
+      <h2>The practice stays organised. The person stays informed.</h2>
+      <p>
+        Lumii gives the practice team one clear view of the work. myLumii helps each
+        person know what happens next and find the information their clinic has shared.
+      </p>
+    </header>
+
+    <div class="ecosystem__grid">
+      <article class="ecosystem-card ecosystem-card--clinic" data-reveal>
+        <div class="ecosystem-card__copy">
+          <span class="ecosystem-card__number">01</span>
+          <p class="ecosystem-card__eyebrow">Lumii for clinics</p>
+          <h3>Fewer missed tasks and less information to chase.</h3>
+          <p>
+            Appointments, records, funded care, billing and the day’s follow-up stay
+            together, so the team spends less time checking and chasing.
+          </p>
+          <ul>
+            <li><Icon name="frontdesk" size={17} /> Clinic operations</li>
+            <li><Icon name="claim" size={17} /> Billing and claiming</li>
+            <li><Icon name="careplan" size={17} /> Connected care</li>
+          </ul>
+          <a href={platformHref}
+            >Explore Lumii for clinics <span aria-hidden="true">→</span></a
+          >
+        </div>
+        <ProductShot
+          shotId="C01"
+          title="One clinic day, moving together"
+          note="Appointments, arrivals, care-plan context and four disciplines in one calm view."
+          src="/product/lumii-clinic-day.webp"
+          alt="Lumii appointment book showing a populated clinic day across four practitioners"
+          device="wide"
+          aspectRatio="2005 / 750"
+          showChrome={false}
+          variant="calendar"
+        />
+      </article>
+
+      <article class="ecosystem-card ecosystem-card--person" data-reveal>
+        <div class="ecosystem-card__copy">
+          <span class="ecosystem-card__number">02</span>
+          <p class="ecosystem-card__eyebrow">myLumii for people</p>
+          <h3>Know what happens next and where to find it.</h3>
+          <p>
+            Book care, receive records, complete forms and understand your own health
+            patterns, while choosing exactly what each clinic may see.
+          </p>
+          <ul>
+            <li><Icon name="book" size={17} /> Appointments and records</li>
+            <li><Icon name="shield" size={17} /> You choose what is shared</li>
+            <li><Icon name="spark" size={17} /> Private health insights</li>
+          </ul>
+          <a href={myLumiiHref}>Meet myLumii <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="ecosystem-card__phones">
+          <ProductShot
+            shotId="M01"
+            title="Today’s care and health"
+            note="Your next appointment, daily wellbeing and the things worth noticing."
+            src="/product/mylumii-today.webp"
+            alt="myLumii Today screen showing Alex's Vitality, next appointment, steps, sleep and clinic connections"
+            device="phone"
+            variant="vitality"
+          />
+          <ProductShot
+            shotId="M02"
+            title="Your care, kept together"
+            note="Rehabilitation, results, referrals and notes, ready when you need them."
+            src="/product/mylumii-care.webp"
+            alt="myLumii Care records screen showing rehab programs, pathology results, a care plan, referral and clinic notes"
+            device="phone"
+            variant="care"
+          />
+        </div>
+      </article>
+    </div>
+
+    <div class="ecosystem__bridge" data-reveal>
+      <span><i></i> A patient books in myLumii</span>
+      <span aria-hidden="true">→</span>
+      <span><i></i> The appointment lands in Lumii</span>
+      <span aria-hidden="true">→</span>
+      <span><i></i> Follow-up stays connected</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ecosystem {
+    padding-block: var(--space-section);
+    background: color-mix(in srgb, var(--surface-2) 28%, var(--surface));
+    border-block: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
+  }
+  .ecosystem__inner {
+    max-inline-size: var(--content-wide);
+  }
+  .ecosystem__head {
+    max-inline-size: 54rem;
+  }
+  .ecosystem__kicker,
+  .ecosystem-card__eyebrow {
+    margin-block-end: var(--space-md);
+    color: var(--accent);
+    font-size: var(--text-label);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+  }
+  .ecosystem__head h2 {
+    max-inline-size: 17ch;
+    font-size: clamp(2.65rem, 4.8vw, 4.9rem);
+    font-weight: var(--weight-regular);
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+  }
+  .ecosystem__head > p:last-child {
+    max-inline-size: 44rem;
+    margin-block-start: var(--space-xl);
+    color: var(--text-secondary);
+    font-size: var(--text-lead);
+    line-height: 1.58;
+  }
+  .ecosystem__grid {
+    display: grid;
+    gap: var(--space-xl);
+    margin-block-start: var(--space-3xl);
+  }
+  .ecosystem-card {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: minmax(17rem, 0.72fr) minmax(0, 1.28fr);
+    align-items: center;
+    gap: clamp(2rem, 5vw, 5rem);
+    padding: clamp(1.5rem, 4vw, 3.5rem);
+    border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+    border-radius: clamp(1.5rem, 3vw, 2.5rem);
+    background: var(--surface);
+  }
+  .ecosystem-card--person {
+    grid-template-columns: minmax(17rem, 0.82fr) minmax(22rem, 1.18fr);
+    background: #15322f;
+    color: #edf8f4;
+  }
+  .ecosystem-card--person::before {
+    content: "";
+    position: absolute;
+    inline-size: 34rem;
+    block-size: 34rem;
+    inset-block-start: -23rem;
+    inset-inline-end: -12rem;
+    border-radius: 50%;
+    background: rgba(232, 198, 101, 0.15);
+    filter: blur(12px);
+  }
+  .ecosystem-card__copy {
+    position: relative;
+    z-index: 2;
+  }
+  .ecosystem-card__number {
+    display: inline-block;
+    margin-block-end: var(--space-xl);
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+  }
+  .ecosystem-card--person .ecosystem-card__number {
+    color: #86aaa3;
+  }
+  .ecosystem-card--person .ecosystem-card__eyebrow {
+    color: #9ad8cd;
+  }
+  .ecosystem-card h3 {
+    max-inline-size: 15ch;
+    font-size: clamp(2.1rem, 3.6vw, 3.8rem);
+    font-weight: var(--weight-regular);
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+  }
+  .ecosystem-card--person h3 {
+    color: #f5fbf8;
+  }
+  .ecosystem-card__copy > p:not(.ecosystem-card__eyebrow) {
+    margin-block-start: var(--space-lg);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+  .ecosystem-card--person .ecosystem-card__copy > p:not(.ecosystem-card__eyebrow) {
+    color: #bad2cc;
+  }
+  .ecosystem-card ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-lg);
+    margin: var(--space-xl) 0;
+    padding: 0;
+    list-style: none;
+    color: var(--text-muted);
+    font-size: var(--text-caption);
+    font-weight: var(--weight-semibold);
+  }
+  .ecosystem-card li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .ecosystem-card li :global(svg) {
+    color: var(--accent);
+  }
+  .ecosystem-card--person ul {
+    color: #a9c3bd;
+  }
+  .ecosystem-card--person li :global(svg) {
+    color: #f0d573;
+  }
+  .ecosystem-card__copy > a {
+    display: inline-flex;
+    gap: var(--space-sm);
+    color: var(--accent);
+    font-size: var(--text-subhead);
+    font-weight: var(--weight-bold);
+    text-decoration: none;
+  }
+  .ecosystem-card--person .ecosystem-card__copy > a {
+    color: #f2d778;
+  }
+  .ecosystem-card__phones {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    gap: clamp(0.7rem, 2vw, 1.5rem);
+    padding-block: var(--space-xl);
+  }
+  .ecosystem-card__phones :global(.product-shot:nth-child(2)) {
+    margin-block-start: 3rem;
+  }
+  .ecosystem-card__phones :global(figcaption strong) {
+    color: #f4fbf8;
+  }
+  .ecosystem-card__phones :global(figcaption span) {
+    color: #94b2ac;
+  }
+  .ecosystem__bridge {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md) var(--space-xl);
+    padding-block: var(--space-2xl) 0;
+    color: var(--text-muted);
+    font-size: var(--text-caption);
+    font-weight: var(--weight-semibold);
+  }
+  .ecosystem__bridge span {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+  .ecosystem__bridge i {
+    inline-size: 0.5rem;
+    block-size: 0.5rem;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 10%, transparent);
+  }
+  @media (max-width: 62rem) {
+    .ecosystem-card,
+    .ecosystem-card--person {
+      grid-template-columns: 1fr;
+    }
+    .ecosystem-card__copy {
+      max-inline-size: 42rem;
+    }
+  }
+  @media (max-width: 40rem) {
+    .ecosystem-card__phones {
+      margin-inline: -1rem;
+    }
+    .ecosystem-card__phones :global(.product-shot--phone) {
+      max-inline-size: 46%;
+    }
+    .ecosystem__bridge > span:nth-child(even) {
+      display: none;
+    }
+    .ecosystem__bridge {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

@@ -1,0 +1,801 @@
+---
+/**
+ * Lumii launch homepage. Product-specific, human and warm: it moves through a
+ * recognisable clinic day, then makes the future onboarding/LMS direction
+ * explicit without presenting unshipped capability as available today.
+ */
+import { getCollection } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import HomeHero from "@components/sections/HomeHero.astro";
+import EcosystemShowcase from "@components/sections/EcosystemShowcase.astro";
+import LogoWall from "@components/sections/LogoWall.astro";
+import CTA from "@components/sections/CTA.astro";
+import FAQ from "@components/sections/FAQ.astro";
+import Icon from "@components/primitives/Icon.astro";
+import Button from "@components/primitives/Button.astro";
+import { localeFromPath, localizePath, localeStaticPaths } from "@i18n/index.ts";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+const locale = localeFromPath(Astro.url.pathname);
+const lp = (p: string) => localizePath(p, locale);
+
+const sectors = (await getCollection("sectors"))
+  .filter((sector) => sector.data.status === "published")
+  .sort((a, b) => a.data.order - b.data.order);
+
+const clinicDay = [
+  {
+    time: "8:04 am",
+    label: "Before the first consult",
+    title: "The team starts ready.",
+    body: "Reminders are confirmed, the waitlist has filled a late cancellation, and reception can see who needs a form before they arrive.",
+    detail: "11 confirmations · 1 gap filled",
+    icon: "frontdesk",
+  },
+  {
+    time: "1:20 pm",
+    label: "Between patients",
+    title: "The work is finished before the next patient.",
+    body: "Notes, funded sessions, consent and claiming stay with the appointment, so clinicians can finish while the details are still fresh.",
+    detail: "Care plan updated · Claim ready",
+    icon: "careplan",
+  },
+  {
+    time: "5:06 pm",
+    label: "At the end of the day",
+    title: "The team can finish on time.",
+    body: "Payments reconcile, Xero stays in step, and practice owners get a clear view of the day without another spreadsheet or late-night export.",
+    detail: "Payments matched · Books in sync",
+    icon: "analytics",
+  },
+];
+
+const humanDetails = [
+  {
+    title: "Reception has the information it needs",
+    body: "Arrival, forms, funding and payment status are easy to find, without opening five screens or asking the patient twice.",
+    icon: "frontdesk",
+  },
+  {
+    title: "Clinicians stay focused",
+    body: "The next task is easy to find, while the screen stays quiet enough to focus on the person in the room.",
+    icon: "notes",
+  },
+  {
+    title: "Owners can act sooner",
+    body: "Staffing, revenue and follow-up are easier to understand using information the team already records.",
+    icon: "analytics",
+  },
+];
+
+const learnSteps = [
+  {
+    number: "01",
+    title: "Set up by role",
+    body: "A clear starting path for owners, reception teams and clinicians—not one giant manual for everyone.",
+  },
+  {
+    number: "02",
+    title: "Practise the work you actually do",
+    body: "Short, guided lessons for booking, claiming, care plans and the close of day.",
+  },
+  {
+    number: "03",
+    title: "Open the doors with confidence",
+    body: "Progress visibility, clinic checklists and human support make readiness something the whole team can see.",
+  },
+];
+
+const faqs = [
+  {
+    q: "Is Lumii available yet?",
+    a: "Lumii is welcoming practices gradually so each team receives proper help with moving data, setting up and learning the new system.",
+  },
+  {
+    q: "How will onboarding and training work?",
+    a: "Every practice receives hands-on help. Lumii Learn will add short lessons and setup checklists for owners, reception teams and practitioners, so nobody has to learn from one enormous manual.",
+  },
+  {
+    q: "What is myLumii?",
+    a: "myLumii is a private home for your appointments, records shared by your clinics, forms, messages, rehabilitation and health information. You choose what each clinic may see.",
+  },
+  {
+    q: "Where is patient data stored?",
+    a: "In Australia. Lumii is designed around the privacy, security and record-keeping responsibilities Australian healthcare expects.",
+  },
+  {
+    q: "Which disciplines does Lumii support?",
+    a: "Lumii is designed for allied health, general practice, medical specialists and multidisciplinary teams. It adapts to different disciplines, funding arrangements and ways of delivering care.",
+  },
+];
+---
+
+<BaseLayout>
+  <HomeHero primaryHref={lp("/request-access")} secondaryHref={lp("/platform")} />
+
+  <section class="day-section">
+    <div class="container-page day-section__layout">
+      <header class="story-head" data-reveal>
+        <p class="section-kicker">A day with Lumii</p>
+        <h2>Less chasing. More time for care.</h2>
+        <p>
+          What matters is a calmer working day: fewer missed tasks, fewer interruptions
+          and more time with patients.
+        </p>
+      </header>
+
+      <div class="day-line">
+        {
+          clinicDay.map((moment, index) => (
+            <article class="day-moment" data-reveal>
+              <div class="day-moment__time">
+                <span>{moment.time}</span>
+                <i aria-hidden="true" />
+              </div>
+              <div class="day-moment__content">
+                <div class="day-moment__icon" aria-hidden="true">
+                  <Icon name={moment.icon} size={22} />
+                </div>
+                <div>
+                  <p class="day-moment__label">{moment.label}</p>
+                  <h3>{moment.title}</h3>
+                  <p class="day-moment__body">{moment.body}</p>
+                  <p class="day-moment__detail">
+                    <span aria-hidden="true">✓</span> {moment.detail}
+                  </p>
+                </div>
+              </div>
+              {index < clinicDay.length - 1 && (
+                <span class="day-moment__connector" aria-hidden="true" />
+              )}
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="people-section">
+    <div class="container-page people-section__inner">
+      <div class="people-section__statement" data-reveal>
+        <p class="section-kicker">Made for real clinic days</p>
+        <h2>Technology that supports everyone on both sides of the desk.</h2>
+        <p>
+          Lumii follows the way a clinic actually works, from reception to the consulting
+          room and the end of day, so staff spend less time working around their software.
+        </p>
+        <Button href={lp("/for-clinicians")} variant="ghost"
+          >See Lumii for clinicians</Button
+        >
+      </div>
+
+      <div class="people-section__details">
+        {
+          humanDetails.map((detail) => (
+            <article class="people-detail" data-reveal>
+              <span class="people-detail__icon" aria-hidden="true">
+                <Icon name={detail.icon} size={20} />
+              </span>
+              <div>
+                <h3>{detail.title}</h3>
+                <p>{detail.body}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <EcosystemShowcase platformHref={lp("/platform")} myLumiiHref={lp("/mylumii")} />
+
+  <LogoWall
+    caption="Built around the systems Australian clinics already use"
+    logos={[
+      { name: "Tyro" },
+      { name: "Medicare" },
+      { name: "NDIS" },
+      { name: "DVA" },
+      { name: "Xero" },
+    ]}
+  />
+
+  <section class="learn-section" id="learn">
+    <div class="container-page learn-section__panel">
+      <div class="learn-section__glow" aria-hidden="true"></div>
+      <div class="learn-section__intro" data-reveal>
+        <p class="section-kicker section-kicker--light">
+          <span>Guided onboarding</span> Lumii Learn
+        </p>
+        <h2>Your whole team can feel ready before the first busy morning.</h2>
+        <p>
+          Lumii Learn will give owners, reception teams and practitioners a clear path
+          through setup and training—so everyone knows what to learn, what is ready and
+          where to get help.
+        </p>
+        <a class="learn-section__link" href={lp("/request-access")}
+          >Talk to us about your team <span aria-hidden="true">→</span></a
+        >
+      </div>
+
+      <ol class="learn-path" aria-label="Lumii Learn onboarding plan">
+        {
+          learnSteps.map((step) => (
+            <li class="learn-step" data-reveal>
+              <span class="learn-step__number">{step.number}</span>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+
+      <div
+        class="learn-preview"
+        data-reveal
+        aria-label="Preview of a Lumii Learn progress overview"
+      >
+        <div class="learn-preview__top">
+          <div>
+            <span class="learn-preview__eyebrow">Harbour Health · onboarding</span>
+            <strong>Ready for a confident first week</strong>
+          </div>
+          <span class="learn-preview__score">78% ready</span>
+        </div>
+        <div class="learn-preview__bar"><i></i></div>
+        <div class="learn-preview__roles">
+          <span
+            ><i class="is-complete">✓</i> Practice owner <strong>Complete</strong></span
+          >
+          <span><i>3</i> Reception team <strong>3 lessons left</strong></span>
+          <span><i>2</i> Clinicians <strong>2 lessons left</strong></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sectors-section container-page">
+    <header class="story-head" data-reveal>
+      <p class="section-kicker">Built around your practice</p>
+      <h2>Different kinds of care need different ways of working.</h2>
+      <p>
+        Funding, clinical responsibilities and the shape of the day change by discipline.
+        Lumii starts from that reality instead of asking every practice to work the same
+        way.
+      </p>
+    </header>
+    <div class="sector-grid">
+      {
+        sectors.map((sector) => (
+          <a class="sector-card" href={lp(`/sectors/${sector.id}`)} data-reveal>
+            <span class="sector-card__icon" aria-hidden="true">
+              <Icon name={sector.id} size={24} />
+            </span>
+            <span>
+              <strong>{sector.data.audience}</strong>
+              <small>{sector.data.summary}</small>
+            </span>
+            <span class="sector-card__arrow" aria-hidden="true">
+              ↗
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <FAQ title="Questions we hear often" items={faqs} />
+
+  <CTA
+    eyebrow="For practices, practitioners and people"
+    title="Better care, with less admin on both sides."
+    body="Tell us whether you're exploring Lumii for your practice, your work or your own health. Someone from our team will be in touch."
+    buttonLabel="Register interest"
+    buttonHref={lp("/request-access")}
+  />
+</BaseLayout>
+
+<style>
+  .section-kicker {
+    margin-block-end: var(--space-md);
+    color: var(--accent);
+    font-size: var(--text-label);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+  }
+  .story-head {
+    max-inline-size: 47rem;
+  }
+  .story-head h2 {
+    max-inline-size: 16ch;
+    font-size: clamp(2.55rem, 4.7vw, 4.8rem);
+    font-weight: var(--weight-regular);
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+  }
+  .story-head > p:last-child {
+    max-inline-size: 42rem;
+    margin-block-start: var(--space-xl);
+    color: var(--text-secondary);
+    font-size: var(--text-lead);
+    line-height: 1.58;
+  }
+
+  .day-section {
+    padding-block: var(--space-section);
+    background: var(--surface);
+    border-block: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
+  }
+  .day-section__layout {
+    display: grid;
+    grid-template-columns: minmax(17rem, 0.72fr) minmax(0, 1.28fr);
+    gap: clamp(3rem, 7vw, 7rem);
+    max-inline-size: var(--content-wide);
+  }
+  .day-section .story-head {
+    position: sticky;
+    inset-block-start: 7.5rem;
+    align-self: start;
+  }
+  .day-section .story-head h2 {
+    font-size: clamp(2.5rem, 4vw, 4.2rem);
+  }
+  .day-line {
+    position: relative;
+  }
+  .day-moment {
+    position: relative;
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    gap: var(--space-xl);
+    padding-block: 0 var(--space-4xl);
+  }
+  .day-moment:last-child {
+    padding-block-end: 0;
+  }
+  .day-moment__time {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: var(--space-md);
+    padding-block-start: 0.2rem;
+    color: var(--text-muted);
+    font-size: var(--text-caption);
+    font-weight: var(--weight-semibold);
+  }
+  .day-moment__time i {
+    position: relative;
+    z-index: 2;
+    inline-size: 0.75rem;
+    block-size: 0.75rem;
+    margin-inline-end: 0.1rem;
+    border: 3px solid var(--surface);
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  .day-moment__connector {
+    position: absolute;
+    z-index: 1;
+    inset-block-start: 2.8rem;
+    inset-block-end: 0.4rem;
+    inset-inline-start: calc(5.5rem - 0.5rem);
+    border-inline-start: 1px dashed color-mix(in srgb, var(--accent) 32%, transparent);
+  }
+  .day-moment__content {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-lg);
+    padding-block-end: var(--space-4xl);
+    border-block-end: 1px solid color-mix(in srgb, var(--text) 9%, transparent);
+  }
+  .day-moment:last-child .day-moment__content {
+    padding-block-end: 0;
+    border: 0;
+  }
+  .day-moment__icon {
+    display: grid;
+    place-items: center;
+    inline-size: 2.8rem;
+    block-size: 2.8rem;
+    border-radius: 0.9rem;
+    background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+    color: var(--accent);
+  }
+  .day-moment__label {
+    margin-block-end: var(--space-sm);
+    color: var(--text-muted);
+    font-size: var(--text-label);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+  .day-moment h3 {
+    max-inline-size: 22ch;
+    font-size: var(--text-h2);
+    font-weight: var(--weight-regular);
+  }
+  .day-moment__body {
+    max-inline-size: 38rem;
+    margin-block-start: var(--space-md);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+  .day-moment__detail {
+    margin-block-start: var(--space-lg);
+    color: var(--accent);
+    font-size: var(--text-caption);
+    font-weight: var(--weight-semibold);
+  }
+
+  .people-section {
+    padding-block: var(--space-section);
+  }
+  .people-section__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.03fr) minmax(22rem, 0.97fr);
+    gap: clamp(3rem, 8vw, 8rem);
+    align-items: start;
+    max-inline-size: var(--content-wide);
+  }
+  .people-section__statement {
+    position: relative;
+  }
+  .people-section__statement::before {
+    content: "“";
+    position: absolute;
+    z-index: -1;
+    inset-block-start: -5.5rem;
+    inset-inline-start: -1.5rem;
+    color: color-mix(in srgb, var(--brand-gold) 24%, transparent);
+    font-family: var(--font-display);
+    font-size: 14rem;
+    line-height: 1;
+  }
+  .people-section__statement h2 {
+    max-inline-size: 18ch;
+    font-size: clamp(2.55rem, 4.5vw, 4.65rem);
+    font-weight: var(--weight-regular);
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+  }
+  .people-section__statement > p:not(.section-kicker) {
+    max-inline-size: 39rem;
+    margin-block: var(--space-xl);
+    color: var(--text-secondary);
+    font-size: var(--text-lead);
+    line-height: 1.58;
+  }
+  .people-section__details {
+    border-block-start: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+  }
+  .people-detail {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-lg);
+    padding-block: var(--space-xl);
+    border-block-end: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+  }
+  .people-detail__icon {
+    display: grid;
+    place-items: center;
+    inline-size: 2.7rem;
+    block-size: 2.7rem;
+    border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+    border-radius: 50%;
+    color: var(--accent);
+  }
+  .people-detail h3 {
+    font-family: var(--font-sans);
+    font-size: var(--text-headline);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tight);
+  }
+  .people-detail p {
+    margin-block-start: var(--space-sm);
+    color: var(--text-secondary);
+    font-size: var(--text-subhead);
+    line-height: var(--leading-relaxed);
+  }
+
+  .learn-section {
+    padding-block: var(--space-section);
+  }
+  .learn-section__panel {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(22rem, 1.1fr);
+    gap: clamp(2.5rem, 6vw, 6rem);
+    max-inline-size: calc(var(--content-wide) - 2 * var(--space-gutter));
+    padding: clamp(2rem, 5vw, 5rem);
+    border-radius: clamp(1.5rem, 4vw, 3rem);
+    background: #102f2c;
+    color: #edf8f4;
+    box-shadow: 0 2.5rem 6rem rgba(16, 47, 44, 0.2);
+  }
+  .learn-section__glow {
+    position: absolute;
+    inline-size: 36rem;
+    block-size: 36rem;
+    inset-inline-end: -18rem;
+    inset-block-start: -22rem;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--brand-lilac) 19%, transparent);
+    filter: blur(15px);
+    pointer-events: none;
+  }
+  .section-kicker--light {
+    color: #9ad8cd;
+  }
+  .section-kicker--light span {
+    display: inline-block;
+    margin-inline-end: 0.5rem;
+    padding: 0.3rem 0.52rem;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #f4d778;
+    font-size: 0.58rem;
+  }
+  .learn-section__intro h2 {
+    max-inline-size: 15ch;
+    color: #f4fbf8;
+    font-size: clamp(2.55rem, 4.3vw, 4.5rem);
+    font-weight: var(--weight-regular);
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+  }
+  .learn-section__intro > p:not(.section-kicker) {
+    max-inline-size: 38rem;
+    margin-block-start: var(--space-xl);
+    color: #c1d8d3;
+    font-size: var(--text-lead);
+    line-height: 1.58;
+  }
+  .learn-section__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-block-start: var(--space-xl);
+    color: #f7df8b;
+    font-size: var(--text-subhead);
+    font-weight: var(--weight-semibold);
+    text-decoration: none;
+  }
+  .learn-path {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .learn-step {
+    display: grid;
+    grid-template-columns: 2.2rem 1fr;
+    column-gap: var(--space-lg);
+    padding-block: var(--space-lg);
+    border-block-end: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .learn-step:first-child {
+    border-block-start: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .learn-step__number {
+    grid-row: span 2;
+    color: #7ab8ad;
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+  }
+  .learn-step h3 {
+    color: #f4fbf8;
+    font-family: var(--font-sans);
+    font-size: var(--text-headline);
+    font-weight: var(--weight-semibold);
+  }
+  .learn-step p {
+    margin-block-start: var(--space-xs);
+    color: #abc6c0;
+    font-size: var(--text-subhead);
+    line-height: var(--leading-relaxed);
+  }
+  .learn-preview {
+    position: relative;
+    z-index: 1;
+    grid-column: 1 / -1;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: var(--radius-xl);
+    background: rgba(255, 255, 255, 0.065);
+    backdrop-filter: blur(14px);
+  }
+  .learn-preview__top {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--space-lg);
+  }
+  .learn-preview__eyebrow {
+    display: block;
+    margin-block-end: 0.3rem;
+    color: #8dbab1;
+    font-size: var(--text-micro);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+  }
+  .learn-preview__top strong {
+    color: white;
+    font-size: var(--text-headline);
+  }
+  .learn-preview__score {
+    color: #f7df8b;
+    font-size: var(--text-caption);
+    font-weight: var(--weight-bold);
+  }
+  .learn-preview__bar {
+    overflow: hidden;
+    block-size: 0.5rem;
+    margin-block: var(--space-lg);
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+  .learn-preview__bar i {
+    display: block;
+    inline-size: 78%;
+    block-size: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #66c6b4, #f2cf6e);
+  }
+  .learn-preview__roles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+  }
+  .learn-preview__roles > span {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 var(--space-sm);
+    color: #d6e8e4;
+    font-size: var(--text-caption);
+  }
+  .learn-preview__roles i {
+    grid-row: span 2;
+    display: grid;
+    place-items: center;
+    inline-size: 1.8rem;
+    block-size: 1.8rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: #f7df8b;
+    font-style: normal;
+    font-weight: var(--weight-bold);
+  }
+  .learn-preview__roles i.is-complete {
+    background: #63bba8;
+    color: #102f2c;
+  }
+  .learn-preview__roles strong {
+    color: #83b5ab;
+    font-size: var(--text-micro);
+    font-weight: var(--weight-medium);
+  }
+
+  .sectors-section {
+    padding-block: var(--space-section);
+    max-inline-size: var(--content-wide);
+  }
+  .sector-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+    margin-block-start: var(--space-3xl);
+  }
+  .sector-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--space-lg);
+    min-block-size: 8rem;
+    padding: var(--space-xl);
+    border: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+    border-radius: var(--radius-xl);
+    background: var(--surface);
+    color: var(--text);
+    text-decoration: none;
+    transition:
+      transform var(--duration-standard) var(--ease-out),
+      box-shadow var(--duration-standard) var(--ease-out),
+      border-color var(--duration-standard) var(--ease-out);
+  }
+  .sector-card:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--accent) 36%, transparent);
+    box-shadow: var(--shadow-elevated);
+  }
+  .sector-card__icon {
+    display: grid;
+    place-items: center;
+    inline-size: 3.3rem;
+    block-size: 3.3rem;
+    border-radius: 1rem;
+    background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+    color: var(--accent);
+  }
+  .sector-card strong,
+  .sector-card small {
+    display: block;
+  }
+  .sector-card strong {
+    font-family: var(--font-display);
+    font-size: var(--text-h4);
+    font-weight: var(--weight-regular);
+  }
+  .sector-card small {
+    margin-block-start: var(--space-xs);
+    color: var(--text-secondary);
+    line-height: var(--leading-normal);
+  }
+  .sector-card__arrow {
+    color: var(--accent);
+    font-size: var(--text-headline);
+  }
+
+  @media (max-width: 58rem) {
+    .day-section__layout,
+    .people-section__inner,
+    .learn-section__panel {
+      grid-template-columns: 1fr;
+    }
+    .day-section .story-head {
+      position: static;
+    }
+    .learn-preview {
+      grid-column: auto;
+    }
+  }
+  @media (max-width: 42rem) {
+    .day-moment {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+    .day-moment__time {
+      align-items: center;
+      flex-direction: row;
+    }
+    .day-moment__connector {
+      display: none;
+    }
+    .day-moment__content {
+      grid-template-columns: 1fr;
+    }
+    .day-moment__icon {
+      inline-size: 2.5rem;
+      block-size: 2.5rem;
+    }
+    .learn-section {
+      padding-inline: var(--space-gutter);
+    }
+    .learn-section__panel {
+      padding-inline: var(--space-xl);
+      border-radius: var(--radius-xl);
+    }
+    .learn-preview__top {
+      align-items: start;
+      flex-direction: column;
+    }
+    .learn-preview__roles {
+      grid-template-columns: 1fr;
+    }
+    .sector-grid {
+      grid-template-columns: 1fr;
+    }
+    .sector-card {
+      align-items: start;
+    }
+  }
+</style>

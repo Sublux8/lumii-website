@@ -25,36 +25,41 @@ const lp = (p: string) => localizePath(p, locale);
 
 const beliefs = [
   {
-    title: "Calm beats clever",
-    body: "The best software disappears. Lumii is built to get out of the way — fewer clicks, fewer systems, fewer surprises — so your team can spend their attention on people, not screens.",
+    title: "Good software should feel straightforward",
+    body: "Lumii reduces unnecessary clicks, repeated work and surprises, so your team can spend more attention on people and less on screens.",
     icon: "spark",
   },
   {
-    title: "Australian, properly",
-    body: "Tyro, Medicare, NDIS, DVA, and patient data kept in Sydney. Not a global product with a local plug-in — built from the ground up for how clinics here actually book, bill and get paid.",
+    title: "Made for Australian healthcare",
+    body: "Lumii works with Tyro, Medicare, NDIS and DVA, with patient data kept in Sydney. It is built around how clinics here book, bill and get paid.",
     icon: "au",
   },
   {
-    title: "One platform, every discipline",
-    body: "Allied health, general practice, aged care, NDIS. Lumii flexes to your funding mix and your workflow instead of forcing every clinic into the same mould.",
+    title: "Flexible enough for different kinds of care",
+    body: "Allied health, general practice, medical specialists, aged care and NDIS. Lumii adapts to your team and funding mix instead of forcing every clinic into the same mould.",
     icon: "layers",
   },
   {
-    title: "Your data is yours",
-    body: "Stored in Australia, encrypted, with you in control. We hold it carefully because it's the most trust a clinic can give us — and we'd rather earn that than assume it.",
+    title: "We protect the data entrusted to us",
+    body: "Clinic and patient data is stored in Australia, encrypted and protected by clear access controls. We treat that responsibility as something to earn every day.",
     icon: "lock",
+  },
+  {
+    title: "Care continues beyond the clinic",
+    body: "Lumii helps the clinic run the day. myLumii helps each person keep track of care between visits, with clear choices about what is shared.",
+    icon: "layers",
   },
 ];
 ---
 
 <BaseLayout
   title={t("nav.about")}
-  description="Lumii is an Australian-built practice-management platform for multi-disciplinary clinics — made to feel calm, warm, and genuinely on your side."
+  description="Lumii is Australian-built care technology that helps practices run the day and people keep track of care between visits."
 >
   <Hero
     eyebrow="About Lumii"
-    title="The practice software we wished existed."
-    subtitle="Lumii is an Australian-built platform for multi-disciplinary clinics — made to take the friction out of the day, keep patient data on home soil, and feel genuinely warm to use."
+    title="Care technology that feels like it is on your side."
+    subtitle="Lumii is made in Australia to give practice teams a calmer working day and help people keep their care and health information close."
     primaryLabel={t("hero.ctaPrimary")}
     primaryHref={lp("/request-access")}
     secondaryLabel={t("nav.platform")}
@@ -73,24 +78,31 @@ const beliefs = [
 
   <section class="container-page section section--tight">
     <div class="story measure">
-      <p class="section__eyebrow">Where we're at</p>
-      <h2>Pre-launch, and hands-on about it.</h2>
+      <p class="section__eyebrow">How we're introducing Lumii</p>
+      <h2>Built closely with the people who will use it.</h2>
       <p>
-        Lumii isn't open to everyone yet — and that's deliberate. We're onboarding a small
-        group of foundation clinics, working alongside them to get every workflow right
-        before we open the doors wider.
+        Lumii is welcoming a small number of practices at a time. That gives every team
+        real help with moving data, setting up and finding their feet, while giving us
+        time to listen carefully and respond well.
       </p>
       <p>
-        It means the people building Lumii are close to the people using it. If you run a
-        clinic and the day feels heavier than it should, we'd genuinely love to hear how —
-        and to build the thing that makes it lighter.
+        The people shaping Lumii stay close to the people using it. If you run a practice,
+        work in care or simply know that health technology can feel better than it does
+        today, we genuinely want to hear what would make the difference.
+      </p>
+      <p>
+        It also means building for the person beyond the waiting room. myLumii is being
+        prepared alongside Lumii so appointments, shared records, forms, messages and
+        rehabilitation can feel like one continuous care story—not a trail of portals and
+        paperwork.
       </p>
     </div>
   </section>
 
   <CTA
-    title={t("cta.title")}
-    body={t("cta.body")}
+    eyebrow="Start a conversation"
+    title="Help us make care technology feel more human."
+    body="Tell us what you need from Lumii for your practice, your work or your own health. We'd genuinely like to hear your perspective."
     buttonLabel={t("cta.button")}
     buttonHref={lp("/request-access")}
   />

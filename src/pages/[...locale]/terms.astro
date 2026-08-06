@@ -4,12 +4,19 @@
  * until reviewed (§18). Replace with the reviewed terms before launch.
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { useTranslations, localeFromPath, localeStaticPaths } from "@i18n/index.ts";
+import {
+  useTranslations,
+  localeFromPath,
+  localeStaticPaths,
+  localizePath,
+} from "@i18n/index.ts";
 
 export function getStaticPaths() {
   return localeStaticPaths();
 }
-const t = useTranslations(localeFromPath(Astro.url.pathname));
+const locale = localeFromPath(Astro.url.pathname);
+const lp = (p: string) => localizePath(p, locale);
+const t = useTranslations(locale);
 ---
 
 <BaseLayout title={t("footer.terms")} noindex={true}>
@@ -19,14 +26,15 @@ const t = useTranslations(localeFromPath(Astro.url.pathname));
     <h1>{t("footer.terms")}</h1>
     <p>
       These terms govern access to the Lumii website and, where applicable, the Lumii
-      pre-launch program. Full product terms of service will accompany commercial launch.
+      early-access program. Full product terms of service will be provided before paid
+      subscriptions begin.
     </p>
 
-    <h2>Pre-launch access</h2>
+    <h2>Early access</h2>
     <p>
-      Lumii is in a pre-launch phase. Requesting access does not create a binding
-      agreement to provide the service. We may contact you about onboarding and may
-      decline or withdraw access at our discretion.
+      Registering your interest does not create a binding agreement to provide Lumii. We
+      may contact you about availability and setup, and may decline or withdraw access at
+      our discretion.
     </p>
 
     <h2>Acceptable use</h2>
@@ -44,14 +52,14 @@ const t = useTranslations(localeFromPath(Astro.url.pathname));
 
     <h2>No warranty</h2>
     <p>
-      This site is provided "as is" during pre-launch, without warranties. To the extent
+      This site is provided "as is" during early access, without warranties. To the extent
       permitted by law, we're not liable for loss arising from its use.
     </p>
 
     <h2>Privacy</h2>
     <p>
       Our handling of personal information is described in our
-      <a href="/en-au/privacy">privacy policy</a>.
+      <a href={lp("/privacy")}>privacy policy</a>.
     </p>
 
     <h2>Contact</h2>

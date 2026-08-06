@@ -1,0 +1,205 @@
+---
+/**
+ * For Clinicians — audience page (§6). Speaks to the practitioner (vs the
+ * practice owner): less admin, claim in the room, notes that write themselves.
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Hero from "@components/sections/Hero.astro";
+import FeatureBlock from "@components/sections/FeatureBlock.astro";
+import FAQ from "@components/sections/FAQ.astro";
+import CTA from "@components/sections/CTA.astro";
+import ProductShot from "@components/ProductShot.astro";
+import {
+  useTranslations,
+  localeFromPath,
+  localizePath,
+  localeStaticPaths,
+} from "@i18n/index.ts";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+const locale = localeFromPath(Astro.url.pathname);
+const t = useTranslations(locale);
+const lp = (p: string) => localizePath(p, locale);
+
+const values = [
+  {
+    title: "Claim before the patient leaves",
+    body: "Finish the appointment and raise the claim from the same screen—Tyro HealthPoint, Medicare, DVA and NDIS—with checks that catch common problems before you submit.",
+    icon: "claim",
+  },
+  {
+    title: "Notes that take less time",
+    body: "Optional AI-assisted capture can help turn the consult into a structured note and draft correspondence. You review every word before anything becomes part of the record.",
+    icon: "notes",
+  },
+  {
+    title: "Funded care plans stay current",
+    body: "Medicare CDM, DVA, WorkCover and Private-Health Extras sessions update as appointments are completed, so you can see what remains without counting on paper.",
+    icon: "careplan",
+  },
+  {
+    title: "Telehealth, kept with the appointment",
+    body: "Video consults, consent, pre-visit forms and screen sharing stay with the appointment, with optional note assistance when your clinic chooses to use it.",
+    icon: "telehealth",
+  },
+  {
+    title: "One clear view of the day",
+    body: "The appointment book and reception stay in step, so check-ins, changes and the next patient are clear without a phone call across the clinic.",
+    icon: "book",
+  },
+  {
+    title: "Fewer interruptions for reception",
+    body: "Online booking, SMS reminders with one-tap confirm, and waitlist offers mean fewer no-shows and fewer interruptions between patients.",
+    icon: "frontdesk",
+  },
+  {
+    title: "Stay connected between visits",
+    body: "myLumii gives patients one place for shared records, forms, messages and prescribed rehabilitation, while they choose what each clinic may see.",
+    icon: "layers",
+  },
+];
+
+const faqs = [
+  {
+    q: "Does Lumii work on iPad?",
+    a: "Lumii is available for Mac. iPad and iPhone support is being prepared, including a reception kiosk that stays in step with the appointment book.",
+  },
+  {
+    q: "How does Lumii use AI in clinical work?",
+    a: "AI-assisted capture and drafting are optional and controlled by the practice. They are designed to reduce typing, not replace clinical judgement: a practitioner reviews and approves content before it is saved or sent.",
+  },
+  {
+    q: "Which disciplines is it built for?",
+    a: "Lumii is designed for physio, OT, podiatry, psychology, general practice, medical specialists and more. Claiming, care plans and everyday safeguards adapt to your discipline and funding mix.",
+  },
+  {
+    q: "What can patients do in myLumii?",
+    a: "myLumii brings eligible appointment booking and cancellation, clinic-shared records, forms, messages and prescribed rehabilitation into one place. Individuals can also connect health information and use private wellbeing spaces, with sharing controlled separately for each clinic.",
+  },
+];
+---
+
+<BaseLayout
+  title="For clinicians"
+  description="Lumii for clinicians: claim in the room, keep notes and care plans close, and see the whole appointment day clearly."
+>
+  <Hero
+    eyebrow="For clinicians"
+    title="Keep your attention where it belongs."
+    subtitle="Lumii keeps claiming, notes, care plans and the appointment day close together, leaving more of your attention for the person in front of you."
+    primaryLabel={t("hero.ctaPrimary")}
+    primaryHref={lp("/request-access")}
+    secondaryLabel={t("hero.ctaSecondary")}
+    secondaryHref={lp("/platform")}
+  />
+
+  <section class="container-page section">
+    <header class="section__head">
+      <p class="section__eyebrow">In the room</p>
+      <h2>Less between you and the patient.</h2>
+      <p class="section__lead measure">
+        Claiming, notes, funded visits and follow-up stay close to the appointment, so you
+        can finish the job without disappearing into three other screens.
+      </p>
+    </header>
+    <div class="grid-3">
+      {values.map((v) => <FeatureBlock title={v.title} body={v.body} icon={v.icon} />)}
+    </div>
+  </section>
+
+  <section class="record-story">
+    <div class="container-page record-story__inner">
+      <header class="record-story__copy" data-reveal>
+        <p class="section__eyebrow">One patient, one story</p>
+        <h2>The next clinician can see what happened.</h2>
+        <p>
+          Appointments, invoices, claims and funded care land in one timeline, so the next
+          clinician sees what happened without hunting across the practice.
+        </p>
+      </header>
+      <ProductShot
+        shotId="C04"
+        title="The context you need, when you need it"
+        note="Appointments, billing, claims and care-plan milestones in one patient timeline."
+        src="/product/lumii-patient-record.webp"
+        alt="Lumii patient timeline for Owen Reyes showing appointments, invoice, Comcare claim and active care plan"
+        device="wide"
+        aspectRatio="1752 / 736"
+        showChrome={false}
+        variant="care"
+        class="record-story__shot"
+      />
+    </div>
+  </section>
+
+  <FAQ title="Common questions" items={faqs} />
+
+  <CTA
+    eyebrow="For practitioners"
+    title="Less admin should mean more room for care."
+    body="Tell us how you work today and what gets in the way. We'll show you where Lumii can make the clinical day feel lighter."
+    buttonLabel={t("cta.button")}
+    buttonHref={lp("/request-access")}
+  />
+</BaseLayout>
+
+<style>
+  .section {
+    padding-block: var(--space-section);
+  }
+  .section__head {
+    margin-block-end: var(--space-2xl);
+    max-inline-size: 46ch;
+  }
+  .section__eyebrow {
+    font-size: var(--text-label);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-block-end: var(--space-sm);
+  }
+  .section__head h2 {
+    font-size: var(--text-h2);
+  }
+  .section__lead {
+    margin-block-start: var(--space-md);
+    font-size: var(--text-lead);
+    color: var(--text-secondary);
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: var(--space-xl);
+  }
+  .record-story {
+    padding-block: var(--space-section);
+    background:
+      radial-gradient(circle at 82% 12%, rgba(93, 205, 184, 0.2), transparent 31rem),
+      #edf8f4;
+  }
+  .record-story__inner {
+    max-inline-size: var(--content-wide);
+  }
+  .record-story__copy {
+    max-inline-size: 48rem;
+  }
+  .record-story__copy h2 {
+    max-inline-size: 15ch;
+    font-size: var(--text-h2);
+  }
+  .record-story__copy > p:not(.section__eyebrow) {
+    max-inline-size: 42rem;
+    margin-block-start: var(--space-md);
+    color: var(--text-secondary);
+    font-size: var(--text-lead);
+    line-height: var(--leading-normal);
+  }
+  :global(.record-story__shot) {
+    max-inline-size: 70rem;
+    margin: var(--space-2xl) auto 0;
+  }
+</style>
